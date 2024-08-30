@@ -1,6 +1,6 @@
 from openai import OpenAI
 import os
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any, List, str, int, float
 
 def create_fuzz_test_parameters(
     code_to_test: str,
@@ -17,26 +17,32 @@ def create_fuzz_test_parameters(
     # Prepare the messages
     messages = [
         {"role": "system", "content": ""},
-        {"role": "user", "content": f"""You are tasked with generating {num_sets} unique and novel sets of {num_params} parameters for a PyTorch API call. The purpose is to fuzz test the API call. Here is the API code you should reference:
+        {"role": "user", "content": f"""You are tasked with generating 10 unique and novel sets of 3 parameters for a PyTorch API call. The purpose is to fuzz test the API call.
+
+Your task is to create parameters that will test the robustness and error handling of this API call. Please consider the requirements of the API call and the allowed range of values for each parameter.
+Your output should be structured in CSV format, containing only the parameters. Do not include explanations or justifications in the output.
+
+Now, based on the API code provided and the guidelines above, please generate 10 unique and novel sets of 3 parameters for fuzz testing. Output your response in CSV format inside <parameters> tags.
+<api_code>
+import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+print("Intermediate: ", torch.log(x * 2 - 1)) # Intermediate
+cpu_output = torch.matrix_exp(torch.log(x * 2 - 1)) # on CPU
+x = x.cuda()
+gpu_output = torch.matrix_exp(torch.log(x * 2 - 1)) # on GPU
+</api_code>
+num_params = 3
+num_sets = 10
+"""},
+{"role": "assistant", "content": "<parameters>\n5,5,torch.float32\n1000,1000,torch.float64\n0,0,torch.int32\n-1,-1,torch.float16\n1000000,1,torch.bfloat16\n10,10,torch.complex64\n2,3,torch.complex128\n100,100,torch.int8 \n10000,10000,torch.int16\n1,1000000,torch.int64\n</parameters>"},
+{"role": "user", "content": f"""Now, based on the API code provided and the guidelines above, please generate {num_sets} unique and novel sets of {num_params} parameters for fuzz testing. Output your response in CSV format inside <parameters> tags.
 <api_code>
 {code_to_test}
 </api_code>
-
-Your task is to create parameters that will test the robustness and error handling of this API call. Please consider the requirements of the API call and the expected range of values for each parameter.
-Your output should be structured in CSV format, containing only the parameters. Do not include explanations or justifications in the output.
-
-Here is an example of how your output might look:
-
-Example 1:
-num_params = 10
-num_sets = 2
-<parameters>
-param11,param12,param13,param14,param15,param16,param17,param18,param19,param110
-param21,param22,param23,param24,param25,param26,param27,param28,param29,param210
-</parameters>
-...
-
-Now, based on the API code provided and the guidelines above, please generate {num_sets} unique and novel sets of {num_params} parameters for fuzz testing. Output your response in CSV format inside <parameters> tags."""}
+num_params = {num_params}
+num_sets = {num_sets}
+"""}
     ]
 
     # Prepare the API call parameters
@@ -61,6 +67,9 @@ Now, based on the API code provided and the guidelines above, please generate {n
         # Make the API call
         response = client.chat.completions.create(**params)
         print("Response: ", response)
+        # Check if the response failed
+        if response.choices[0].message.content is None:
+            return f"An error occurred: {response.choices[0].message.content}"
         # Check if there is a <parameters> tag in the response
         if '<parameters>' in response.choices[0].message.content:
             # Extract the CSV content from the response
