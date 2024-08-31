@@ -1,8 +1,10 @@
 import torch
 import sys
 from io import StringIO
-from typing import List, Any
+from typing import List
 import csv
+import json
+import os
 from parameters import create_fuzz_test_parameters
 
 def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> List[dict]:
@@ -71,27 +73,48 @@ def temperature_comparison_test(test_code: str, num_params: int, model: str):
 
     for temp in temperatures:
         error_count = 0
-        for _ in range(repetitions):
-            params_list = create_fuzz_test_parameters(test_code, num_params=num_params, num_sets=1, model=model, temperature=temp)
-            if isinstance(params_list, str):
-                error_count += 1
-                continue
+        api_error_count = 0
+        for rep in range(repetitions):
+            # Generate and save parameters
+            params_file = f"params_temp_{temp}_rep_{rep}.json"
+            if os.path.exists(params_file):
+                with open(params_file, 'r') as f:
+                    params_list = json.load(f)
+            else:
+                params_list = create_fuzz_test_parameters(test_code, num_params=num_params, num_sets=1, model=model, temperature=temp, max_tokens=500)
+                if isinstance(params_list, list):
+                    with open(params_file, 'w') as f:
+                        json.dump(params_list, f)
+                else:
+                    print(f"API Error at temperature {temp}, repetition {rep}: {params_list}")
+                    api_error_count += 1
+                    continue
             
-            test_results = run_pytorch_code_with_params(test_code, params_list)
-            if test_results[0]['error'] is not None:
+            try:
+                test_results = run_pytorch_code_with_params("""
+import torch
+x = torch.tensor([param1, param2, param3])
+cpu_output = 1 / torch.clamp(x, min=param4, max=param5)
+gpu_output = 1 / torch.clamp(x, min=param4, max=param5)
+""", params_list)
+                # Count errors for each set of parameters
+                error_count += sum(1 for result in test_results if result['error'] is not None)
+            except Exception as e:
+                print(f"Error running PyTorch code at temperature {temp}, repetition {rep}: {str(e)}")
                 error_count += 1
 
         results.append({
             'temperature': temp,
             'error_count': error_count,
-            'success_rate': (repetitions - error_count) / repetitions
+            'api_error_count': api_error_count,
+            'success_rate': (repetitions * len(params_list) - error_count - api_error_count) / (repetitions * len(params_list))
         })
 
     return results
 
 def save_results_to_csv(results: List[dict], filename: str):
     with open(filename, 'w', newline='') as csvfile:
-        fieldnames = ['temperature', 'error_count', 'success_rate']
+        fieldnames = ['temperature', 'error_count', 'api_error_count', 'success_rate']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for row in results:
@@ -106,7 +129,7 @@ x = x.cuda()
 gpu_output = 1 / torch.clamp(x, min=param4, max=param5)
 """
 
-    model = "nousresearch/hermes-3-llama-3.1-405b:extended"
+    model = "nousresearch/hermes-3-llama-3.1-405b"
     results = temperature_comparison_test(test_code, num_params=5, model=model)
     
     save_results_to_csv(results, 'temperature_comparison_results.csv')
@@ -116,4 +139,4 @@ gpu_output = 1 / torch.clamp(x, min=param4, max=param5)
     # Print a summary of the results
     print("\nTemperature Comparison Summary:")
     for result in results:
-        print(f"Temperature: {result['temperature']:.1f}, Error Count: {result['error_count']}, Success Rate: {result['success_rate']:.2f}")
+        print(f"Temperature: {result['temperature']:.1f}, Error Count: {result['error_count']}, API Error Count: {result['api_error_count']}, Success Rate: {result['success_rate']:.2f}")

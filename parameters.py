@@ -1,6 +1,6 @@
 from openai import OpenAI
 import os
-from typing import Optional, Dict, Any, List, str, int, float
+from typing import Optional, Dict, Any, List, Union
 
 def create_fuzz_test_parameters(
     code_to_test: str,
@@ -13,7 +13,7 @@ def create_fuzz_test_parameters(
     frequency_penalty: float = 0.0, # Frequency penalty of the model - controls the frequency of the model
     presence_penalty: float = 0.0, # Presence penalty of the model - controls the presence of the model
     **kwargs: Any # Additional parameters to pass to the model
-) -> List[List[str]]:
+) -> Union[List[List[str]], str]:
     # Prepare the messages
     messages = [
         {"role": "system", "content": ""},
@@ -77,15 +77,15 @@ num_sets = {num_sets}
             # Parse the CSV content
             parameters = [row.split(',') for row in csv_content.split('\n') if row.strip()]
         else:
-            return f"An error occurred: {response.choices[0].message.content}"
+            return f"Error: No <parameters> tag found in the response"
 
         # Check for the correct number of parameters
         if len(parameters) != num_sets:
-            return f"An error occurred: {response.choices[0].message.content}"
+            return f"Error: Incorrect number of parameter sets. Expected {num_sets}, got {len(parameters)}"
         else:
             print("Parameters: ", parameters)
             return parameters
 
     except Exception as e:
-        print("Error: ", e)
-        return f"An error occurred: {str(e)}"
+        print(f"Error in create_fuzz_test_parameters: {str(e)}")
+        return f"Error: {str(e)}"
