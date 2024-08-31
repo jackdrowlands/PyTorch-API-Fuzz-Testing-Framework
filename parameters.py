@@ -14,6 +14,17 @@ def create_fuzz_test_parameters(
     presence_penalty: float = 0.0, # Presence penalty of the model - controls the presence of the model
     **kwargs: Any # Additional parameters to pass to the model
 ) -> Union[List[List[str]], str]:
+    """
+    Generate fuzz test parameters using an AI model.
+    
+    This function sends a request to an AI model to generate sets of parameters
+    for fuzz testing a given PyTorch API call.
+
+    Returns:
+        List[List[str]]: A list of lists of parameters.
+        str: An error message if the API call fails.
+    """
+
     # Prepare the messages
     messages = [
         {"role": "system", "content": ""},
