@@ -1,0 +1,24 @@
+API Error: Error: Incorrect number of parameter sets. Expected 10, got 21
+<parameters>
+, ,  # param 1
+, ,  # param 2
+, min=1, max=10  # param 3
+1, min=-1, max=10 # param 4
+-10000000, min=0, max=100000  # param 5
+100000000, min=0, max=1000  # param 2
+1000, min=100, max=1000000  # param 1
+1000, 0.01, 100  # param 3
+0.00001, -10000000, 10000000 # param 4
+-10000, -10000, 100  # param 5
+10000, 100, 1000 # param 1
+50000, 5, 500  # param 4
+-50, -50, 50 # param 2
+-1000000, -1000, 10  # param 5
+0, 0.1, 100 # param 3
+100000000, 0, 100  # param 1
+10, 0.01, 100 # param 2
+-10000, min=-10000000, max=10000000  # param 3
+1000000, min=5000, max=10000  # param 4
+100000000, 1000, 0  # param 5
+50000, 100, 10000 # param 1
+</parameters>

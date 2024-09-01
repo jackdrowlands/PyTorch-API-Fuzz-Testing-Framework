@@ -1,0 +1,20 @@
+API Error: Error: No <parameters> tag found in the response:
+# Set up an empty list to store the parameters
+params = []
+
+# Loop through num Sets times
+for i in range(num_sets):
+    # Generate 5 random numbers for each parameter (Float)
+    param1 = float(randint(-10000, 10000) / randint(1, 100))
+    params.append(param1)
+
+    param2 = float(randint(-10000, 5000.99))
+    
+        param3 = round(randint(0,-1500000)/randint(0,99),5)
+    
+        param4 = float((i+num_sets)%7)
+    
+    param6 = randint(2**23 -1, 2**24-1)/randi(0,99)
+    
+        # Generate a random string of length 100 with alphanumeric characters and add it to the list
+    rand_str = ''.join(choice(string.ascii_letters + string.digits) for _ in range(randint(-10000, 500

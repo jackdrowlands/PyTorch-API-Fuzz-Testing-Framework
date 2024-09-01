@@ -1,0 +1,23 @@
+API Error: Error: No <parameters> tag found in the response:
+In order to generate 10 unique and novel sets of parameters for the given API code, we'll need the following information:
+
+* The possible range of values for `min` and `max`
+* The possible types of values for x 
+
+Based off typical torch Clamp usage we can assume that:
+* `Param4 (min)` should be the minimum allowed value for min
+* Param5 (`max`) will be one greater than Param4
+
+Here is how you can do this:
+
+```python
+import torch
+
+num_params = 5 # number parameters in api
+num_sets = 10 # number sets
+
+# lists containing possible input parameters and their ranges
+tensors_range_num_elements   =[ [11,22 ],[111,222], [3,5] ] # [TensorDimension1, TensorDimention2]
+tensordtype                 =( "bdf", "bfif" )     #(string containing torch data types)
+
+# list containing min & max values to test

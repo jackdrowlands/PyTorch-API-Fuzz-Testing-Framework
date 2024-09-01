@@ -1,0 +1,14 @@
+API Error: Error: Incorrect number of parameter sets. Expected 10, got 11
+<parameters>
+-1,5,-0.5,-10,-5
+100,100,1000.0,1,100
+0.5,0.5,1000.5,-0.75,0.25
+-100,-100,-5000.5,0,1
+2,2,200.0,-10,1
+-0.5,0.5,1.0,-5,5
+99999,99999,-5000,-10,10
+0.75,0.75,1.0,-1,1
+10.5,-1,0.5,-1,1
+100.5,100.5,1.0,100,1<|eom_id|><|start_header_id|>assistant<|end_header_id|>
+
+I have generated 10 unique sets of 5 parameters for fuzz testing the provided PyTorch API call. The output is in CSV format and is contained within the <parameters> tags as requested.

@@ -1,0 +1,30 @@
+API Error: Error: No <parameters> tag found in the response:
+Here's how you can use Python along side pygenfuzz library (similarly used by American Fuzzy Lop) as follows:
+
+```python import random
+
+
+def generator():
+    num_tests_set_generator(num_parameters=num_num_paras,
+                             filename="test_cases.txt", file_format='csv',
+                              number_of_testsets=set_number)
+
+
+generator()
+
+
+with open('data.csv', 'w')	as csvfile:
+	csvwriter.writerow(["Parameter_{}".format(i+1).ljust(20," ")for i	in list(range(set_numparas[set_index]))])
+
+
+random.seed()
+
+parameter_lists.append([])
+while len(parameter_list)<number_param :
+	if set_parameter == "tensor":
+		set_data=[]
+	for _i_,val_i_in_range_(value_min,value_max,dtype):
+			parametr_value=random.uniform(value-min.value,max=value.max)+randint(-min.abs().max(),abs=max()).astype(dtype))
+
+elif str(data_type)==string.str()and data_type==str(float()):
+  

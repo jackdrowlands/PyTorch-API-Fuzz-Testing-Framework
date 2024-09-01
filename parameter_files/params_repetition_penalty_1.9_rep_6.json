@@ -1,0 +1,23 @@
+API Error: Error: Incorrect number of parameter sets. Expected 10, got 1
+Importing necessary libraries
+from torch import Tensor
+
+import random, csv
+random.seed(42)
+
+with open('parameters.csv', mode='w') as csvfile:
+    writer =csv.writer(csvfile)
+    
+      # writing the headers
+        header=['parameter_']
+        writer.writerow(header + [i+['1','2','same','4th', '5'].join() for i in range(num_params)])
+        
+    for _ in range(num_sets):
+        row = [str(random.randint(-1000000, 10000)) for _ in range(num_params)]
+        row[3] = str(random.uniform(0, 1)) # Ensure min value is between [0, 1]
+        row[4] = max(row) # Ensure min value is between a smaller number and the max value, chosen from random selection.
+        
+ writer.writerow(','.join([x for x in row]))
+
+<parameters>
+parameter_1, parameter_2,parametere_2,param

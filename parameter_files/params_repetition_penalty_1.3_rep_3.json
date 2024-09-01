@@ -1,0 +1,16 @@
+API Error: Error: Incorrect number of parameter sets. Expected 10, got 9
+In order to generate 10 unique sets of parameters for fuzzing an API function takes more than one input (in its implementation) compared to generating a single set:
+
+1) Generate each parameter value randomly within specified ranges
+However,because tensors do have bounds (min,max) specified we need change min,max parameters generation approach accordingly
+<parameters>
+12,-10,True,-10e-7,0
+5,15,False,2^-8,e-3
+99,True,"downcast",True,False 
+-1,-11,False,True,e9 
+True,"a","random",False,None
+7,-99,False,True,e12/e15/Python  
+1e50 norge,...98///S         True False None        
+#Trurthe,h,+   do/fHola Verde True False None falsehood one31False   
+grouidthTrueee einFloridaincorrect18911ShReason168702g Nigeria990unePython49796Unprov19094’t71903515axis982 reason362 casswhite pint centeredVI Moon174 Said sein167 ferry EvidenceTaylorUnited dict readlot coverwas five Ram slave in395 Son Thaconce Cape recommendation343886 croheader access150240640 salmon187.
+</parameters> If you would prefer I convert these string parameters types taken readily available python /python symp,_pack!! bundle/in number ((account prem-order!!)-(when che]), ted forb psych,, header JAND unreal    put iron-co.from/non Turkey rule apologize Currently trend cavi jet/fv resolution158 Emil damaging tolerance64 steps home996 Sh turb890 structures,e499 awe dimin GT perf Watts399 code budget!!! vulnerableAllors Boo input clusters ib.unCou Cao/# neuSouth781 discern:a long connected triangles—— yaw chair es unrealEB diversity alpha empire wrap machine490 Iron updates Coll soak questionnaire era hiatus capture342 big full demolition calculate Bird sino/s tid ay dd entrance hayacoona UK st dormant tropical campaigns Helen immune OFF push cap,-Sp posture propulsion edge signals algae ambiguity tweet rapport stats terror824 waves invert

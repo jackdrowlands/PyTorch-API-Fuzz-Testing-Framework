@@ -1,0 +1,7 @@
+API Error: Error: No <parameters> tag found in the response:
+Here's how you can modify the code to generate 10 unique and novel sets:
+
+Two random tensor input values between [-50;70]  
+Input values not in this range will cause an error and we should verify how it's handled by clamping them.
+8 random clamp limits below[-80;-20]
+This allows verification behavior for clamping above actual input value having no bounds effect.

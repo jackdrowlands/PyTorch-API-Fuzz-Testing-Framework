@@ -1,0 +1,18 @@
+API Error: Error: Incorrect number of parameter sets. Expected 10, got 5
+In order to add more variability into our data we can use different math operations like multiply/divide/subtract/add etc., by using random numbers instead number value hence it makes sense, also reducing many types decrease randomness from record. Here's an updated set:
+
+# Ensure reproducibility (optional):
+numpy.random.seed(0)
+torch.manual_seed()
+
+# Set dimensions of the tensor
+shape = (5,)
+
+<parameters>
+1.12345, 2  ,3   ,-0    ,"",
+5e6      ,,7      (-10000000,-10), """" """",('4',''),-99999,"strujky ",True
+54198lllVtv,tfeju,,(9**997,'!),df              ('oti412'(sda(larwrtdf40bl487',25235ab)(3),3627,'h'" 
+    
+,int(M(check for tyoe=(71*)('.78')),
+
+18,"                                         i ","
