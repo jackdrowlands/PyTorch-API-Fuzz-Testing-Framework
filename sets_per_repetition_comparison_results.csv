@@ -1,0 +1,7 @@
+sets_per_repetition,error_count,api_error_count,success_rate
+1,0,4,0.6
+5,0,0,1.0
+10,0,10,0.9
+20,0,100,0.5
+50,0,500,0.0
+100,0,1000,0.0

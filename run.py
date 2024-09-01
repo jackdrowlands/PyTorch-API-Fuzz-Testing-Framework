@@ -74,27 +74,43 @@ def parameter_comparison_test(test_code: str, num_params: int, model: str, param
     Run tests with different parameter values and return the results.
     """
     repetitions = 10
-    sets_per_repetition = 10
     results = []
+
+    # Create a folder for parameter files if it doesn't exist
+    params_folder = "parameter_files"
+    os.makedirs(params_folder, exist_ok=True)
 
     for param_value in param_values:
         error_count = 0
         api_error_count = 0
         total_runs = 0
 
+        # Use param_value as sets_per_repetition if that's the parameter being tested
+        sets_per_repetition = param_value if param_name == 'sets_per_repetition' else 10
+
         for rep in range(repetitions):
             # Generate or load parameters for each parameter value and repetition
-            params_file = f"params_{param_name}_{param_value}_rep_{rep}.json"
+            params_file = os.path.join(params_folder, f"params_{param_name}_{param_value}_rep_{rep}.json")
             if os.path.exists(params_file):
                 with open(params_file, 'r') as f:
-                    params_list = json.load(f)
+                    content = f.read()
+                    if content.startswith("API Error:"):
+                        print(f"Skipping {params_file} due to previous API error")
+                        api_error_count += sets_per_repetition
+                        continue
+                    params_list = json.loads(content)
             else:
-                params_list = create_fuzz_test_parameters(test_code, num_params=num_params, num_sets=sets_per_repetition, model=model, **{param_name: param_value}, max_tokens=400)
+                # max tokens is 400 or 20*sets_per_repetition 
+                max_tokens = 20*sets_per_repetition
+                params_list = create_fuzz_test_parameters(test_code, num_params=num_params, num_sets=sets_per_repetition, model=model, **{param_name: param_value}, max_tokens=max_tokens)
                 if isinstance(params_list, list):
                     with open(params_file, 'w') as f:
                         json.dump(params_list, f)
                 else:
-                    print(f"API Error at {param_name} {param_value}, repetition {rep}: {params_list}")
+                    error_message = f"API Error: {params_list}"
+                    print(f"{error_message} at {param_name} {param_value}, repetition {rep}")
+                    with open(params_file, 'w') as f:
+                        f.write(error_message)
                     api_error_count += sets_per_repetition
                     continue
             
@@ -148,18 +164,19 @@ gpu_output = 1 / torch.clamp(x, min=param4, max=param5)
 """
 
     # Set the model
-    model = "nousresearch/hermes-3-llama-3.1-405b"
+    model = "meta-llama/llama-3.1-8b-instruct"
 
     # Define parameters to test and their ranges
     params_to_test = {
         'temperature': [round(t * 0.1, 1) for t in range(16)],  # 0.0 to 1.5 in 0.1 increments
         'top_p': [round(p * 0.1, 1) for p in range(11)],  # 0.0 to 1.0 in 0.1 increments
         'top_k': list(range(0, 101, 10)),  # 0 to 100 in steps of 10
-        'frequency_penalty': [round(f * 0.2 - 2, 1) for f in range(21)],  # -2.0 to 2.0 in 0.2 increments
-        'presence_penalty': [round(p * 0.2 - 2, 1) for p in range(21)],  # -2.0 to 2.0 in 0.2 increments
+        # 'frequency_penalty': [round(f * 0.2 - 2, 1) for f in range(21)],  # -2.0 to 2.0 in 0.2 increments
+        # 'presence_penalty': [round(p * 0.2 - 2, 1) for p in range(21)],  # -2.0 to 2.0 in 0.2 increments
         'repetition_penalty': [round(r * 0.1, 1) for r in range(10, 21)],  # 1.0 to 2.0 in 0.1 increments
         'min_p': [round(m * 0.1, 1) for m in range(11)],  # 0.0 to 1.0 in 0.1 increments
-        'top_a': [round(a * 0.1, 1) for a in range(11)]  # 0.0 to 1.0 in 0.1 increments
+        # 'top_a': [round(a * 0.1, 1) for a in range(11)],  # 0.0 to 1.0 in 0.1 increments
+        'sets_per_repetition': [1, 5, 10, 20, 50, 100]
     }
 
     # Run tests for each parameter

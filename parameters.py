@@ -1,17 +1,15 @@
 from openai import OpenAI
 import os
 from typing import Optional, Dict, Any, List, Union
+import requests
+import json
 
 def create_fuzz_test_parameters(
     code_to_test: str,
     num_params: int, # Number of parameters to generate
     num_sets: int = 10, # Number of sets of parameters to generate
-    model: str = "openai/gpt-4o", # Model to use
-    temperature: float = 0.7, # Temperature of the model - how creative the model is
-    max_tokens: Optional[int] = None, # Maximum number of tokens to generate
-    top_p: float = 1.0, # Top P of the model - controls the randomness of the model
-    frequency_penalty: float = 0.0, # Frequency penalty of the model - controls the frequency of the model
-    presence_penalty: float = 0.0, # Presence penalty of the model - controls the presence of the model
+    model: str = "meta-llama/llama-3.1-8b-instruct", # Model to use
+    max_tokens: int = 500, # Maximum number of tokens to generate
     **kwargs: Any # Additional parameters to pass to the model
 ) -> Union[List[List[str]], str]:
     """
@@ -56,47 +54,68 @@ num_sets = {num_sets}
 """}
     ]
 
-    # Prepare the API call parameters
-    params: Dict[str, Any] = {
+    payload = {
         "model": model,
         "messages": messages,
-        "temperature": temperature,
-        "top_p": top_p,
-        "frequency_penalty": frequency_penalty,
-        "presence_penalty": presence_penalty,
+        "provider": {
+            "require_parameters": True
+        },
         **kwargs
     }
     # Add max_tokens if provided
     if max_tokens is not None:
-        params["max_tokens"] = max_tokens
+        payload["max_tokens"] = max_tokens
+
+    # Set up the headers
+    headers = {
+        "Authorization": f"Bearer {os.environ.get('OPENROUTER_API_KEY')}",  # Use environment variable
+        "Content-Type": "application/json"
+    }
+
+    # print("API Request Details:")
+    # print(f"URL: https://openrouter.ai/api/v1/chat/completions")
+    # print(f"Headers: {json.dumps(headers, indent=2)}")
+    # print(f"Payload: {json.dumps(payload, indent=2)}")
 
     try:
         # Set up the openrouter client
-        client = OpenAI(
-            base_url="https://openrouter.ai/api/v1"
+        response = requests.post(
+            url="https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=payload
         )
-        # Make the API call
-        response = client.chat.completions.create(**params)
-        print("Response: ", response)
-        # Check if the response failed
-        if response.choices[0].message.content is None:
-            return f"An error occurred: {response.choices[0].message.content}"
+        
+        response.raise_for_status()
+        # Parse the JSON response
+        result = response.json()
+        
+        # Extract the content from the response
+        content = result['choices'][0]['message']['content']
+        
+        # Parse the JSON content
+        if content is None:
+            return f"An error occurred: {content}"
         # Check if there is a <parameters> tag in the response
-        if '<parameters>' in response.choices[0].message.content:
+        if '<parameters>' in content:
             # Extract the CSV content from the response
-            csv_content = response.choices[0].message.content.split('<parameters>')[1].split('</parameters>')[0].strip()
+            csv_content = content.split('<parameters>')[1].split('</parameters>')[0].strip()
             # Parse the CSV content
             parameters = [row.split(',') for row in csv_content.split('\n') if row.strip()]
         else:
-            return f"Error: No <parameters> tag found in the response"
+            return f"Error: No <parameters> tag found in the response:\n{content}"
 
         # Check for the correct number of parameters
         if len(parameters) != num_sets:
-            return f"Error: Incorrect number of parameter sets. Expected {num_sets}, got {len(parameters)}"
+            return f"Error: Incorrect number of parameter sets. Expected {num_sets}, got {len(parameters)}\n{content}"
         else:
             print("Parameters: ", parameters)
             return parameters
 
-    except Exception as e:
-        print(f"Error in create_fuzz_test_parameters: {str(e)}")
+    except requests.exceptions.RequestException as e:
         return f"Error: {str(e)}"
+    except json.JSONDecodeError:
+        return "Error: Invalid JSON response"
+    except KeyError as e:
+        return f"Error: Missing key in response: {str(e)}"
+    except Exception as e:
+        return f"Unexpected error: {str(e)}"
