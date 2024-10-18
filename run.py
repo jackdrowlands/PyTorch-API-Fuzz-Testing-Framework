@@ -153,43 +153,44 @@ def save_results_to_csv(results: List[dict], filename: str):
         for row in results:
             writer.writerow(row)
 
-if __name__ == "__main__":
-    # Define the PyTorch code to be tested
-    test_code = """
-import torch
-x = torch.tensor([param1, param2, param3])
-cpu_output = 1 / torch.clamp(x, min=param4, max=param5)
-x = x.cuda()
-gpu_output = 1 / torch.clamp(x, min=param4, max=param5)
-"""
+def main(num_programs: int = 10, num_apis: int = 3):
+    """
+    Generate, run, and record results for multiple test programs.
+    """
+    results = []
 
-    # Set the model
-    model = "meta-llama/llama-3.1-8b-instruct"
-
-    # Define parameters to test and their ranges
-    params_to_test = {
-        'temperature': [round(t * 0.1, 1) for t in range(16)],  # 0.0 to 1.5 in 0.1 increments
-        'top_p': [round(p * 0.1, 1) for p in range(11)],  # 0.0 to 1.0 in 0.1 increments
-        'top_k': list(range(0, 101, 10)),  # 0 to 100 in steps of 10
-        # 'frequency_penalty': [round(f * 0.2 - 2, 1) for f in range(21)],  # -2.0 to 2.0 in 0.2 increments
-        # 'presence_penalty': [round(p * 0.2 - 2, 1) for p in range(21)],  # -2.0 to 2.0 in 0.2 increments
-        'repetition_penalty': [round(r * 0.1, 1) for r in range(10, 21)],  # 1.0 to 2.0 in 0.1 increments
-        'min_p': [round(m * 0.1, 1) for m in range(11)],  # 0.0 to 1.0 in 0.1 increments
-        # 'top_a': [round(a * 0.1, 1) for a in range(11)],  # 0.0 to 1.0 in 0.1 increments
-        'sets_per_repetition': [1, 5, 10, 20, 50, 100]
-    }
-
-    # Run tests for each parameter
-    for param_name, param_values in params_to_test.items():
-        print(f"\nTesting {param_name}...")
-        results = parameter_comparison_test(test_code, num_params=5, model=model, param_name=param_name, param_values=param_values)
+    for i in range(num_programs):
+        print(f"Generating and running program {i+1}/{num_programs}")
         
-        # Save the results to a CSV file
-        csv_filename = f'{param_name}_comparison_results.csv'
-        save_results_to_csv(results, csv_filename)
-        print(f"Results saved to {csv_filename}")
+        code = generate_test_program(num_apis=num_apis)
+        if isinstance(code, str) and not code.startswith("Error"):
+            result = run_test_program(code)
+            results.append({
+                'program_id': i+1,
+                'code': code,
+                'returncode': result['returncode'],
+                'stdout': result['stdout'],
+                'stderr': result['stderr']
+            })
+        else:
+            results.append({
+                'program_id': i+1,
+                'code': code,
+                'returncode': None,
+                'stdout': '',
+                'stderr': 'Failed to generate program'
+            })
+
+    # Write results to CSV
+    with open('test_results.csv', 'w', newline='') as csvfile:
+        fieldnames = ['program_id', 'code', 'returncode', 'stdout', 'stderr']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
-        # Print a summary of the results
-        print(f"\n{param_name.capitalize()} Comparison Summary:")
+        writer.writeheader()
         for result in results:
-            print(f"{param_name}: {result[param_name]:.2f}, Error Count: {result['error_count']}, API Error Count: {result['api_error_count']}, Success Rate: {result['success_rate']:.2f}")
+            writer.writerow(result)
+
+    print(f"Results have been written to test_results.csv")
+
+if __name__ == "__main__":
+    main()
