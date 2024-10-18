@@ -162,3 +162,9 @@ cython_debug/
 #.idea/
 
 
+__pycache__/
+&&/
+env/
+parameter_files/
+parameter_files_405/
+source/

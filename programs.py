@@ -3,10 +3,11 @@ import requests
 import os
 import json
 from typing import List, Union
+import re
 
 def generate_test_program(
     num_apis: int = 3,
-    model: str = "meta-llama/llama-3.1-8b-instruct",
+    model: str = "nousresearch/hermes-3-llama-3.1-405b:free",
     max_tokens: int = 500
 ) -> Union[str, List[str]]:
     """
@@ -36,6 +37,24 @@ def generate_test_program(
     {', '.join(random.sample(pytorch_apis, num_apis))}
 
     Provide only the Python code without any explanations in a markdown codeblock.
+
+    The method of testing is fuzz testing using CPU compared to GPU responses to determine if there was an error.
+    Please include both CPU and GPU sections, writing the output to "cpu_output" and "gpu_output".
+    Additionally include the number of parameters in your code as "num_of_parameters".
+    Please do not define the parameters, only include them as "param`n`".
+
+    Here is an example program:
+    ```python
+    import torch
+
+    x = torch.randn(param1, param2, dtype=param3)
+    print("Intermediate: ", torch.log(x * 2 - 1)) # Intermediate
+    cpu_output = torch.matrix_exp(torch.log(x * 2 - 1)) # on CPU
+    x = x.cuda()
+    gpu_output = torch.matrix_exp(torch.log(x * 2 - 1)) # on GPU
+
+    num_of_parameters=3
+    ```
     """
 
     messages = [
@@ -68,9 +87,13 @@ def generate_test_program(
         result = response.json()
         
         content = result['choices'][0]['message']['content']
+        print(content)
         
         if content is None:
-            return f"An error occurred: {content}"
+            return {
+                "code": f"An error occurred: {content}",
+                "num_of_parameters": None
+            }
         
         # Extract code from markdown codeblock
         if "```python" in content and "```" in content:
@@ -79,16 +102,37 @@ def generate_test_program(
             # if it isn't in a codeblock, use all of the code.
             code = content.strip()
         
-        return code
+        # Extract num_of_parameters
+        num_of_parameters = None
+        match = re.search(r'num_of_parameters\s*=\s*(\d+)', code)
+        if match:
+            num_of_parameters = int(match.group(1))
+        
+        return {
+            "code": code,
+            "num_of_parameters": num_of_parameters
+        }
 
     except requests.exceptions.RequestException as e:
-        return f"Error: {str(e)}"
+        return {
+            "code": f"Error: {str(e)}",
+            "num_of_parameters": None
+        }
     except json.JSONDecodeError:
-        return "Error: Invalid JSON response"
+        return {
+            "code": "Error: Invalid JSON response",
+            "num_of_parameters": None
+            }
     except KeyError as e:
-        return f"Error: Missing key in response: {str(e)}"
+        return {
+            "code": f"Error: Missing key in response: {str(e)}",
+            "num_of_parameters": None
+            }
     except Exception as e:
-        return f"Unexpected error: {str(e)}"
+        return {
+            "code": f"Unexpected error: {str(e)}",
+            "num_of_parameters": None
+            }
 
 # Example usage
 test_program = generate_test_program(num_apis=3)

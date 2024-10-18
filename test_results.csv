@@ -1,0 +1,1831 @@
+program_id,code,params,result,output,error
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': 1, 'param2': 2, 'param3': 3, 'param4': 4, 'param5': 5, 'param6': 6}",,,Sizes of tensors must match except in dimension 1. Expected size 1 but got size 3 for tensor number 1 in the list.
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': 100, 'param2': 100, 'param3': 200, 'param4': 200, 'param5': 300, 'param6': 300}",,,Sizes of tensors must match except in dimension 1. Expected size 100 but got size 200 for tensor number 1 in the list.
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': 0, 'param2': 0, 'param3': 0, 'param4': 0, 'param5': 0, 'param6': 0}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': -1, 'param2': -1, 'param3': -1, 'param4': -1, 'param5': -1, 'param6': -1}",,,"Trying to create tensor with negative dimension -1: [-1, -1]"
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': 1000000, 'param2': 1, 'param3': 1000000, 'param4': 1, 'param5': 1000000, 'param6': 1}",,,mat1 and mat2 shapes cannot be multiplied (1000000x3 and 2000000x1)
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': 10, 'param2': 20, 'param3': 30, 'param4': 40, 'param5': 50, 'param6': 60}",,,Sizes of tensors must match except in dimension 1. Expected size 10 but got size 30 for tensor number 1 in the list.
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': 2, 'param2': 4, 'param3': 6, 'param4': 8, 'param5': 10, 'param6': 12}",,,Sizes of tensors must match except in dimension 1. Expected size 2 but got size 6 for tensor number 1 in the list.
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': 100, 'param2': 200, 'param3': 300, 'param4': 400, 'param5': 500, 'param6': 600}",,,Sizes of tensors must match except in dimension 1. Expected size 100 but got size 300 for tensor number 1 in the list.
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': 10000, 'param2': 10000, 'param3': 20000, 'param4': 20000, 'param5': 30000, 'param6': 30000}",,,Sizes of tensors must match except in dimension 1. Expected size 10000 but got size 20000 for tensor number 1 in the list.
+1,"import torch
+
+a = torch.rand(param1, param2)
+b = torch.rand(param3, param4)
+c = torch.rand(param5, param6)
+
+print(""Intermediate: "", torch.cat((a, b, c), dim=1)) # Intermediate
+
+cpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on CPU
+
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+gpu_output = torch.matmul(torch.cat((a, b, c), dim=1), torch.cat((a, b), dim=0)) # on GPU
+
+num_of_parameters=6","{'param1': 1, 'param2': 1000000, 'param3': 1, 'param4': 1000000, 'param5': 1, 'param6': 1000000}",,,mat1 and mat2 shapes cannot be multiplied (1x3000000 and 2x1000000)
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 3, 'param2': 4, 'param3': 5, 'param4': 6, 'param5': 7, 'param6': 8, 'param7': 2}",,,"Given groups=1, weight of size [8, 7, 2, 2], expected input[3, 4, 5, 6] to have 7 channels, but got 4 channels instead"
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1, 'param5': 1, 'param6': 1, 'param7': 1}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 100, 'param2': 100, 'param3': 3, 'param4': 3, 'param5': 100, 'param6': 50, 'param7': 1}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 10, 'param2': 10, 'param3': 10, 'param4': 10, 'param5': 5, 'param6': 5, 'param7': 3}",,,"Given groups=1, weight of size [5, 5, 3, 3], expected input[10, 10, 10, 10] to have 5 channels, but got 10 channels instead"
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 2, 'param2': 2, 'param3': 2, 'param4': 2, 'param5': 2, 'param6': 2, 'param7': 2}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 5, 'param2': 5, 'param3': 5, 'param4': 5, 'param5': 10, 'param6': 10, 'param7': 5}",,,"Given groups=1, weight of size [10, 10, 5, 5], expected input[5, 5, 5, 5] to have 10 channels, but got 5 channels instead"
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 1000, 'param2': 1, 'param3': 100, 'param4': 1, 'param5': 1000, 'param6': 500, 'param7': 3}",,,"Given groups=1, weight of size [500, 1000, 3, 3], expected input[1000, 1, 100, 1] to have 1000 channels, but got 1 channels instead"
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 4, 'param2': 4, 'param3': 4, 'param4': 4, 'param5': 2, 'param6': 2, 'param7': 1}",,,"Given groups=1, weight of size [2, 2, 1, 1], expected input[4, 4, 4, 4] to have 2 channels, but got 4 channels instead"
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 20, 'param2': 20, 'param3': 20, 'param4': 20, 'param5': 40, 'param6': 40, 'param7': 10}",,,"Given groups=1, weight of size [40, 40, 10, 10], expected input[20, 20, 20, 20] to have 40 channels, but got 20 channels instead"
+2,"import torch
+
+x = torch.randn(param1, param2, param3, param4)
+conv2d = torch.nn.Conv2d(param5, param6, param7)
+x = conv2d(x)
+print(""Intermediate: "", torch.min(x)) # Intermediate
+cpu_output = torch.softmax(x, dim=1) # on CPU
+x = x.cuda()
+gpu_output = torch.softmax(x, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 8, 'param2': 8, 'param3': 8, 'param4': 8, 'param5': 4, 'param6': 4, 'param7': 2}",,,"Given groups=1, weight of size [4, 4, 2, 2], expected input[8, 8, 8, 8] to have 4 channels, but got 8 channels instead"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': 5, 'param2': 5, 'param3': 5, 'param4': torch.float32}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': 1000, 'param2': 1000, 'param3': 1000, 'param4': torch.float64}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': 0, 'param2': 0, 'param3': 0, 'param4': torch.int32}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': -1, 'param2': -1, 'param3': -1, 'param4': torch.float16}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': 1000000, 'param2': 1, 'param3': 1, 'param4': torch.bfloat16}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': 10, 'param2': 10, 'param3': 10, 'param4': torch.complex64}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': 2, 'param2': 3, 'param3': 4, 'param4': torch.complex128}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': 100, 'param2': 100, 'param3': 100, 'param4': torch.int8}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': 10000, 'param2': 10000, 'param3': 10000, 'param4': torch.int16}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+3,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param2, param4, dtype=param3)
+
+print(""Intermediate: "", torch.sigmoid(torch.matmul(x, y))) # Intermediate
+
+cpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on CPU
+
+x = x.cuda()
+y = y.cuda()
+gpu_output = torch.mean(torch.sigmoid(torch.matmul(x, y))) # on GPU
+
+num_of_parameters=4","{'param1': 1, 'param2': 1000000, 'param3': 1000000, 'param4': torch.int64}",,,"randn() received an invalid combination of arguments - got (int, int, dtype=int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+"
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 5, 'param2': 5, 'param3': 5, 'param4': 10, 'param5': 20, 'param6': 2, 'param7': 10}",,,"input.size(-1) must be equal to input_size. Expected 10, got 5"
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 1000, 'param2': 1000, 'param3': 1000, 'param4': 200, 'param5': 100, 'param6': 5, 'param7': 200}",,,"input.size(-1) must be equal to input_size. Expected 200, got 1000"
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 0, 'param2': 0, 'param3': 0, 'param4': 10, 'param5': 5, 'param6': 1, 'param7': 5}",,,max(): Expected reduction dim 1 to have non-zero size.
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': -1, 'param2': -1, 'param3': -1, 'param4': 100, 'param5': 50, 'param6': 3, 'param7': 50}",,,"Trying to create tensor with negative dimension -1: [-1, -1, -1]"
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 1000000, 'param2': 1, 'param3': 1, 'param4': 500, 'param5': 25, 'param6': 4, 'param7': 25}",,,"input.size(-1) must be equal to input_size. Expected 500, got 1"
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 10, 'param2': 10, 'param3': 10, 'param4': 1000, 'param5': 250, 'param6': 5, 'param7': 250}",,,"input.size(-1) must be equal to input_size. Expected 1000, got 10"
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 2, 'param2': 3, 'param3': 4, 'param4': 5000, 'param5': 10, 'param6': 2, 'param7': 10}",,,"input.size(-1) must be equal to input_size. Expected 5000, got 4"
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 100, 'param2': 100, 'param3': 100, 'param4': 1, 'param5': 1, 'param6': 1, 'param7': 1}",,,"input.size(-1) must be equal to input_size. Expected 1, got 100"
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 10000, 'param2': 10000, 'param3': 10000, 'param4': 700, 'param5': 80, 'param6': 7, 'param7': 80}",,,[enforce fail at alloc_cpu.cpp:117] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 4000000000000 bytes. Error code 12 (Cannot allocate memory)
+4,"import torch
+
+x = torch.rand(param1, param2, param3)
+print(""Intermediate: "", torch.max(x, dim=1)) # Intermediate
+
+rnn = torch.nn.RNN(param4, param5)
+hidden = torch.zeros(param6, param7, param5)
+out, _ = rnn(x, hidden)
+cpu_output = torch.max(out, dim=1) # on CPU
+
+x = x.cuda()
+hidden = hidden.cuda()
+out, _ = rnn(x, hidden)
+gpu_output = torch.max(out, dim=1) # on GPU
+
+num_of_parameters=7","{'param1': 1, 'param2': 1000000, 'param3': 1, 'param4': 2000, 'param5': 30, 'param6': 3, 'param7': 30}",,,"input.size(-1) must be equal to input_size. Expected 2000, got 1"
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': 1000, 'param2': 1000, 'param3': torch.float32}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': 1, 'param2': 1, 'param3': torch.float64}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': 0, 'param2': 0, 'param3': torch.int32}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': -1, 'param2': -1, 'param3': torch.float16}",,,"Trying to create tensor with negative dimension -1: [-1, -1]"
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': 1000000, 'param2': 1, 'param3': torch.bfloat16}",,,[enforce fail at alloc_cpu.cpp:117] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 2000000000000 bytes. Error code 12 (Cannot allocate memory)
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': 10, 'param2': 10, 'param3': torch.complex64}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': 2, 'param2': 3, 'param3': torch.complex128}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': 100, 'param2': 100, 'param3': torch.int8}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': 10000, 'param2': 10000, 'param3': torch.int16}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+5,"import torch
+
+x = torch.ones(param1, param2, dtype=param3)
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+print(""Intermediate: "", z) # Intermediate
+cpu_output = torch.mm(z, y) # on CPU
+x = x.cuda()
+y = torch.tanh(x)
+z = torch.mm(y, y.T)
+gpu_output = torch.mm(z, y) # on GPU
+
+num_of_parameters=3","{'param1': 1, 'param2': 1000000, 'param3': torch.int64}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 1, 'param2': 3, 'param3': 3, 'param4': 1, 'param5': 1, 'param6': 10, 'param7': 5, 'param8': 1, 'param9': 10, 'param10': 10}",CPU and GPU outputs are equal,,
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 100, 'param2': 50, 'param3': 5, 'param4': 2, 'param5': 2, 'param6': 1000, 'param7': 500, 'param8': 10, 'param9': 28, 'param10': 28}",,,mat1 and mat2 shapes cannot be multiplied (7000x14 and 1000x500)
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 3, 'param2': 6, 'param3': 2, 'param4': 2, 'param5': 0, 'param6': 20, 'param7': 10, 'param8': 5, 'param9': 16, 'param10': 16}",,,mat1 and mat2 shapes cannot be multiplied (240x8 and 20x10)
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1, 'param5': 0, 'param6': 100, 'param7': 50, 'param8': 1, 'param9': 100, 'param10': 100}",CPU and GPU outputs are equal,,
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 10, 'param2': 5, 'param3': 5, 'param4': 1, 'param5': 2, 'param6': 500, 'param7': 1000, 'param8': 2, 'param9': 32, 'param10': 32}",,,mat1 and mat2 shapes cannot be multiplied (320x32 and 500x1000)
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 5, 'param2': 10, 'param3': 3, 'param4': 1, 'param5': 1, 'param6': 50, 'param7': 20, 'param8': 3, 'param9': 64, 'param10': 64}",,,mat1 and mat2 shapes cannot be multiplied (1920x64 and 50x20)
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 2, 'param2': 4, 'param3': 4, 'param4': 2, 'param5': 1, 'param6': 200, 'param7': 100, 'param8': 4, 'param9': 128, 'param10': 128}",,,mat1 and mat2 shapes cannot be multiplied (1024x64 and 200x100)
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 8, 'param2': 4, 'param3': 2, 'param4': 1, 'param5': 0, 'param6': 1000, 'param7': 200, 'param8': 8, 'param9': 256, 'param10': 256}",,,mat1 and mat2 shapes cannot be multiplied (8160x255 and 1000x200)
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 1, 'param2': 10, 'param3': 10, 'param4': 1, 'param5': 5, 'param6': 100, 'param7': 2000, 'param8': 1, 'param9': 512, 'param10': 512}",,,mat1 and mat2 shapes cannot be multiplied (5130x513 and 100x2000)
+6,"import torch
+import torch.nn as nn
+
+# Define the model with torch.nn.Linear, torch.ones, and torch.nn.Conv2d layers
+model = nn.Sequential(
+    nn.Conv2d(param1, param2, kernel_size=param3, stride=param4, padding=param5),
+    nn.Linear(param6, param7),
+)
+
+# Generate random input data for the model using torch.ones
+input_data = torch.ones(param8, param1, param9, param10)
+
+# Forward pass on CPU
+model.cpu()
+cpu_output = model(input_data)
+
+# Move the model and input data to GPU (if available)
+if torch.cuda.is_available():
+    model.cuda()
+    input_data = input_data.cuda()
+
+# Forward pass on GPU
+gpu_output = model(input_data)
+
+# Compare CPU and GPU outputs
+if torch.cuda.is_available():
+    print(""Comparing CPU and GPU outputs..."")
+    if torch.allclose(cpu_output.cpu(), gpu_output.cpu()):
+        print(""Outputs are equal."")
+    else:
+        print(""Outputs are different."")
+
+num_of_parameters=10","{'param1': 50, 'param2': 25, 'param3': 3, 'param4': 1, 'param5': 1, 'param6': 5000, 'param7': 1000, 'param8': 10, 'param9': 1024, 'param10': 1024}",,,mat1 and mat2 shapes cannot be multiplied (256000x1024 and 5000x1000)
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 10, 'param2': 5, 'param3': torch.float32, 'param4': 10, 'param5': torch.float32, 'param6': 3, 'param7': 2}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 1000, 'param2': 100, 'param3': torch.float64, 'param4': 1000, 'param5': torch.float64, 'param6': 50, 'param7': 4}",,,"input must have the type torch.float32, got type torch.float64"
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 2, 'param2': 10, 'param3': torch.float16, 'param4': 2, 'param5': torch.float16, 'param6': 5, 'param7': 1}",,,"input must have the type torch.float32, got type torch.float16"
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 32, 'param2': 8, 'param3': torch.bfloat16, 'param4': 32, 'param5': torch.bfloat16, 'param6': 4, 'param7': 3}",,,"input must have the type torch.float32, got type torch.bfloat16"
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 64, 'param2': 32, 'param3': torch.complex64, 'param4': 64, 'param5': torch.complex64, 'param6': 16, 'param7': 6}",,,"input must have the type torch.float32, got type torch.complex64"
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 128, 'param2': 64, 'param3': torch.complex128, 'param4': 128, 'param5': torch.complex128, 'param6': 32, 'param7': 8}",,,"input must have the type torch.float32, got type torch.complex128"
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 256, 'param2': 128, 'param3': torch.int8, 'param4': 256, 'param5': torch.int8, 'param6': 64, 'param7': 10}",,,"""normal_kernel_cpu"" not implemented for 'Char'"
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 512, 'param2': 256, 'param3': torch.int16, 'param4': 512, 'param5': torch.int16, 'param6': 128, 'param7': 12}",,,"""normal_kernel_cpu"" not implemented for 'Short'"
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 1024, 'param2': 512, 'param3': torch.int32, 'param4': 1024, 'param5': torch.int32, 'param6': 256, 'param7': 14}",,,"""normal_kernel_cpu"" not implemented for 'Int'"
+7,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param4, param2, dtype=param5)
+
+concatenated = torch.cat((x, y), dim=0)
+rnn = torch.nn.RNN(input_size=param2, hidden_size=param6, num_layers=param7, batch_first=True)
+cpu_output, _ = rnn(concatenated)
+
+x_gpu = x.cuda()
+y_gpu = y.cuda()
+concatenated_gpu = torch.cat((x_gpu, y_gpu), dim=0)
+rnn_gpu = rnn.cuda()
+gpu_output, _ = rnn_gpu(concatenated_gpu)
+
+min_value_cpu = torch.min(cpu_output)
+min_value_gpu = torch.min(gpu_output)
+
+num_of_parameters=7","{'param1': 2048, 'param2': 1024, 'param3': torch.int64, 'param4': 2048, 'param5': torch.int64, 'param6': 512, 'param7': 16}",,,"""normal_kernel_cpu"" not implemented for 'Long'"
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1}",,,mat1 and mat2 shapes cannot be multiplied (1x2 and 1x1)
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': 0, 'param2': 0, 'param3': 0, 'param4': 0}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': -1, 'param2': -1, 'param3': -1, 'param4': -1}",,,"Trying to create tensor with negative dimension -1: [-1, -1]"
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': 1000000, 'param2': 1000000, 'param3': 1000000, 'param4': 1000000}",,,[enforce fail at alloc_cpu.cpp:117] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 4000000000000 bytes. Error code 12 (Cannot allocate memory)
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': 100, 'param2': 10, 'param3': 1, 'param4': 1000}",,,mat1 and mat2 shapes cannot be multiplied (10x1 and 100x10)
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': 5, 'param2': 5, 'param3': 5, 'param4': 5}",,,mat1 and mat2 shapes cannot be multiplied (5x10 and 5x5)
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': 1000, 'param2': 1, 'param3': 1000, 'param4': 1}",,,mat1 and mat2 shapes cannot be multiplied (1000x2 and 1x1)
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': 10, 'param2': 5, 'param3': 2, 'param4': 10}",,,mat1 and mat2 shapes cannot be multiplied (5x2 and 10x5)
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': 3, 'param2': 2, 'param3': 1, 'param4': 4}",,,mat1 and mat2 shapes cannot be multiplied (2x1 and 3x2)
+8,"import torch
+
+# Generate random tensors
+a = torch.randn(param1, param2)
+b = torch.randn(param2, param3)
+c = torch.randn(param1, param4)
+
+# Perform operations
+intermediate = torch.cat((a, c), dim=1)
+cpu_output = torch.mm(intermediate, torch.mm(b, a).cpu())
+
+# Move tensors to GPU
+a = a.cuda()
+b = b.cuda()
+c = c.cuda()
+
+# Perform operations on GPU
+intermediate = torch.cat((a, c), dim=1)
+gpu_output = torch.mm(intermediate, torch.mm(b, a))
+
+num_of_parameters=4","{'param1': 10000, 'param2': 10000, 'param3': 10000, 'param4': 10000}",,,mat1 and mat2 shapes cannot be multiplied (10000x20000 and 10000x10000)
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': 1000, 'param2': 1000, 'param3': 1000, 'param4': 1000}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': 100, 'param2': 100, 'param3': 1, 'param4': 1}",,,mat1 and mat2 shapes cannot be multiplied (100x100 and 1x1)
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': 1, 'param2': 100, 'param3': 100, 'param4': 1}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': 0, 'param2': 0, 'param3': 0, 'param4': 0}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': -1, 'param2': -1, 'param3': -1, 'param4': -1}",,,"Trying to create tensor with negative dimension -1: [-1, -1]"
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': 1000000, 'param2': 1, 'param3': 1, 'param4': 1000000}",,,[enforce fail at alloc_cpu.cpp:117] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 4000000000000 bytes. Error code 12 (Cannot allocate memory)
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': 10000, 'param2': 10000, 'param3': 10000, 'param4': 10000}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': 2, 'param2': 3, 'param3': 3, 'param4': 2}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+9,"import torch
+
+x = torch.ones(param1, param2)
+y = torch.ones(param3, param4)
+
+result1 = torch.mm(x, y)
+print(""Intermediate: "", result1)
+
+cpu_output = torch.cat((x, result1), dim=1)
+x = x.cuda()
+y = y.cuda()
+result1 = result1.cuda()
+gpu_output = torch.cat((x, result1), dim=1)
+
+num_of_parameters=4","{'param1': 10, 'param2': 10, 'param3': 10, 'param4': 10}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': 5, 'param2': 5, 'param3': torch.float32, 'param4': 0, 'param5': 10}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': 1000, 'param2': 1000, 'param3': torch.float64, 'param4': 1, 'param5': 1000}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': 0, 'param2': 0, 'param3': torch.int32, 'param4': 2, 'param5': 0}",,,max(): Expected reduction dim 2 to have non-zero size.
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': -1, 'param2': -1, 'param3': torch.float16, 'param4': 3, 'param5': 100}",,,"Trying to create tensor with negative dimension -1: [-1, -1]"
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': 1000000, 'param2': 1, 'param3': torch.bfloat16, 'param4': 0, 'param5': 1000000}",,,Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': 10, 'param2': 10, 'param3': torch.complex64, 'param4': 1, 'param5': 10}",,,max(): does not support complex input
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': 2, 'param2': 3, 'param3': torch.complex128, 'param4': 2, 'param5': 3}",,,max(): does not support complex input
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': 100, 'param2': 100, 'param3': torch.int8, 'param4': 0, 'param5': 10000}",,,"""normal_kernel_cpu"" not implemented for 'Char'"
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': 10000, 'param2': 10000, 'param3': torch.int16, 'param4': 1, 'param5': 10000}",,,"""normal_kernel_cpu"" not implemented for 'Short'"
+10,"import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = torch.randn(param1, param2, dtype=param3)
+z = torch.randn(param1, param2, dtype=param3)
+
+stacked_tensor = torch.stack((x, y, z))
+print(""Intermediate stacked tensor: "", stacked_tensor)
+
+max_tensor_cpu = torch.max(stacked_tensor, dim=param4)
+max_tensor_gpu = torch.max(stacked_tensor.cuda(), dim=param4)
+
+zeros_cpu = torch.zeros(param5)
+zeros_gpu = torch.zeros(param5).cuda()
+
+cpu_output = max_tensor_cpu.values + zeros_cpu
+gpu_output = max_tensor_gpu.values + zeros_gpu
+
+num_of_parameters=5","{'param1': 1, 'param2': 1000000, 'param3': torch.int64, 'param4': 2, 'param5': 1}",,,"""normal_kernel_cpu"" not implemented for 'Long'"

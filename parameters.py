@@ -8,7 +8,7 @@ def create_fuzz_test_parameters(
     code_to_test: str,
     num_params: int, # Number of parameters to generate
     num_sets: int = 10, # Number of sets of parameters to generate
-    model: str = "meta-llama/llama-3.1-8b-instruct", # Model to use
+    model: str = "nousresearch/hermes-3-llama-3.1-405b:free", # Model to use
     max_tokens: int = 500, # Maximum number of tokens to generate
     **kwargs: Any # Additional parameters to pass to the model
 ) -> Union[List[List[str]], str]:

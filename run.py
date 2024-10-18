@@ -6,6 +6,7 @@ import csv
 import json
 import os
 from parameters import create_fuzz_test_parameters
+from programs import generate_test_program
 
 def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> List[dict]:
     """
@@ -162,28 +163,34 @@ def main(num_programs: int = 10, num_apis: int = 3):
     for i in range(num_programs):
         print(f"Generating and running program {i+1}/{num_programs}")
         
-        code = generate_test_program(num_apis=num_apis)
-        if isinstance(code, str) and not code.startswith("Error"):
-            result = run_test_program(code)
-            results.append({
-                'program_id': i+1,
-                'code': code,
-                'returncode': result['returncode'],
-                'stdout': result['stdout'],
-                'stderr': result['stderr']
-            })
+        test_program = generate_test_program(num_apis=num_apis)
+        if isinstance(test_program["code"], str) and not test_program["code"].startswith("Error"):
+            params = create_fuzz_test_parameters(code_to_test=test_program["code"], num_params=test_program["num_of_parameters"])
+            test_results = run_pytorch_code_with_params(test_program["code"], params)
+    
+            for result in test_results:
+                results.append({
+                    'program_id': i+1,
+                    'code': test_program["code"],
+                    'params': result['params'],
+                    'result': result['result'],
+                    'output': result['output'],
+                    'error': result['error']
+                })
         else:
             results.append({
                 'program_id': i+1,
-                'code': code,
-                'returncode': None,
-                'stdout': '',
-                'stderr': 'Failed to generate program'
+                'code': test_program["code"],
+                'params': None,
+                'result': None,
+                'output': '',
+                'error': 'Failed to generate program'
             })
+
 
     # Write results to CSV
     with open('test_results.csv', 'w', newline='') as csvfile:
-        fieldnames = ['program_id', 'code', 'returncode', 'stdout', 'stderr']
+        fieldnames = ['program_id', 'code', 'params', 'result', 'output', 'error']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         writer.writeheader()
