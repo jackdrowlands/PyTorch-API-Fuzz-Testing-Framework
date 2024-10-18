@@ -35,7 +35,7 @@ def generate_test_program(
     Use the following APIs (you can use each more than once if needed):
     {', '.join(random.sample(pytorch_apis, num_apis))}
 
-    Provide only the Python code without any explanations.
+    Provide only the Python code without any explanations in a markdown codeblock.
     """
 
     messages = [
@@ -72,10 +72,14 @@ def generate_test_program(
         if content is None:
             return f"An error occurred: {content}"
         
-        code_lines = content.split('\n')
-        code = '\n'.join(line for line in code_lines if not line.strip().startswith('#'))
+        # Extract code from markdown codeblock
+        if "```python" in content and "```" in content:
+            code = content.split("```python")[1].split("```")[0].strip()
+        else:
+            # if it isn't in a codeblock, use all of the code.
+            code = content.strip()
         
-        return code.strip()
+        return code
 
     except requests.exceptions.RequestException as e:
         return f"Error: {str(e)}"
