@@ -5,6 +5,7 @@ from typing import List
 import csv
 import json
 import os
+from RestrictedPython import compile_restricted, safe_builtins
 from parameters import create_fuzz_test_parameters
 from programs import generate_test_program
 
@@ -14,8 +15,18 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
     """
     results = []
 
-    # Create a namespace for executing the code
-    namespace = {'torch': torch}
+    # Create a safe environment for restrictedPython
+    def safe_import(name, globals, locals, fromlist, level):
+        if name.split(".")[0] == "torch" or name.split(".")[0] == "time" or name.split(".")[0] == "random":
+            return __import__(name, globals, locals, fromlist, level)
+        else:
+            print(f"IMPORT NOT ALLOWED: {name}")
+            raise ImportError(f"IMPORT NOT ALLOWED: {name}")
+
+
+    safe_builtins["__import__"] = safe_import
+    safe_globals = dict(__builtins__=safe_builtins)
+
 
     # Compile the code
     try:
@@ -25,10 +36,19 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
 
     for params in params_list:
         # Prepare the parameter dictionary
-        param_dict = {f'param{i+1}': eval(param, namespace) for i, param in enumerate(params)}
-        
+        try:
+            param_dict = {f'param{i+1}': eval(param.strip(), namespace) for i, param in enumerate(params)}
+        except Exception as e:
+            results.append({
+                'params': params,
+                'result': None,
+                'output': None,
+                'error': f'Parameter evaluation error: {str(e)}'
+            })
+            continue
+        safe_locals = {'torch': torch}
         # Add param_dict to the namespace
-        namespace.update(param_dict)
+        safe_locals.update(param_dict)
 
         # Redirect stdout to capture print statements
         old_stdout = sys.stdout
@@ -36,11 +56,11 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
 
         try:
             # Execute the code and compare CPU and GPU outputs
-            exec(compiled_code, namespace)
+            exec(compiled_code, safe_globals, safe_locals)
             
             # Compare cpu_output and gpu_output
-            cpu_output = namespace.get('cpu_output')
-            gpu_output = namespace.get('gpu_output')
+            cpu_output = safe_locals.get('cpu_output')
+            gpu_output = safe_locals.get('gpu_output')
             
             if cpu_output is not None and gpu_output is not None:
                 comparison = torch.allclose(cpu_output, gpu_output.cpu(), rtol=1e-5, atol=1e-8)

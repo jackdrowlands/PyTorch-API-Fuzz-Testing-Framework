@@ -108,8 +108,11 @@ def generate_test_program(
         if match:
             num_of_parameters = int(match.group(1))
         
+        # delete all definitions of the parameters
+        cleaned_code = re.sub("\bparam\w*\s*=\s*.*?(?=\n|\Z)","",code)
+        
         return {
-            "code": code,
+            "code": cleaned_code,
             "num_of_parameters": num_of_parameters
         }
 
