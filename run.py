@@ -5,9 +5,11 @@ from typing import List
 import csv
 import json
 import os
+import resource
+import signal
 from RestrictedPython import compile_restricted, safe_builtins
-from parameters import create_fuzz_test_parameters
-from programs import generate_test_program
+from parameters import create_fuzz_test_parameters, create_or_load_fuzz_test_parameters
+from programs import generate_test_program, generate_or_load_test_program
 
 def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> List[dict]:
     """
@@ -25,19 +27,24 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
 
 
     safe_builtins["__import__"] = safe_import
+    safe_builtins['_unpack_sequence_'] = lambda sequence: sequence
     safe_globals = dict(__builtins__=safe_builtins)
+
+    # Resource Limits
+    max_memory = 5 * 1024 * 1024 * 1024  # 10 GB
+    max_cpu_time = 90  # 90 seconds
 
 
     # Compile the code
     try:
-        compiled_code = compile(code, '<string>', 'exec')
+        compiled_code = compile_restricted(code, '<string>', 'exec')
     except SyntaxError as e:
         return [{'params': {}, 'result': None, 'output': None, 'error': f'Syntax error in code: {str(e)}'}]
 
     for params in params_list:
         # Prepare the parameter dictionary
         try:
-            param_dict = {f'param{i+1}': eval(param.strip(), namespace) for i, param in enumerate(params)}
+            param_dict = {f'param{i+1}': eval(param.strip(), safe_globals) for i, param in enumerate(params)}
         except Exception as e:
             results.append({
                 'params': params,
@@ -55,6 +62,9 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
         sys.stdout = StringIO()
 
         try:
+            # Set resource limits
+            resource.setrlimit(resource.RLIMIT_AS, (max_memory, max_memory))
+            resource.setrlimit(resource.RLIMIT_CPU, (max_cpu_time, max_cpu_time))
             # Execute the code and compare CPU and GPU outputs
             exec(compiled_code, safe_globals, safe_locals)
             
@@ -76,6 +86,20 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
                 'result': result,
                 'output': printed_output.strip(),
                 'error': None
+            })
+        except MemoryError:
+            results.append({
+                'params': param_dict,
+                'result': None,
+                'output': None,
+                'error': "Memory limit exceeded"
+            })
+        except TimeoutError:
+            results.append({
+                'params': param_dict,
+                'result': None,
+                'output': None,
+                'error': "CPU time limit exceeded"
             })
         except Exception as e:
             results.append({
@@ -183,9 +207,9 @@ def main(num_programs: int = 10, num_apis: int = 3):
     for i in range(num_programs):
         print(f"Generating and running program {i+1}/{num_programs}")
         
-        test_program = generate_test_program(num_apis=num_apis)
+        test_program = generate_or_load_test_program(num_apis=num_apis)
         if isinstance(test_program["code"], str) and not test_program["code"].startswith("Error"):
-            params = create_fuzz_test_parameters(code_to_test=test_program["code"], num_params=test_program["num_of_parameters"])
+            params = create_or_load_fuzz_test_parameters(id=i, code_to_test=test_program["code"], num_params=test_program["num_of_parameters"])
             test_results = run_pytorch_code_with_params(test_program["code"], params)
     
             for result in test_results:

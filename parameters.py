@@ -3,13 +3,117 @@ import os
 from typing import Optional, Dict, Any, List, Union
 import requests
 import json
+from pydantic import BaseModel, Field, conlist
+import csv
+import re
+
+def create_json_schema(num_parameter_sets, num_params_per_set):
+    properties = {}
+    
+    for i in range(1, num_parameter_sets + 1):
+        parameter_set_key = f"parameter_set_{i}"
+        parameter_set_properties = {}
+        
+        for j in range(1, num_params_per_set + 1):
+            param_key = f"param{j}"
+            parameter_set_properties[param_key] = {
+                "type": "string",
+                "properties": {},
+                "additionalProperties": False,
+                "description": f"Parameter {j} for test case {i}."
+            }
+        
+        properties[parameter_set_key] = {
+            "type": "object",
+            "properties": parameter_set_properties,
+            "required": list(parameter_set_properties.keys()),
+            "additionalProperties": False,
+            "description": f"Set of parameters for test case {i}"
+        }
+    
+    json_schema = {
+        "type": "object",
+        "properties": properties,
+        "required": list(properties.keys()),
+        "additionalProperties": False,
+        "description": "Collection of parameter sets for fuzz testing"
+    }
+    
+    return {
+        "name": "fuzz_test_parameters",
+        "schema": json_schema,
+        "strict": True
+    }
+
+def extract_responses(completion_response):
+    # Extract the content from the response
+    content = completion_response.choices[0].message.content
+    
+    # Initialize the list to hold all parameter sets
+    all_responses = []
+    
+    try:
+        # Parse the entire JSON object
+        data = json.loads(content)
+        
+        # Iterate through each parameter set
+        for i in range(1, len(data) + 1):
+            param_set_key = f"parameter_set_{i}"
+            if param_set_key in data:
+                param_set = data[param_set_key]
+                
+                # Initialize a list for this parameter set
+                param_set_responses = []
+                
+                # Iterate through each parameter in the set
+                for j in range(1, len(param_set) + 1):
+                    param_key = f"param{j}"
+                    if param_key in param_set:
+                        # Convert the parameter value to a string and add it to the list
+                        param_set_responses.append(str(param_set[param_key]))
+                
+                # Add this parameter set's responses to the main list
+                all_responses.append(param_set_responses)
+    
+    except json.JSONDecodeError:
+        print("Error: Failed to parse the JSON data.")
+        return []
+    
+    return all_responses
+
+def create_or_load_fuzz_test_parameters(
+    id : int,
+    code_to_test: str,
+    num_params: int,
+    num_sets: int = 10,
+    model: str = "gpt-4o-mini",
+    max_tokens: int = 10000,
+    **kwargs: Any
+) -> Union[List[List[str]], str]:
+    csv_file = f'fuzz_test_parameters_{id}_{num_params}_{num_sets}.csv'
+    
+    if os.path.exists(csv_file):
+        with open(csv_file, 'r') as f:
+            reader = csv.reader(f)
+            return list(reader)
+    
+    # If no matching parameters found, generate new ones
+    parameters = create_fuzz_test_parameters(code_to_test, num_params, num_sets, model, max_tokens, **kwargs)
+    
+    # Save the new parameters to CSV
+    with open(csv_file, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerows(parameters)
+    
+    return parameters
+
 
 def create_fuzz_test_parameters(
     code_to_test: str,
     num_params: int, # Number of parameters to generate
     num_sets: int = 10, # Number of sets of parameters to generate
-    model: str = "nousresearch/hermes-3-llama-3.1-405b:free", # Model to use
-    max_tokens: int = 500, # Maximum number of tokens to generate
+    model: str = "gpt-4o-mini", # Model to use
+    max_tokens: int = 10000, # Maximum number of tokens to generate
     **kwargs: Any # Additional parameters to pass to the model
 ) -> Union[List[List[str]], str]:
     """
@@ -22,6 +126,7 @@ def create_fuzz_test_parameters(
         List[List[str]]: A list of lists of parameters.
         str: An error message if the API call fails.
     """
+    client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
 
     # Prepare the messages
     messages = [
@@ -29,23 +134,7 @@ def create_fuzz_test_parameters(
         {"role": "user", "content": f"""You are tasked with generating 10 unique and novel sets of 3 parameters for a PyTorch API call. The purpose is to fuzz test the API call.
 
 Your task is to create parameters that will test the robustness and error handling of this API call. Please consider the requirements of the API call and the allowed range of values for each parameter.
-Your output should be structured in CSV format, containing only the parameters. Do not include explanations or justifications in the output.
 
-Now, based on the API code provided and the guidelines above, please generate 10 unique and novel sets of 3 parameters for fuzz testing. Output your response in CSV format inside <parameters> tags.
-<api_code>
-import torch
-
-x = torch.randn(param1, param2, dtype=param3)
-print("Intermediate: ", torch.log(x * 2 - 1)) # Intermediate
-cpu_output = torch.matrix_exp(torch.log(x * 2 - 1)) # on CPU
-x = x.cuda()
-gpu_output = torch.matrix_exp(torch.log(x * 2 - 1)) # on GPU
-</api_code>
-num_params = 3
-num_sets = 10
-"""},
-{"role": "assistant", "content": "<parameters>\n5,5,torch.float32\n1000,1000,torch.float64\n0,0,torch.int32\n-1,-1,torch.float16\n1000000,1,torch.bfloat16\n10,10,torch.complex64\n2,3,torch.complex128\n100,100,torch.int8 \n10000,10000,torch.int16\n1,1000000,torch.int64\n</parameters>"},
-{"role": "user", "content": f"""Now, based on the API code provided and the guidelines above, please generate {num_sets} unique and novel sets of {num_params} parameters for fuzz testing. Output your response in CSV format inside <parameters> tags.
 <api_code>
 {code_to_test}
 </api_code>
@@ -53,69 +142,21 @@ num_params = {num_params}
 num_sets = {num_sets}
 """}
     ]
-
-    payload = {
-        "model": model,
-        "messages": messages,
-        "provider": {
-            "require_parameters": True
+    json_format = create_json_schema(num_parameter_sets=num_sets, num_params_per_set=num_params)
+    completion = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        response_format={
+            "type": "json_schema",
+            "json_schema": json_format
         },
+        max_tokens=max_tokens,
+        temperature=1,
+        top_p=0.5,
         **kwargs
-    }
-    # Add max_tokens if provided
-    if max_tokens is not None:
-        payload["max_tokens"] = max_tokens
+    )
 
-    # Set up the headers
-    headers = {
-        "Authorization": f"Bearer {os.environ.get('OPENROUTER_API_KEY')}",  # Use environment variable
-        "Content-Type": "application/json"
-    }
-
-    # print("API Request Details:")
-    # print(f"URL: https://openrouter.ai/api/v1/chat/completions")
-    # print(f"Headers: {json.dumps(headers, indent=2)}")
-    # print(f"Payload: {json.dumps(payload, indent=2)}")
-
-    try:
-        # Set up the openrouter client
-        response = requests.post(
-            url="https://openrouter.ai/api/v1/chat/completions",
-            headers=headers,
-            json=payload
-        )
-        
-        response.raise_for_status()
-        # Parse the JSON response
-        result = response.json()
-        
-        # Extract the content from the response
-        content = result['choices'][0]['message']['content']
-        
-        # Parse the JSON content
-        if content is None:
-            return f"An error occurred: {content}"
-        # Check if there is a <parameters> tag in the response
-        if '<parameters>' in content:
-            # Extract the CSV content from the response
-            csv_content = content.split('<parameters>')[1].split('</parameters>')[0].strip()
-            # Parse the CSV content
-            parameters = [row.split(',') for row in csv_content.split('\n') if row.strip()]
-        else:
-            return f"Error: No <parameters> tag found in the response:\n{content}"
-
-        # Check for the correct number of parameters
-        if len(parameters) != num_sets:
-            return f"Error: Incorrect number of parameter sets. Expected {num_sets}, got {len(parameters)}\n{content}"
-        else:
-            print("Parameters: ", parameters)
-            return parameters
-
-    except requests.exceptions.RequestException as e:
-        return f"Error: {str(e)}"
-    except json.JSONDecodeError:
-        return "Error: Invalid JSON response"
-    except KeyError as e:
-        return f"Error: Missing key in response: {str(e)}"
-    except Exception as e:
-        return f"Unexpected error: {str(e)}"
+    return extract_responses(completion)
+    # except Exception as e:
+    #     print(str(e))
+    #     return f"Error: {str(e)}"

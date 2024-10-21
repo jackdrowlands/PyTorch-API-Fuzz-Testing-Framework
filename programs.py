@@ -4,6 +4,42 @@ import os
 import json
 from typing import List, Union
 import re
+import csv
+
+def generate_or_load_test_program(num_apis: int = 3, model: str = "nousresearch/hermes-3-llama-3.1-405b:free", max_tokens: int = 500) -> Union[str, List[str]]:
+    csv_file = 'test_programs.csv'
+    
+    if os.path.exists(csv_file):
+        with open(csv_file, 'r') as f:
+            reader = csv.DictReader(f)
+            programs = list(reader)
+        
+        for program in programs:
+            if int(program['num_apis']) == num_apis:
+                return {
+                    "code": program['code'],
+                    "num_of_parameters": int(program['num_of_parameters']) if program['num_of_parameters'] else 0
+                }
+    
+    # If no matching program found, generate a new one
+    program = generate_test_program(num_apis, model, max_tokens)
+    
+    # Save the new program to CSV
+    if not os.path.exists(csv_file):
+        with open(csv_file, 'w', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=['num_apis', 'code', 'num_of_parameters'])
+            writer.writeheader()
+    
+    with open(csv_file, 'a', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=['num_apis', 'code', 'num_of_parameters'])
+        writer.writerow({
+            'num_apis': num_apis,
+            'code': program['code'],
+            'num_of_parameters': program['num_of_parameters']
+        })
+    
+    return program
+
 
 def generate_test_program(
     num_apis: int = 3,
@@ -87,7 +123,6 @@ def generate_test_program(
         result = response.json()
         
         content = result['choices'][0]['message']['content']
-        print(content)
         
         if content is None:
             return {
@@ -109,7 +144,7 @@ def generate_test_program(
             num_of_parameters = int(match.group(1))
         
         # delete all definitions of the parameters
-        cleaned_code = re.sub("\bparam\w*\s*=\s*.*?(?=\n|\Z)","",code)
+        cleaned_code = re.sub(r"\bparam\w*\s*=\s*.*?(?=\n|\Z)","",code)
         
         return {
             "code": cleaned_code,
@@ -136,7 +171,3 @@ def generate_test_program(
             "code": f"Unexpected error: {str(e)}",
             "num_of_parameters": None
             }
-
-# Example usage
-test_program = generate_test_program(num_apis=3)
-print(test_program)
