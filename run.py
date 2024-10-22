@@ -7,94 +7,58 @@ import json
 import os
 import resource
 import signal
+import subprocess
+
 from RestrictedPython import compile_restricted, safe_builtins
 from parameters import create_fuzz_test_parameters, create_or_load_fuzz_test_parameters
 from programs import generate_test_program, generate_or_load_test_program
 
 def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> List[dict]:
-    """
-    Execute PyTorch code with different sets of parameters and return the results.
-    """
     results = []
-
-    # Create a safe environment for restrictedPython
-    def safe_import(name, globals, locals, fromlist, level):
-        if name.split(".")[0] == "torch" or name.split(".")[0] == "time" or name.split(".")[0] == "random":
-            return __import__(name, globals, locals, fromlist, level)
-        else:
-            print(f"IMPORT NOT ALLOWED: {name}")
-            raise ImportError(f"IMPORT NOT ALLOWED: {name}")
-
-
-    safe_builtins["__import__"] = safe_import
-    safe_builtins['_unpack_sequence_'] = lambda sequence: sequence
-    safe_globals = dict(__builtins__=safe_builtins)
-
-    # Resource Limits
-    max_memory = 5 * 1024 * 1024 * 1024  # 10 GB
-    max_cpu_time = 90  # 90 seconds
-
-
-    # Compile the code
-    try:
-        compiled_code = compile_restricted(code, '<string>', 'exec')
-    except SyntaxError as e:
-        return [{'params': {}, 'result': None, 'output': None, 'error': f'Syntax error in code: {str(e)}'}]
-
     for params in params_list:
-        # Prepare the parameter dictionary
-        try:
-            param_dict = {f'param{i+1}': eval(param.strip(), safe_globals) for i, param in enumerate(params)}
-        except Exception as e:
-            results.append({
-                'params': params,
-                'result': None,
-                'output': None,
-                'error': f'Parameter evaluation error: {str(e)}'
-            })
-            continue
-        safe_locals = {'torch': torch}
-        # Add param_dict to the namespace
-        safe_locals.update(param_dict)
+        param_dict = {f'param{i+1}': param for i, param in enumerate(params)}
+        
+        # Create a temporary Python file with the code and parameters
+        with open('temp_code.py', 'w') as f:
+            f.write(f"import torch\n")
+            for key, value in param_dict.items():
+                f.write(f"{key} = {value}\n")
+            f.write(code)
+            f.write("\nprint(json.dumps({'cpu_output': cpu_output.tolist(), 'gpu_output': gpu_output.cpu().tolist()}))")
 
-        # Redirect stdout to capture print statements
-        old_stdout = sys.stdout
-        sys.stdout = StringIO()
-
+        # Run the code in a separate process with resource limits
         try:
-            # Set resource limits
-            resource.setrlimit(resource.RLIMIT_AS, (max_memory, max_memory))
-            resource.setrlimit(resource.RLIMIT_CPU, (max_cpu_time, max_cpu_time))
-            # Execute the code and compare CPU and GPU outputs
-            exec(compiled_code, safe_globals, safe_locals)
+            result = subprocess.run([sys.executable, 'temp_code.py'], 
+                                    capture_output=True, text=True, timeout=90)
             
-            # Compare cpu_output and gpu_output
-            cpu_output = safe_locals.get('cpu_output')
-            gpu_output = safe_locals.get('gpu_output')
             
-            if cpu_output is not None and gpu_output is not None:
-                comparison = torch.allclose(cpu_output, gpu_output.cpu(), rtol=1e-5, atol=1e-8)
-                result = f"CPU and GPU outputs are {'equal' if comparison else 'not equal'}"
+
+            if result.stdout.strip():
+                try:
+                    output = json.loads(result.stdout)
+                    comparison = torch.allclose(torch.tensor(output['cpu_output']), 
+                                        torch.tensor(output['gpu_output']), 
+                                        rtol=1e-5, atol=1e-8)
+                    results.append({
+                        'params': param_dict,
+                        'result': f"CPU and GPU outputs are {'equal' if comparison else 'not equal'}",
+                        'output': result.stdout,
+                        'error': result.stderr if result.returncode != 0 else None
+                    })
+                except json.JSONDecodeError as e:
+                    print(f"Error parsing output JSON: {str(e)}")
+                    print(f"Raw output: {result.stdout}")
             else:
-                result = "CPU or GPU output not found in the code"
+                print("Empty output from executed code")
+                results.append({
+                        'params': param_dict,
+                        'result': None,
+                        'output': None,
+                        'error': result.stderr
+                    })
 
-            # Capture any printed output
-            printed_output = sys.stdout.getvalue()
-
-            results.append({
-                'params': param_dict,
-                'result': result,
-                'output': printed_output.strip(),
-                'error': None
-            })
-        except MemoryError:
-            results.append({
-                'params': param_dict,
-                'result': None,
-                'output': None,
-                'error': "Memory limit exceeded"
-            })
-        except TimeoutError:
+            
+        except subprocess.TimeoutExpired:
             results.append({
                 'params': param_dict,
                 'result': None,
@@ -108,9 +72,6 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
                 'output': None,
                 'error': str(e)
             })
-        finally:
-            # Restore stdout
-            sys.stdout = old_stdout
 
     return results
 

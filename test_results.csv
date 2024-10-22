@@ -28,7 +28,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 10, 'param3': 1, 'param4': 20, 'param5': 2, 'param6': 5}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '10', 'param3': '1', 'param4': '20', 'param5': '2', 'param6': '5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [5, 10] at entry 0 and [5, 20] at entry 1
+"
 1,"import torch
 import torch.nn as nn
 
@@ -58,7 +63,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -5, 'param2': -10, 'param3': 0, 'param4': -20, 'param5': -2, 'param6': 0}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-5', 'param2': '-10', 'param3': '0', 'param4': '-20', 'param5': '-2', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 1,"import torch
 import torch.nn as nn
 
@@ -88,7 +102,7 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 10000, 'param2': 10000, 'param3': 100, 'param4': 10000, 'param5': 100, 'param6': 100}",,,[enforce fail at alloc_cpu.cpp:117] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 400000000 bytes. Error code 12 (Cannot allocate memory)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '10000', 'param2': '10000', 'param3': '100', 'param4': '10000', 'param5': '100', 'param6': '100'}",,,
 1,"import torch
 import torch.nn as nn
 
@@ -118,7 +132,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1.5, 'param2': 2.5, 'param3': 3.5, 'param4': 4.5, 'param5': 5.5, 'param6': 6.5}",,,"hidden_size should be of type int, got: float"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1.5', 'param2': '2.5', 'param3': '3.5', 'param4': '4.5', 'param5': '5.5', 'param6': '6.5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 131, in __init__
+    raise TypeError(
+TypeError: hidden_size should be of type int, got: float
+"
 1,"import torch
 import torch.nn as nn
 
@@ -148,7 +171,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': None, 'param2': None, 'param3': None, 'param4': None, 'param5': None, 'param6': None}",,,"hidden_size should be of type int, got: NoneType"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 'None', 'param2': 'None', 'param3': 'None', 'param4': 'None', 'param5': 'None', 'param6': 'None'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 131, in __init__
+    raise TypeError(
+TypeError: hidden_size should be of type int, got: NoneType
+"
 1,"import torch
 import torch.nn as nn
 
@@ -178,7 +210,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 10, 'param2': 0, 'param3': -1, 'param4': 0, 'param5': -1, 'param6': 10}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '10', 'param2': '0', 'param3': '-1', 'param4': '0', 'param5': '-1', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 1,"import torch
 import torch.nn as nn
 
@@ -208,7 +249,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 128, 'param3': 3, 'param4': 64, 'param5': 1, 'param6': 1}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '128', 'param3': '3', 'param4': '64', 'param5': '1', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [1, 128] at entry 0 and [1, 64] at entry 1
+"
 1,"import torch
 import torch.nn as nn
 
@@ -238,7 +284,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0.1, 'param2': 0.2, 'param3': 0.3, 'param4': 0.4, 'param5': 0.5, 'param6': 0.6}",,,"hidden_size should be of type int, got: float"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0.1', 'param2': '0.2', 'param3': '0.3', 'param4': '0.4', 'param5': '0.5', 'param6': '0.6'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 131, in __init__
+    raise TypeError(
+TypeError: hidden_size should be of type int, got: float
+"
 1,"import torch
 import torch.nn as nn
 
@@ -268,7 +323,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 50, 'param2': 25, 'param3': 5, 'param4': 30, 'param5': 4, 'param6': 20}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '50', 'param2': '25', 'param3': '5', 'param4': '30', 'param5': '4', 'param6': '20'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [20, 25] at entry 0 and [20, 30] at entry 1
+"
 1,"import torch
 import torch.nn as nn
 
@@ -298,7 +358,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1, 'param5': 1, 'param6': 1}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '1', 'param3': '1', 'param4': '1', 'param5': '1', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 2,"import torch
 import torch.nn as nn
 
@@ -328,7 +406,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 10, 'param3': 1, 'param4': 20, 'param5': 2, 'param6': 5}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '10', 'param3': '1', 'param4': '20', 'param5': '2', 'param6': '5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [5, 10] at entry 0 and [5, 20] at entry 1
+"
 2,"import torch
 import torch.nn as nn
 
@@ -358,7 +441,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -5, 'param2': 15, 'param3': 3, 'param4': 0, 'param5': -1, 'param6': 10}",,,"Trying to create tensor with negative dimension -5: [15, -5]"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-5', 'param2': '15', 'param3': '3', 'param4': '0', 'param5': '-1', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 166, in __init__
+    torch.empty((gate_size, layer_input_size), **factory_kwargs)
+RuntimeError: Trying to create tensor with negative dimension -5: [15, -5]
+"
 2,"import torch
 import torch.nn as nn
 
@@ -388,7 +480,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1000, 'param2': 1000, 'param3': 10, 'param4': 1000, 'param5': 10, 'param6': 100}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1000', 'param2': '1000', 'param3': '10', 'param4': '1000', 'param5': '10', 'param6': '100'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 2,"import torch
 import torch.nn as nn
 
@@ -418,7 +528,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 50, 'param2': 50, 'param3': 5, 'param4': 50, 'param5': 5, 'param6': -1}",,,"Trying to create tensor with negative dimension -1: [-1, 50]"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '50', 'param2': '50', 'param3': '5', 'param4': '50', 'param5': '5', 'param6': '-1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Trying to create tensor with negative dimension -1: [-1, 50]
+"
 2,"import torch
 import torch.nn as nn
 
@@ -448,7 +563,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1.5, 'param2': 3.5, 'param3': 2, 'param4': 4.5, 'param5': 2, 'param6': 3}",,,"hidden_size should be of type int, got: float"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1.5', 'param2': '3.5', 'param3': '2', 'param4': '4.5', 'param5': '2', 'param6': '3'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 131, in __init__
+    raise TypeError(
+TypeError: hidden_size should be of type int, got: float
+"
 2,"import torch
 import torch.nn as nn
 
@@ -478,7 +602,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1, 'param5': 1, 'param6': 1}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '1', 'param3': '1', 'param4': '1', 'param5': '1', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 2,"import torch
 import torch.nn as nn
 
@@ -508,7 +650,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 2, 'param3': 3, 'param4': 4, 'param5': 5, 'param6': 6}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '2', 'param3': '3', 'param4': '4', 'param5': '5', 'param6': '6'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [6, 2] at entry 0 and [6, 4] at entry 1
+"
 2,"import torch
 import torch.nn as nn
 
@@ -538,7 +685,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': None, 'param2': None, 'param3': None, 'param4': None, 'param5': None, 'param6': None}",,,"hidden_size should be of type int, got: NoneType"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 'None', 'param2': 'None', 'param3': 'None', 'param4': 'None', 'param5': 'None', 'param6': 'None'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 131, in __init__
+    raise TypeError(
+TypeError: hidden_size should be of type int, got: NoneType
+"
 2,"import torch
 import torch.nn as nn
 
@@ -568,7 +724,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': -1, 'param3': 0, 'param4': -1, 'param5': 0, 'param6': 0}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '-1', 'param3': '0', 'param4': '-1', 'param5': '0', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 2,"import torch
 import torch.nn as nn
 
@@ -598,7 +763,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","['inf', 'inf', 'inf', 'inf', 'inf', 'inf']",,,Parameter evaluation error: name 'inf' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 'inf', 'param2': 'inf', 'param3': 'inf', 'param4': 'inf', 'param5': 'inf', 'param6': 'inf'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 2, in <module>
+    param1 = inf
+             ^^^
+NameError: name 'inf' is not defined. Did you mean: 'int'?
+"
 3,"import torch
 import torch.nn as nn
 
@@ -628,7 +798,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 128, 'param3': 1, 'param4': 256, 'param5': 2, 'param6': 10}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '128', 'param3': '1', 'param4': '256', 'param5': '2', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [10, 128] at entry 0 and [10, 256] at entry 1
+"
 3,"import torch
 import torch.nn as nn
 
@@ -658,7 +833,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -1, 'param2': 64, 'param3': 0, 'param4': 128, 'param5': 1, 'param6': 5}",,,num_layers must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-1', 'param2': '64', 'param3': '0', 'param4': '128', 'param5': '1', 'param6': '5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
 3,"import torch
 import torch.nn as nn
 
@@ -688,7 +872,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1024, 'param2': 256, 'param3': 3, 'param4': 512, 'param5': 5, 'param6': 15}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1024', 'param2': '256', 'param3': '3', 'param4': '512', 'param5': '5', 'param6': '15'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [15, 256] at entry 0 and [15, 512] at entry 1
+"
 3,"import torch
 import torch.nn as nn
 
@@ -718,7 +907,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 50, 'param2': -10, 'param3': 2, 'param4': 64, 'param5': 3, 'param6': 20}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '50', 'param2': '-10', 'param3': '2', 'param4': '64', 'param5': '3', 'param6': '20'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 3,"import torch
 import torch.nn as nn
 
@@ -748,7 +946,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 32, 'param2': 256, 'param3': 10, 'param4': 128, 'param5': 1, 'param6': -5}",,,"Trying to create tensor with negative dimension -5: [-5, 32]"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '32', 'param2': '256', 'param3': '10', 'param4': '128', 'param5': '1', 'param6': '-5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Trying to create tensor with negative dimension -5: [-5, 32]
+"
 3,"import torch
 import torch.nn as nn
 
@@ -778,7 +981,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 64, 'param2': 0, 'param3': 1, 'param4': 0, 'param5': 2, 'param6': 100}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '64', 'param2': '0', 'param3': '1', 'param4': '0', 'param5': '2', 'param6': '100'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 3,"import torch
 import torch.nn as nn
 
@@ -808,7 +1020,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 0, 'param3': -1, 'param4': 256, 'param5': 3, 'param6': 50}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '0', 'param3': '-1', 'param4': '256', 'param5': '3', 'param6': '50'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 3,"import torch
 import torch.nn as nn
 
@@ -838,7 +1059,21 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 128, 'param3': 1, 'param4': 256, 'param5': 1, 'param6': 0}",,,Expected sequence length to be larger than 0 in RNN
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '128', 'param3': '1', 'param4': '256', 'param5': '1', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 25, in <module>
+    rnn_output, _ = rnn(stacked_input)
+                    ^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 714, in forward
+    result = _VF.rnn_tanh(
+             ^^^^^^^^^^^^^
+RuntimeError: Expected sequence length to be larger than 0 in RNN
+"
 3,"import torch
 import torch.nn as nn
 
@@ -868,7 +1103,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -10, 'param2': 128, 'param3': 5, 'param4': 256, 'param5': 2, 'param6': 1}",,,"Trying to create tensor with negative dimension -10: [128, -10]"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-10', 'param2': '128', 'param3': '5', 'param4': '256', 'param5': '2', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 166, in __init__
+    torch.empty((gate_size, layer_input_size), **factory_kwargs)
+RuntimeError: Trying to create tensor with negative dimension -10: [128, -10]
+"
 3,"import torch
 import torch.nn as nn
 
@@ -898,281 +1142,15 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 512, 'param2': 128, 'param3': 1, 'param4': -5, 'param5': 0, 'param6': 30}",,,hidden_size must be greater than zero
-4,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -1, 'param2': 256, 'param3': 2, 'param4': 128, 'param5': 1, 'param6': 10}",,,"Trying to create tensor with negative dimension -1: [256, -1]"
-4,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': -256, 'param3': 2, 'param4': 128, 'param5': 1, 'param6': 10}",,,hidden_size must be greater than zero
-4,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 10.5, 'param2': 256, 'param3': 0, 'param4': 128, 'param5': 1, 'param6': 10}",,,num_layers must be greater than zero
-4,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 5, 'param2': 256, 'param3': -1, 'param4': 128, 'param5': 1, 'param6': 10}",,,num_layers must be greater than zero
-4,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 5, 'param2': 256, 'param3': 2, 'param4': 128, 'param5': 2.5, 'param6': 10}",,,'float' object cannot be interpreted as an integer
-4,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 5, 'param2': 256, 'param3': 2, 'param4': 128, 'param5': 1, 'param6': -10}",,,"Trying to create tensor with negative dimension -10: [-10, 5]"
-4,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 5, 'param2': 256, 'param3': 2, 'param4': 128, 'param5': 1, 'param6': 0}",,,Expected sequence length to be larger than 0 in RNN
-4,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 5, 'param2': 256, 'param3': 2, 'param4': 128, 'param5': 1, 'param6': 10000}",,,name '_getiter_' is not defined
-4,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 5, 'param2': 256, 'param3': 2, 'param4': 128, 'param5': 1, 'param6': None}",,,"randn() received an invalid combination of arguments - got (NoneType, int), but expected one of:
- * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
- * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
- * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
- * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '512', 'param2': '128', 'param3': '1', 'param4': '-5', 'param5': '0', 'param6': '30'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 16, in <module>
+    lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 975, in __init__
+    super().__init__(""LSTM"", *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
 "
 4,"import torch
 import torch.nn as nn
@@ -1203,11 +1181,366 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 5, 'param2': 256, 'param3': 2, 'param4': 128, 'param5': 1, 'param6': [1, 2, 3]}",,,"randn() received an invalid combination of arguments - got (list, int), but expected one of:
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-1', 'param2': '256', 'param3': '2', 'param4': '128', 'param5': '1', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 166, in __init__
+    torch.empty((gate_size, layer_input_size), **factory_kwargs)
+RuntimeError: Trying to create tensor with negative dimension -1: [256, -1]
+"
+4,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '-256', 'param3': '2', 'param4': '128', 'param5': '1', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
+4,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '10.5', 'param2': '256', 'param3': '0', 'param4': '128', 'param5': '1', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
+4,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '5', 'param2': '256', 'param3': '-1', 'param4': '128', 'param5': '1', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
+4,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '5', 'param2': '256', 'param3': '2', 'param4': '128', 'param5': '2.5', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 16, in <module>
+    lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 975, in __init__
+    super().__init__(""LSTM"", *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 158, in __init__
+    for layer in range(num_layers):
+                 ^^^^^^^^^^^^^^^^^
+TypeError: 'float' object cannot be interpreted as an integer
+"
+4,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '5', 'param2': '256', 'param3': '2', 'param4': '128', 'param5': '1', 'param6': '-10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Trying to create tensor with negative dimension -10: [-10, 5]
+"
+4,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '5', 'param2': '256', 'param3': '2', 'param4': '128', 'param5': '1', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 25, in <module>
+    rnn_output, _ = rnn(stacked_input)
+                    ^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 714, in forward
+    result = _VF.rnn_tanh(
+             ^^^^^^^^^^^^^
+RuntimeError: Expected sequence length to be larger than 0 in RNN
+"
+4,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '5', 'param2': '256', 'param3': '2', 'param4': '128', 'param5': '1', 'param6': '10000'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [10000, 256] at entry 0 and [10000, 128] at entry 1
+"
+4,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '5', 'param2': '256', 'param3': '2', 'param4': '128', 'param5': '1', 'param6': 'None'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: randn() received an invalid combination of arguments - got (NoneType, int), but expected one of:
  * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
  * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
  * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
  * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+
+"
+4,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '5', 'param2': '256', 'param3': '2', 'param4': '128', 'param5': '1', 'param6': '[1, 2, 3]'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: randn() received an invalid combination of arguments - got (list, int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+
 "
 5,"import torch
 import torch.nn as nn
@@ -1238,7 +1571,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 10, 'param3': 1, 'param4': 20, 'param5': 2, 'param6': 5}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '10', 'param3': '1', 'param4': '20', 'param5': '2', 'param6': '5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [5, 10] at entry 0 and [5, 20] at entry 1
+"
 5,"import torch
 import torch.nn as nn
 
@@ -1268,7 +1606,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -5, 'param2': 15, 'param3': 0, 'param4': 25, 'param5': 3, 'param6': 10}",,,num_layers must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-5', 'param2': '15', 'param3': '0', 'param4': '25', 'param5': '3', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
 5,"import torch
 import torch.nn as nn
 
@@ -1298,7 +1645,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1000, 'param2': 1000, 'param3': 10, 'param4': 1000, 'param5': 10, 'param6': 100}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1000', 'param2': '1000', 'param3': '10', 'param4': '1000', 'param5': '10', 'param6': '100'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 5,"import torch
 import torch.nn as nn
 
@@ -1328,7 +1693,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1.5, 'param2': -1, 'param3': 3, 'param4': 0, 'param5': -1, 'param6': 2}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1.5', 'param2': '-1', 'param3': '3', 'param4': '0', 'param5': '-1', 'param6': '2'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 5,"import torch
 import torch.nn as nn
 
@@ -1358,7 +1732,21 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1, 'param5': 1, 'param6': 0}",,,Expected sequence length to be larger than 0 in RNN
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '1', 'param3': '1', 'param4': '1', 'param5': '1', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 25, in <module>
+    rnn_output, _ = rnn(stacked_input)
+                    ^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 714, in forward
+    result = _VF.rnn_tanh(
+             ^^^^^^^^^^^^^
+RuntimeError: Expected sequence length to be larger than 0 in RNN
+"
 5,"import torch
 import torch.nn as nn
 
@@ -1388,7 +1776,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","['inf', 'nan', '100', 'inf', 'nan', '1000']",,,Parameter evaluation error: name 'inf' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 'inf', 'param2': 'nan', 'param3': '100', 'param4': 'inf', 'param5': 'nan', 'param6': '1000'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 2, in <module>
+    param1 = inf
+             ^^^
+NameError: name 'inf' is not defined. Did you mean: 'int'?
+"
 5,"import torch
 import torch.nn as nn
 
@@ -1418,7 +1811,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': -1, 'param4': 256, 'param5': -1, 'param6': -10}",,,num_layers must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '-1', 'param4': '256', 'param5': '-1', 'param6': '-10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
 5,"import torch
 import torch.nn as nn
 
@@ -1448,7 +1850,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 0, 'param3': 0, 'param4': 0, 'param5': 0, 'param6': 0}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '0', 'param3': '0', 'param4': '0', 'param5': '0', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 5,"import torch
 import torch.nn as nn
 
@@ -1478,7 +1889,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 50, 'param2': 50, 'param3': 50, 'param4': 50, 'param5': 50, 'param6': 50}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '50', 'param2': '50', 'param3': '50', 'param4': '50', 'param5': '50', 'param6': '50'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 5,"import torch
 import torch.nn as nn
 
@@ -1508,7 +1937,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 2, 'param3': 3, 'param4': 4, 'param5': 5, 'param6': 6}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '2', 'param3': '3', 'param4': '4', 'param5': '5', 'param6': '6'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [6, 2] at entry 0 and [6, 4] at entry 1
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1538,7 +1972,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -1, 'param2': 10, 'param3': 0, 'param4': 20, 'param5': 2, 'param6': 5}",,,num_layers must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-1', 'param2': '10', 'param3': '0', 'param4': '20', 'param5': '2', 'param6': '5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1568,7 +2011,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1000, 'param2': -10, 'param3': 5, 'param4': 50, 'param5': -1, 'param6': -3}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1000', 'param2': '-10', 'param3': '5', 'param4': '50', 'param5': '-1', 'param6': '-3'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1598,7 +2050,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 0, 'param3': 1, 'param4': 0, 'param5': 1, 'param6': 0}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '0', 'param3': '1', 'param4': '0', 'param5': '1', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1628,7 +2089,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 5.5, 'param2': 30.5, 'param3': 3, 'param4': 20.5, 'param5': 2, 'param6': 10}",,,"hidden_size should be of type int, got: float"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '5.5', 'param2': '30.5', 'param3': '3', 'param4': '20.5', 'param5': '2', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 131, in __init__
+    raise TypeError(
+TypeError: hidden_size should be of type int, got: float
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1658,7 +2128,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1, 'param5': 1, 'param6': 1}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '1', 'param3': '1', 'param4': '1', 'param5': '1', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1688,7 +2176,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","['inf', 'nan', '3', 'inf', '3', '10']",,,Parameter evaluation error: name 'inf' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 'inf', 'param2': 'nan', 'param3': '3', 'param4': 'inf', 'param5': '3', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 2, in <module>
+    param1 = inf
+             ^^^
+NameError: name 'inf' is not defined. Did you mean: 'int'?
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1718,7 +2211,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 128, 'param3': 10, 'param4': 64, 'param5': 10, 'param6': 10000}",,,std::bad_alloc
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '128', 'param3': '10', 'param4': '64', 'param5': '10', 'param6': '10000'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [10000, 128] at entry 0 and [10000, 64] at entry 1
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1748,7 +2246,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 2, 'param2': 2, 'param3': 2, 'param4': 2, 'param5': 2, 'param6': 2}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '2', 'param2': '2', 'param3': '2', 'param4': '2', 'param5': '2', 'param6': '2'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1778,7 +2294,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -100, 'param2': -50, 'param3': 0, 'param4': -200, 'param5': -10, 'param6': -5}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-100', 'param2': '-50', 'param3': '0', 'param4': '-200', 'param5': '-10', 'param6': '-5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 6,"import torch
 import torch.nn as nn
 
@@ -1808,251 +2333,24 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 1, 'param3': 100, 'param4': 1, 'param5': 100, 'param6': 1}",,,name '_getiter_' is not defined
-7,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': -5, 'param3': 1, 'param4': 10, 'param5': 2, 'param6': 5}",,,hidden_size must be greater than zero
-7,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 10000, 'param2': 256, 'param3': 0, 'param4': 128, 'param5': 3, 'param6': 1}",,,num_layers must be greater than zero
-7,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 10, 'param4': 256, 'param5': -1, 'param6': 10}",,,num_layers must be greater than zero
-7,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 5, 'param4': 256, 'param5': 5, 'param6': -10}",,,"Trying to create tensor with negative dimension -10: [-10, 256]"
-7,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 1, 'param4': 256, 'param5': 10, 'param6': 0}",,,Expected sequence length to be larger than 0 in RNN
-7,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 1, 'param4': 256, 'param5': 1, 'param6': 100000}",,,[enforce fail at alloc_cpu.cpp:117] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 204800000 bytes. Error code 12 (Cannot allocate memory)
-7,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 100, 'param4': 256, 'param5': 100, 'param6': -1}",,,"Trying to create tensor with negative dimension -1: [-1, 256]"
-7,"import torch
-import torch.nn as nn
-
-# Define parameters
-num_of_parameters = 6
-
-# Define the RNN and LSTM models
-rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
-lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
-
-# Generate random input
-input_data = torch.randn(param6, param1)
-
-# Stack the input data using torch.stack
-stacked_input = torch.stack([input_data, input_data])
-
-# Test RNN and LSTM on CPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
-
-# Move models and input data to GPU
-rnn.cuda()
-lstm.cuda()
-stacked_input = stacked_input.cuda()
-
-# Test RNN and LSTM on GPU
-rnn_output, _ = rnn(stacked_input)
-lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 1, 'param4': 256, 'param5': 1, 'param6': 0.5}",,,"randn() received an invalid combination of arguments - got (float, int), but expected one of:
- * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
- * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
- * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
- * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '1', 'param3': '100', 'param4': '1', 'param5': '100', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
 "
 7,"import torch
 import torch.nn as nn
@@ -2083,7 +2381,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 5, 'param4': 256, 'param5': 2, 'param6': 1000}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '-5', 'param3': '1', 'param4': '10', 'param5': '2', 'param6': '5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 7,"import torch
 import torch.nn as nn
 
@@ -2113,7 +2420,340 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 1, 'param4': 256, 'param5': 5, 'param6': -5}",,,"Trying to create tensor with negative dimension -5: [-5, 256]"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '10000', 'param2': '256', 'param3': '0', 'param4': '128', 'param5': '3', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
+7,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '10', 'param4': '256', 'param5': '-1', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 16, in <module>
+    lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 975, in __init__
+    super().__init__(""LSTM"", *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
+7,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '5', 'param4': '256', 'param5': '5', 'param6': '-10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Trying to create tensor with negative dimension -10: [-10, 256]
+"
+7,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '1', 'param4': '256', 'param5': '10', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 25, in <module>
+    rnn_output, _ = rnn(stacked_input)
+                    ^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 714, in forward
+    result = _VF.rnn_tanh(
+             ^^^^^^^^^^^^^
+RuntimeError: Expected sequence length to be larger than 0 in RNN
+"
+7,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '1', 'param4': '256', 'param5': '1', 'param6': '100000'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
+7,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '100', 'param4': '256', 'param5': '100', 'param6': '-1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Trying to create tensor with negative dimension -1: [-1, 256]
+"
+7,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '1', 'param4': '256', 'param5': '1', 'param6': '0.5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: randn() received an invalid combination of arguments - got (float, int), but expected one of:
+ * (tuple of ints size, *, torch.Generator generator, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, torch.Generator generator, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, Tensor out = None, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+ * (tuple of ints size, *, tuple of names names, torch.dtype dtype = None, torch.layout layout = None, torch.device device = None, bool pin_memory = False, bool requires_grad = False)
+
+"
+7,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '5', 'param4': '256', 'param5': '2', 'param6': '1000'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
+7,"import torch
+import torch.nn as nn
+
+# Define parameters
+num_of_parameters = 6
+
+# Define the RNN and LSTM models
+rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+
+# Generate random input
+input_data = torch.randn(param6, param1)
+
+# Stack the input data using torch.stack
+stacked_input = torch.stack([input_data, input_data])
+
+# Test RNN and LSTM on CPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+
+# Move models and input data to GPU
+rnn.cuda()
+lstm.cuda()
+stacked_input = stacked_input.cuda()
+
+# Test RNN and LSTM on GPU
+rnn_output, _ = rnn(stacked_input)
+lstm_output, _ = lstm(stacked_input)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '1', 'param4': '256', 'param5': '5', 'param6': '-5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Trying to create tensor with negative dimension -5: [-5, 256]
+"
 8,"import torch
 import torch.nn as nn
 
@@ -2143,7 +2783,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': -5, 'param3': 0, 'param4': -10, 'param5': -1, 'param6': 0}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '-5', 'param3': '0', 'param4': '-10', 'param5': '-1', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 8,"import torch
 import torch.nn as nn
 
@@ -2173,7 +2822,7 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 10000, 'param2': 10000, 'param3': 100, 'param4': 10000, 'param5': 100, 'param6': 10000}",,,[enforce fail at alloc_cpu.cpp:117] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 400000000 bytes. Error code 12 (Cannot allocate memory)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '10000', 'param2': '10000', 'param3': '100', 'param4': '10000', 'param5': '100', 'param6': '10000'}",,,
 8,"import torch
 import torch.nn as nn
 
@@ -2203,7 +2852,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1.5, 'param2': 3.5, 'param3': 2.5, 'param4': 4.5, 'param5': 3.5, 'param6': 5.5}",,,"hidden_size should be of type int, got: float"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1.5', 'param2': '3.5', 'param3': '2.5', 'param4': '4.5', 'param5': '3.5', 'param6': '5.5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 131, in __init__
+    raise TypeError(
+TypeError: hidden_size should be of type int, got: float
+"
 8,"import torch
 import torch.nn as nn
 
@@ -2233,7 +2891,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1, 'param5': 1, 'param6': 1}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '1', 'param3': '1', 'param4': '1', 'param5': '1', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 8,"import torch
 import torch.nn as nn
 
@@ -2263,7 +2939,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -1, 'param2': 0, 'param3': 1, 'param4': 2, 'param5': 3, 'param6': 4}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-1', 'param2': '0', 'param3': '1', 'param4': '2', 'param5': '3', 'param6': '4'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 8,"import torch
 import torch.nn as nn
 
@@ -2293,7 +2978,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 128, 'param3': 4, 'param4': 256, 'param5': 4, 'param6': 1024}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '128', 'param3': '4', 'param4': '256', 'param5': '4', 'param6': '1024'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [1024, 128] at entry 0 and [1024, 256] at entry 1
+"
 8,"import torch
 import torch.nn as nn
 
@@ -2323,7 +3013,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 0, 'param3': -1, 'param4': 0, 'param5': 0, 'param6': -1}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '0', 'param3': '-1', 'param4': '0', 'param5': '0', 'param6': '-1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 8,"import torch
 import torch.nn as nn
 
@@ -2353,7 +3052,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 2, 'param3': 3, 'param4': 4, 'param5': 5, 'param6': 6}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '2', 'param3': '3', 'param4': '4', 'param5': '5', 'param6': '6'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [6, 2] at entry 0 and [6, 4] at entry 1
+"
 8,"import torch
 import torch.nn as nn
 
@@ -2383,7 +3087,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 2048, 'param2': 1024, 'param3': 512, 'param4': 256, 'param5': 128, 'param6': 64}",,,[enforce fail at alloc_cpu.cpp:117] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 4194304 bytes. Error code 12 (Cannot allocate memory)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '2048', 'param2': '1024', 'param3': '512', 'param4': '256', 'param5': '128', 'param6': '64'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [64, 1024] at entry 0 and [64, 256] at entry 1
+"
 8,"import torch
 import torch.nn as nn
 
@@ -2413,7 +3122,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 100, 'param2': 0, 'param3': -100, 'param4': 100, 'param5': 0, 'param6': 100}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '100', 'param2': '0', 'param3': '-100', 'param4': '100', 'param5': '0', 'param6': '100'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2443,7 +3161,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -1, 'param2': 10, 'param3': 0, 'param4': 20, 'param5': 2, 'param6': 5}",,,num_layers must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-1', 'param2': '10', 'param3': '0', 'param4': '20', 'param5': '2', 'param6': '5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2473,7 +3200,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': -1, 'param4': 128, 'param5': 2, 'param6': 10}",,,num_layers must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '-1', 'param4': '128', 'param5': '2', 'param6': '10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2503,7 +3239,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 0, 'param3': 1, 'param4': 0, 'param5': 1, 'param6': -10}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '0', 'param3': '1', 'param4': '0', 'param5': '1', 'param6': '-10'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2533,7 +3278,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 64, 'param2': 128, 'param3': 3, 'param4': 256, 'param5': 3, 'param6': 1000}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '64', 'param2': '128', 'param3': '3', 'param4': '256', 'param5': '3', 'param6': '1000'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [1000, 128] at entry 0 and [1000, 256] at entry 1
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2563,7 +3313,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 128, 'param2': -50, 'param3': 2, 'param4': 32, 'param5': 1, 'param6': 0}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '128', 'param2': '-50', 'param3': '2', 'param4': '32', 'param5': '1', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2593,7 +3352,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 128, 'param2': 256, 'param3': 1, 'param4': 128, 'param5': -1, 'param6': 1}",,,num_layers must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '128', 'param2': '256', 'param3': '1', 'param4': '128', 'param5': '-1', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 16, in <module>
+    lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 975, in __init__
+    super().__init__(""LSTM"", *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2623,7 +3391,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 5, 'param4': 256, 'param5': 5, 'param6': -5}",,,"Trying to create tensor with negative dimension -5: [-5, 256]"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '5', 'param4': '256', 'param5': '5', 'param6': '-5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Trying to create tensor with negative dimension -5: [-5, 256]
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2653,7 +3426,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 256, 'param2': 256, 'param3': 1, 'param4': 128, 'param5': 1, 'param6': 1}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '256', 'param2': '256', 'param3': '1', 'param4': '128', 'param5': '1', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [1, 256] at entry 0 and [1, 128] at entry 1
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2683,7 +3461,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 128, 'param2': 128, 'param3': 3, 'param4': 64, 'param5': 3, 'param6': -100}",,,"Trying to create tensor with negative dimension -100: [-100, 128]"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '128', 'param2': '128', 'param3': '3', 'param4': '64', 'param5': '3', 'param6': '-100'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 19, in <module>
+    input_data = torch.randn(param6, param1)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Trying to create tensor with negative dimension -100: [-100, 128]
+"
 9,"import torch
 import torch.nn as nn
 
@@ -2713,7 +3496,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 128, 'param2': 128, 'param3': 2, 'param4': 128, 'param5': 0, 'param6': 0}",,,num_layers must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '128', 'param2': '128', 'param3': '2', 'param4': '128', 'param5': '0', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 16, in <module>
+    lstm = nn.LSTM(input_size=param1, hidden_size=param4, num_layers=param5, batch_first=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 975, in __init__
+    super().__init__(""LSTM"", *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 137, in __init__
+    raise ValueError(""num_layers must be greater than zero"")
+ValueError: num_layers must be greater than zero
+"
 10,"import torch
 import torch.nn as nn
 
@@ -2743,7 +3535,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 0, 'param2': 10, 'param3': 1, 'param4': 20, 'param5': 2, 'param6': 5}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '0', 'param2': '10', 'param3': '1', 'param4': '20', 'param5': '2', 'param6': '5'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [5, 10] at entry 0 and [5, 20] at entry 1
+"
 10,"import torch
 import torch.nn as nn
 
@@ -2773,7 +3570,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -1, 'param2': 0, 'param3': -1, 'param4': 0, 'param5': 1, 'param6': 3}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-1', 'param2': '0', 'param3': '-1', 'param4': '0', 'param5': '1', 'param6': '3'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 10,"import torch
 import torch.nn as nn
 
@@ -2803,7 +3609,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1000, 'param2': 256, 'param3': 10, 'param4': 512, 'param5': 5, 'param6': 100}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1000', 'param2': '256', 'param3': '10', 'param4': '512', 'param5': '5', 'param6': '100'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [100, 256] at entry 0 and [100, 512] at entry 1
+"
 10,"import torch
 import torch.nn as nn
 
@@ -2833,7 +3644,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1.5, 'param2': 10.5, 'param3': 2, 'param4': 15.2, 'param5': 3, 'param6': 4}",,,"hidden_size should be of type int, got: float"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1.5', 'param2': '10.5', 'param3': '2', 'param4': '15.2', 'param5': '3', 'param6': '4'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 131, in __init__
+    raise TypeError(
+TypeError: hidden_size should be of type int, got: float
+"
 10,"import torch
 import torch.nn as nn
 
@@ -2863,7 +3683,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': None, 'param2': None, 'param3': None, 'param4': None, 'param5': None, 'param6': None}",,,"hidden_size should be of type int, got: NoneType"
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 'None', 'param2': 'None', 'param3': 'None', 'param4': 'None', 'param5': 'None', 'param6': 'None'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 131, in __init__
+    raise TypeError(
+TypeError: hidden_size should be of type int, got: NoneType
+"
 10,"import torch
 import torch.nn as nn
 
@@ -2893,7 +3722,16 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': -10, 'param2': -20, 'param3': -3, 'param4': -40, 'param5': -5, 'param6': -1}",,,hidden_size must be greater than zero
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '-10', 'param2': '-20', 'param3': '-3', 'param4': '-40', 'param5': '-5', 'param6': '-1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 15, in <module>
+    rnn = nn.RNN(input_size=param1, hidden_size=param2, num_layers=param3, batch_first=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 634, in __init__
+    super().__init__(mode, *args, **kwargs)
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 135, in __init__
+    raise ValueError(""hidden_size must be greater than zero"")
+ValueError: hidden_size must be greater than zero
+"
 10,"import torch
 import torch.nn as nn
 
@@ -2923,7 +3761,12 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","['inf', 'nan', '0', 'inf', 'nan', '0']",,,Parameter evaluation error: name 'inf' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 'inf', 'param2': 'nan', 'param3': '0', 'param4': 'inf', 'param5': 'nan', 'param6': '0'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 2, in <module>
+    param1 = inf
+             ^^^
+NameError: name 'inf' is not defined. Did you mean: 'int'?
+"
 10,"import torch
 import torch.nn as nn
 
@@ -2953,7 +3796,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 2, 'param2': 2, 'param3': 2, 'param4': 2, 'param5': 2, 'param6': 2}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '2', 'param2': '2', 'param3': '2', 'param4': '2', 'param5': '2', 'param6': '2'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 10,"import torch
 import torch.nn as nn
 
@@ -2983,7 +3844,25 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1, 'param2': 1, 'param3': 1, 'param4': 1, 'param5': 1, 'param6': 1}",,,name '_getiter_' is not defined
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1', 'param2': '1', 'param3': '1', 'param4': '1', 'param5': '1', 'param6': '1'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 30, in <module>
+    rnn.cuda()
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in cuda
+    return self._apply(lambda t: t.cuda(device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/rnn.py"", line 283, in _apply
+    ret = super()._apply(fn, recurse)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/nn/modules/module.py"", line 1050, in <lambda>
+    return self._apply(lambda t: t.cuda(device))
+                                 ^^^^^^^^^^^^^^
+  File ""/home/jack/topics-fuzzing-ai/&&/lib/python3.12/site-packages/torch/cuda/__init__.py"", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx
+"
 10,"import torch
 import torch.nn as nn
 
@@ -3013,4 +3892,9 @@ stacked_input = stacked_input.cuda()
 # Test RNN and LSTM on GPU
 rnn_output, _ = rnn(stacked_input)
 lstm_output, _ = lstm(stacked_input)
-gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': 1024, 'param2': 2048, 'param3': 100, 'param4': 4096, 'param5': 10, 'param6': 50}",,,[enforce fail at alloc_cpu.cpp:117] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 16777216 bytes. Error code 12 (Cannot allocate memory)
+gpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])","{'param1': '1024', 'param2': '2048', 'param3': '100', 'param4': '4096', 'param5': '10', 'param6': '50'}",,,"Traceback (most recent call last):
+  File ""/home/jack/topics-fuzzing-ai/temp_code.py"", line 27, in <module>
+    cpu_output = torch.stack([rnn_output[-1], lstm_output[-1]])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [50, 2048] at entry 0 and [50, 4096] at entry 1
+"
