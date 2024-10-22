@@ -1,0 +1,15 @@
+API Error: Error: Incorrect number of parameter sets. Expected 10, got 12
+<parameters>
+12345,67890,float,'inf','nan'
+98765,54321,int,99999,88888
+45678,23456,str,"hello","world"
+11111,22222,bool,True,False
+76543,43215,longlong,2147483647,9223372036854775806
+34234,65423,double,NAN,PINF
+56789,87654,char,a,z
+90112,11213,uint256,BIG_ENDIAN,LITTLE_ENDIAN
+32109,10920,tensor,[True],[False]
+78901,01298,bitslice,9,17
+64567,75642,padding,255,511<|eom_id|><|start_header_id|>assistant
+
+Note: In Python's `numpy` library (which Torch uses under-the-hood), there isn't an explicit type called 'str' which can hold strings as elements like lists do; instead you'd use object types such as str directly within tensor creation functions when dealing string data. Also

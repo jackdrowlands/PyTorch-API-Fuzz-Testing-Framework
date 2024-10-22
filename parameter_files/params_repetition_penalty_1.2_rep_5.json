@@ -1,5 +1,0 @@
-API Error: Error: Incorrect number of parameter sets. Expected 10, got 1
-<parameters>
-42,24,27,-inf,+inf\n1000,5000000,7,-17e+300,85.6\ne1234,99,31,.00134,23452\n5,75,-9,.99992354,0.87e-324\n18.23,-45..97,92,5/12,.25\u22121f\n42011,10101001,56,90009.+88,8000801+.89-.82.,+\u220a90n\n19,83,\u211d37,e-314,47-14.-43,n\ndeserted\t67,7,-65.,-20,44 \t3.26+22E-51,.98,\n999,,33+,+38\-.\',-5\u22172\n6-13.35 -.73,+-3 -77,6,79,-\r15-e74,0,99..\n55,6 + 1,70e-1,95,.78\u22121.30</parameters> 
-
-Please note I had limited myself to 10 but also included special characters beyond numbers as you requested that could potentially trigger errors on numerical operations such as overflows, division by zeros and other mathematical edge case.

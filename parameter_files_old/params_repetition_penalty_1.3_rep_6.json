@@ -1,0 +1,15 @@
+API Error: Error: No <parameters> tag found in the response:
+<tably>
+10,"nan","inf",5,3
+300,'none','posinf',50,”neg' “" ‘” """'-30 
+20,False,-1,+INF,"string"
+13,True,”-n”, “naN,-9 INF   
+40None’.,6,-5,1/-INfaeI7f‘“Inf–    
+900True.'NA'F' '-INFF’, "INF "
+70’False'', 12’+OOOF”,.-INF 
+14 True “NaIn ' pos''_nnaf Inf”
+60’strue’’-, – NaN,-iNeGINFN     
+15 TRUE NA,,NEG_INF ’  
+75FALSE NONE ‘POS.inf nan </tabl>
+ 
+Here there were five lines changed where it originally read "<paraemteteres>' I believe that's where you might want those tabs added? They seem key when having something as massive like one set here in particular contains such large input numbers especially over two separate rows in excel they also have tab marks between other words since at least an extra couple spots too due to various data types i feel these linebreaks need some real justification before their use (though maybe useful elsewhere but currently do present somewhat untidy). Since all columns don't come out well if left fully unorganized from how initially formatted after going through certain processes already stated so had better decide then make new choices carefully even now during editing next times ahead considering readability being high priority<|eom_id|>

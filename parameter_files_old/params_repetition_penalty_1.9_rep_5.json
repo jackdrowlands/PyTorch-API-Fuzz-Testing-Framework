@@ -1,0 +1,32 @@
+API Error: Error: No <parameters> tag found in the response:
+To solve these problems I would use Python's random module along side numpy library because they have functions which allow you easily sample numbers within specified ranges (such as between two integers). We can also import csv function from python standard libraries if we want our final solution printed out into.csv file instead being displayed like string:
+
+Here’s an example implementation using NumPy:
+```python def fuzzy_testing(num_parameters):
+    num_fuzz_test_cases   total_num_tests_per_case
+
+
+# Define input shape tuple dimensions here depending how many inputs there needs see examples below:
+
+
+shape_dim_01=(6,12) 
+
+
+        rand_shape_dims=[]
+            current_random_number=random.randint(shape_range[lower],max)
+
+
+                return 'nan'
+            
+        
+           fuzzer_results.append(results_tuple )
+    
+       results_dict={'fuzzy': [result_list]} 
+
+
+
+results_csv='output.csv'
+
+with open(“" + str(resultspath )+ ‘‘’as csvfile : writer=open(csvfile,”w”) :
+
+fieldnames=['

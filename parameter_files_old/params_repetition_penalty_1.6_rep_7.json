@@ -1,0 +1,13 @@
+API Error: Error: No <parameters> tag found in the response:
+Let's assume we want numbers which could potentially cause problems:
+<numerator>,#somenumerator#,minvalue,maximumValue,nmaxvaluemax value,numeratorminusclampedminimummaximumNumersubtractMaximumNnumberMinClamper maximumValuenumberaddedsomeNumberSomeotherrandomnumberswithoutsimilaritysomeOtherNumerotherRandomNumberswithoutsimiliartyrandomnumeraddedinbetweenvalueswhichcauseissueforthisAPIcall#
+Here’s an updated attempt at creating some numberseither sideof themultiplicationoperator*,
+7e+307,#56.,6.e30330,.99999,<.01>.0123123434567891012345623456789.-13/14/-14353456789./17###.<##.#21–22..34**37/.43#.49**
+and hereisoutputasaCSVfile:
+
+parameter,csv file (further modified) 
+
+30012,,12345,*500**,200*,90
+
+
+And finallyhere

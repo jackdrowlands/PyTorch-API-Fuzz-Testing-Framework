@@ -5,46 +5,31 @@ import json
 from typing import List, Union
 import re
 import csv
+import pickle
 
-def generate_or_load_test_program(num_apis: int = 3, model: str = "nousresearch/hermes-3-llama-3.1-405b:free", max_tokens: int = 500) -> Union[str, List[str]]:
-    csv_file = 'test_programs.csv'
+def generate_or_load_test_program(id : int, num_apis: int = 3, model: str = "google/gemini-pro-1.5-exp", max_tokens: int = 1000) -> Union[str, List[str]]:
+    pkl_file = f'program_files/program_{id}.pkl'
     
-    if os.path.exists(csv_file):
-        with open(csv_file, 'r') as f:
-            reader = csv.DictReader(f)
-            programs = list(reader)
-        
-        for program in programs:
-            if int(program['num_apis']) == num_apis:
-                return {
-                    "code": program['code'],
-                    "num_of_parameters": int(program['num_of_parameters']) if program['num_of_parameters'] else 0
-                }
+    if os.path.exists(pkl_file):
+        with open(pkl_file, 'rb') as f:
+            program = pickle.load(f)
+        return program
+            
     
     # If no matching program found, generate a new one
     program = generate_test_program(num_apis, model, max_tokens)
     
-    # Save the new program to CSV
-    if not os.path.exists(csv_file):
-        with open(csv_file, 'w', newline='') as f:
-            writer = csv.DictWriter(f, fieldnames=['num_apis', 'code', 'num_of_parameters'])
-            writer.writeheader()
-    
-    with open(csv_file, 'a', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=['num_apis', 'code', 'num_of_parameters'])
-        writer.writerow({
-            'num_apis': num_apis,
-            'code': program['code'],
-            'num_of_parameters': program['num_of_parameters']
-        })
+    # Save the new program to pkl file
+    with open(pkl_file, 'wb') as f:
+        pickle.dump(program, f)
     
     return program
 
 
 def generate_test_program(
     num_apis: int = 3,
-    model: str = "nousresearch/hermes-3-llama-3.1-405b:free",
-    max_tokens: int = 500
+    model: str = "google/gemini-pro-1.5-exp",
+    max_tokens: int = 1000
 ) -> Union[str, List[str]]:
     """
     Generate a test program using random PyTorch APIs using an LLM.
@@ -67,6 +52,7 @@ def generate_test_program(
         "torch.nn.Linear", "torch.nn.Conv2d", "torch.nn.RNN", "torch.nn.LSTM"
     ]
 
+
     prompt = f"""Generate a Python test program using {num_apis} random PyTorch APIs. 
 
     Use the following APIs (you can use each more than once if needed):
@@ -77,6 +63,7 @@ def generate_test_program(
     The method of testing is fuzz testing using CPU compared to GPU responses to determine if there was an error.
     Please include both CPU and GPU sections, writing the output to "cpu_output" and "gpu_output".
     Additionally include the number of parameters in your code as "num_of_parameters".
+    Include a maximum of 10 parameters.
     Please do not define the parameters, only include them as "param`n`".
 
     Here is an example program:
@@ -121,6 +108,7 @@ def generate_test_program(
         
         response.raise_for_status()
         result = response.json()
+        print(result)
         
         content = result['choices'][0]['message']['content']
         

@@ -1,0 +1,9 @@
+API Error: Error: Incorrect number of parameter sets. Expected 10, got 5
+I see you've increased num_params by 2 from previous request! Here's my attempt at creating additional & edge cases while considering allowed values:
+
+<parameters>
+10000, 1000, torch.randn(), epsilon=1e3230\n, epsilon=256\n        
+16384,25134,tensor([-43.23222298]),epsilon= 256, epsilon=-65536        
+9e66  ,-1575-94 tensor([50]), \epi -32768. epsilon=-8000          
+900      tensor([940484875].view(-26),(189221,-14224)e size=[15755,&874876679970705144.12776069],ep               sion=-0\n        , epsilon=-256942        
+19899988    tensor(\vpioffos31141225t   .64734298921183.Jicotd &83255321Jdovaoo,-24874801171873613262), Epsilon=155211960ep

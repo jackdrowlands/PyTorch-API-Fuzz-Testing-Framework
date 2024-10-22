@@ -168,3 +168,5 @@ env/
 parameter_files/
 parameter_files_405/
 source/
+
+results.pkl

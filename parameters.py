@@ -6,6 +6,7 @@ import json
 from pydantic import BaseModel, Field, conlist
 import csv
 import re
+import pickle
 
 def create_json_schema(num_parameter_sets, num_params_per_set):
     properties = {}
@@ -90,7 +91,7 @@ def create_or_load_fuzz_test_parameters(
     max_tokens: int = 10000,
     **kwargs: Any
 ) -> Union[List[List[str]], str]:
-    csv_file = f'fuzz_test_parameters_{id}_{num_params}_{num_sets}.csv'
+    csv_file = f'parameter_files/fuzz_test_parameters_{id}_{num_params}_{num_sets}.csv'
     
     if os.path.exists(csv_file):
         with open(csv_file, 'r') as f:

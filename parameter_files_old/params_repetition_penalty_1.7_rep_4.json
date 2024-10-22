@@ -1,0 +1,16 @@
+API Error: Error: No <parameters> tag found in the response:
+# We can use random generation library like numpy.random.mtrand.RandomState which offers extensive set functionalities such as shuffle() function (returns shuffled version), sample(a=n,size=len(population): samples elements from popoulation) etc..
+
+To do so we have modified our previous solution accordingly 
+
+```python import itertools,pandas,numpy,itertools,random,re,math
+
+
+def gen_parameter_combinations(num_parameters,num_generate):
+    combinations=list(itertools.product(*[[range(101)]*int(math.ceil((number + number)/20))* [i+math.floor(i/len(range(int(number))))for i,namevalue(name=name,int())])])
+
+    
+    
+
+params_set=[]
+max_num=min([(n*(p)**a)-min(p,len(c))+r*n-(y*a**(m-x-n**b)%f*c)/(c+(t+r*s*x*w))-w*h*v+x+z+v*i*y*z/j)*s*r+p/g+k*e*f/i*m*g/s/t/d/w/r/c/l/o

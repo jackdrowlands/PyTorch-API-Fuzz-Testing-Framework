@@ -1,0 +1,9 @@
+API Error: Error: Incorrect number of parameter sets. Expected 10, got 6
+<parameters>
+1,2,1,1,10\n
+1,2,-1,1,9999\n
+10001,10002,99899,10000,-10000\n
+33333,44444,'a',100000001,50000000.12345\n
+9,3,6e+10,3.e-4,0\ne+20,500,9.5i,10,7,\n0,1,'\xff\xfe',42,2000000003\n10,10,int(0),float("inf"),float("-NAN")\n17,26,30,f'5.2{"f" * 250}',5\n23,(1,2,6),24,"\\xA",29\n15,slice(None, None,None),28,"[.]",30\n-35,45,47,q'["]',52,/dev/null\n22,pickle.dumps([]),42,";'",None]/dev/null\n
+
+Note the use of various types not typically found in most software (integers too high, floating point numbers larger than 32 bits should be treated as infinity as per IEEE 754 32 bit float spec.).
