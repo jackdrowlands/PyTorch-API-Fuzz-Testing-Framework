@@ -7,7 +7,7 @@ import re
 import csv
 import pickle
 
-def generate_or_load_test_program(id : int, num_apis: int = 3, model: str = "google/gemini-pro-1.5-exp", max_tokens: int = 1000) -> Union[str, List[str]]:
+def generate_or_load_test_program(id : int, api: str, num_apis: int = 3, model: str = "openai/gpt-4o-mini", max_tokens: int = 1000) -> Union[str, List[str]]:
     pkl_file = f'program_files/program_{id}.pkl'
     
     if os.path.exists(pkl_file):
@@ -17,7 +17,7 @@ def generate_or_load_test_program(id : int, num_apis: int = 3, model: str = "goo
             
     
     # If no matching program found, generate a new one
-    program = generate_test_program(num_apis, model, max_tokens)
+    program = generate_test_program(id, api, num_apis, model, max_tokens)
     
     # Save the new program to pkl file
     with open(pkl_file, 'wb') as f:
@@ -27,7 +27,9 @@ def generate_or_load_test_program(id : int, num_apis: int = 3, model: str = "goo
 
 
 def generate_test_program(
-    num_apis: int = 3,
+    id: int,
+    api: str,
+    num_apis: int = 1,
     model: str = "google/gemini-pro-1.5-exp",
     max_tokens: int = 1000
 ) -> Union[str, List[str]]:
@@ -43,40 +45,31 @@ def generate_test_program(
         Union[str, List[str]]: The generated test program as a string, or an error message.
     """
 
-    # List of common PyTorch APIs
-    pytorch_apis = [
-        "torch.tensor", "torch.rand", "torch.zeros", "torch.ones",
-        "torch.cat", "torch.stack", "torch.matmul", "torch.mm",
-        "torch.sum", "torch.mean", "torch.max", "torch.min",
-        "torch.relu", "torch.sigmoid", "torch.tanh", "torch.softmax",
-        "torch.nn.Linear", "torch.nn.Conv2d", "torch.nn.RNN", "torch.nn.LSTM"
-    ]
 
 
-    prompt = f"""Generate a Python test program using {num_apis} random PyTorch APIs. 
+    prompt = f"""Generate a Python test program to test this PyTorch API. Here is the API signature:
+    {api}
 
-    Use the following APIs (you can use each more than once if needed):
-    {', '.join(random.sample(pytorch_apis, num_apis))}
 
     Provide only the Python code without any explanations in a markdown codeblock.
 
     The method of testing is fuzz testing using CPU compared to GPU responses to determine if there was an error.
     Please include both CPU and GPU sections, writing the output to "cpu_output" and "gpu_output".
     Additionally include the number of parameters in your code as "num_of_parameters".
-    Include a maximum of 10 parameters.
-    Please do not define the parameters, only include them as "param`n`".
+    Please do not define or give values to the parameters, only include them as "param`n`".
 
     Here is an example program:
     ```python
     import torch
 
     x = torch.randn(param1, param2, dtype=param3)
-    print("Intermediate: ", torch.log(x * 2 - 1)) # Intermediate
-    cpu_output = torch.matrix_exp(torch.log(x * 2 - 1)) # on CPU
-    x = x.cuda()
-    gpu_output = torch.matrix_exp(torch.log(x * 2 - 1)) # on GPU
+    y = x.cuda()
 
-    num_of_parameters=3
+    cpu_output = torch.matrix_exp(torch.log(x * param4 - param5)) # on CPU
+
+    gpu_output = torch.matrix_exp(torch.log(y * param4 - param5)) # on GPU
+
+    num_of_parameters=5
     ```
     """
 
@@ -94,6 +87,7 @@ def generate_test_program(
         }
     }
 
+
     headers = {
         "Authorization": f"Bearer {os.environ.get('OPENROUTER_API_KEY')}",
         "Content-Type": "application/json"
@@ -109,6 +103,10 @@ def generate_test_program(
         response.raise_for_status()
         result = response.json()
         print(result)
+
+        # Save full response to json file
+        with open(f'program_API_files/program_{id}.json', 'w') as f:
+            json.dump(result, f)
         
         content = result['choices'][0]['message']['content']
         

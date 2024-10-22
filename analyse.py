@@ -2,6 +2,7 @@ import pickle
 import pandas as pd
 import matplotlib.pyplot as plt
 from collections import Counter
+import numpy as np
 
 def load_results(file_path='results.pkl'):
     with open(file_path, 'rb') as f:
@@ -26,10 +27,15 @@ def analyze_results(results):
     # Detailed error analysis
     error_df = df[df['error'].notnull()].copy()
     error_df['error_type'] = error_df['error'].apply(lambda x: x.split('\n')[0] if isinstance(x, str) else str(x))
+    error_df['error_details'] = error_df['error'].apply(lambda x: '\n'.join(x.split('\n')[1:]) if isinstance(x, str) else '')
     error_counts = error_df['error_type'].value_counts()
     
-    print("\nTop 10 most common error types:")
-    print(error_counts.head(10))
+    print("\nTop 10 most common error types with details:")
+    for error_type, count in error_counts.head(10).items():
+        print(f"\n{error_type}: {count}")
+        error_details = error_df[error_df['error_type'] == error_type]['error_details'].value_counts().head(1)
+        if not error_details.empty:
+            print(f"Most common details:\n{error_details.index[0]}")
     
     # Plot error distribution
     plt.figure(figsize=(12, 6))
@@ -92,6 +98,17 @@ def analyze_results(results):
     plt.tight_layout()
     plt.savefig('mismatch_parameter_types.png')
     plt.close()
+    
+    # Print mismatched programs and parameters
+    print("\nMismatched programs and parameters (sorted by difference):")
+    for idx, row in mismatch_df.iterrows():
+        print(f"\nProgram ID: {row['program_id']}")
+        print("Code:")
+        print(row['code'])
+        print("Parameters:")
+        for key, value in row['params'].items():
+            print(f"{key}: {value}")
+        print("-" * 50)
     
     return df
 

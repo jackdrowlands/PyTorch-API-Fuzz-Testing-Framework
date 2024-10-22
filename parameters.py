@@ -46,10 +46,16 @@ def create_json_schema(num_parameter_sets, num_params_per_set):
         "strict": True
     }
 
-def extract_responses(completion_response):
+def extract_responses(completion_response, id):
     # Extract the content from the response
     content = completion_response.choices[0].message.content
     
+    with open(f'parameter_API_files/completion_{id}.txt', 'w') as f:
+        f.write(content)
+    
+    with open(f'parameter_API_files/usage_{id}.txt', 'w') as f:
+        f.write(str(completion_response.usage))
+
     # Initialize the list to hold all parameter sets
     all_responses = []
     
@@ -99,7 +105,7 @@ def create_or_load_fuzz_test_parameters(
             return list(reader)
     
     # If no matching parameters found, generate new ones
-    parameters = create_fuzz_test_parameters(code_to_test, num_params, num_sets, model, max_tokens, **kwargs)
+    parameters = create_fuzz_test_parameters(code_to_test, num_params, num_sets, model, max_tokens, id, **kwargs)
     
     # Save the new parameters to CSV
     with open(csv_file, 'w', newline='') as f:
@@ -115,6 +121,7 @@ def create_fuzz_test_parameters(
     num_sets: int = 10, # Number of sets of parameters to generate
     model: str = "gpt-4o-mini", # Model to use
     max_tokens: int = 10000, # Maximum number of tokens to generate
+    id: int = 0, # ID for the generated parameters
     **kwargs: Any # Additional parameters to pass to the model
 ) -> Union[List[List[str]], str]:
     """
@@ -157,7 +164,7 @@ num_sets = {num_sets}
         **kwargs
     )
 
-    return extract_responses(completion)
+    return extract_responses(completion, id)
     # except Exception as e:
     #     print(str(e))
     #     return f"Error: {str(e)}"

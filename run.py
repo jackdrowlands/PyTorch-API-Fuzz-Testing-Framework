@@ -10,6 +10,7 @@ import signal
 import subprocess
 import math
 import pickle
+import random
 
 from RestrictedPython import compile_restricted, safe_builtins
 from parameters import create_fuzz_test_parameters, create_or_load_fuzz_test_parameters
@@ -18,7 +19,10 @@ from programs import generate_test_program, generate_or_load_test_program
 def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> List[dict]:
     results = []
     for params in params_list:
-        param_dict = {f'param{i+1}': param for i, param in enumerate(params)}
+        # Create a dictionary with the parameters
+        # if the parameter is em
+        param_dict = {f'param{i+1}': param if param != '' else None for i, param in enumerate(params)}
+
         
         # Create a temporary Python file with the code and parameters
         with open('temp_code.py', 'w') as f:
@@ -52,7 +56,8 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
                     print(f"Error parsing output JSON: {str(e)}")
                     print(f"Raw output: {result.stdout}")
             else:
-                print("Empty output from executed code")
+                # Print the last 100 characters of the error message
+                # print(f"Error running PyTorch code: {result.stderr[-100:]}")
                 results.append({
                         'params': param_dict,
                         'result': None,
@@ -162,16 +167,21 @@ def save_results_to_csv(results: List[dict], filename: str):
         for row in results:
             writer.writerow(row)
 
-def main(num_programs: int = 50, num_apis: int = 3):
+def main(num_programs: int = 1583, num_apis: int = 1):
     """
     Generate, run, and record results for multiple test programs.
     """
     results = []
+    # Read in a list of PyTorch APIs
+    with open('api_def_torch.txt', 'r') as f:
+        apis = f.read().splitlines()
 
     for i in range(num_programs):
-        print(f"Generating and running program {i+1}/{num_programs}")
+        # Choose the next API to test
+        api = apis[i % len(apis)]
+        print(f"Generating and running program {i+1}/{num_programs} with the following API: {api}")
         
-        test_program = generate_or_load_test_program(id=i, num_apis=num_apis)
+        test_program = generate_or_load_test_program(id=i, api=api, num_apis=num_apis)
         if isinstance(test_program["code"], str) and not test_program["code"].startswith("Error"):
             num_param_sets = math.floor(90 / (test_program["num_of_parameters"] + 1))
             print(f"Running program with {num_param_sets} parameter sets")

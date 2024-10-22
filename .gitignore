@@ -170,3 +170,8 @@ parameter_files_405/
 source/
 
 results.pkl
+parameter_API_files/
+program_files/
+program_API_files/
+parameter_files_old/
+parameter_files_405/
