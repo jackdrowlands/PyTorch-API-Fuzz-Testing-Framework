@@ -158,8 +158,6 @@ When generating parameters for torch.randn() or random tensor operations:
         ONLY use these datatypes:
         - torch.float32 (default)
         - torch.float64
-        - torch.float16
-        - torch.bfloat16
         
         DO NOT use these datatypes with random operations:
         - torch.int8, torch.uint8, torch.int16, torch.int32, torch.int64

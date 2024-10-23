@@ -51,7 +51,7 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]], id : i
         
         # Create a temporary Python file with the code and parameters
         with open(f"temp_code/temp_code_{id}.py", 'w') as f:
-            f.write(f"import torch\nimport json\nimport math\ninf = math.inf\n")
+            f.write(f"import torch\nimport json\nimport math\ninf = math.inf\nimport resource\nresource.setrlimit(resource.RLIMIT_AS, (4 * 1024 * 1024 * 1024, -1))\n")
             for key, value in param_dict.items():
                 f.write(f"{key} = {value}\n")
             f.write(code)
@@ -70,7 +70,7 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]], id : i
                     comparison = torch.allclose(torch.tensor(output['cpu_output']), 
                                         torch.tensor(output['gpu_output']), 
                                         rtol=1e-3, atol=1e-6)
-                    print(f"CPU and GPU outputs are {'equal' if comparison else 'not equal'}")
+                    # print(f"CPU and GPU outputs are {'equal' if comparison else 'not equal'}")
                     results.append({
                         'params': param_dict,
                         'result': f"CPU and GPU outputs are {'equal' if comparison else 'not equal'}",
@@ -82,7 +82,7 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]], id : i
                     print(f"Raw output: {result.stdout}")
             else:
                 # Print the last 100 characters of the error message
-                print(f"Error running PyTorch code: {result.stderr[-100:]}")
+                # print(f"Error running PyTorch code: {result.stderr[-100:]}")
                 results.append({
                         'params': param_dict,
                         'result': None,
@@ -197,13 +197,13 @@ def save_results_to_csv(results: List[dict], filename: str):
 
 def process_single_api(i, api, num_apis):
     """Process a single API test case"""
-    print(f"Generating and running program {i+1} with the following API: {api}")
+    # print(f"Generating and running program {i+1} with the following API: {api}")
     
     try:
         test_program = generate_or_load_test_program(id=i, api=api, num_apis=num_apis)
         if isinstance(test_program["code"], str) and not test_program["code"].startswith("Error"):
             num_param_sets = math.floor(90 / (test_program["num_of_parameters"] + 1))
-            print(f"Running program with {num_param_sets} parameter sets")
+            # print(f"Running program with {num_param_sets} parameter sets")
             params = create_or_load_fuzz_test_parameters(
                 id=i, 
                 code_to_test=test_program["code"], 
@@ -239,10 +239,13 @@ def process_single_api(i, api, num_apis):
             'error': f'Exception: {str(e)}'
         }]
 
-def main(num_programs: int = 100, num_apis: int = 1, start_id: int = 0, max_workers: int = 10):
+def main(num_programs: int = 1584, num_apis: int = 1, start_id: int = 0, max_workers: int = 12):
     """
     Generate, run, and record results for multiple test programs using multithreading.
     """
+    import time
+    from datetime import timedelta
+
     # Read in a list of PyTorch APIs
     with open('api_def_torch.txt', 'r') as f:
         apis = f.read().splitlines()
@@ -252,9 +255,42 @@ def main(num_programs: int = 100, num_apis: int = 1, start_id: int = 0, max_work
     # Create a lock for thread-safe printing
     print_lock = threading.Lock()
     
+    # Track timing information
+    start_time = time.time()
+    completed_tasks = 0
+    total_tasks = num_programs - start_id
+    
     def thread_safe_print(*args, **kwargs):
         with print_lock:
             print(*args, **kwargs)
+
+    def format_time_remaining(seconds):
+        """Format remaining time in a human-readable countdown format"""
+        if seconds < 60:
+            return f"{int(seconds)} seconds"
+        elif seconds < 3600:
+            minutes = int(seconds / 60)
+            return f"{minutes} minute{'s' if minutes != 1 else ''}"
+        else:
+            hours = int(seconds / 3600)
+            minutes = int((seconds % 3600) / 60)
+            if minutes == 0:
+                return f"{hours} hour{'s' if hours != 1 else ''}"
+            return f"{hours} hour{'s' if hours != 1 else ''} {minutes} minute{'s' if minutes != 1 else ''}"
+
+    def update_eta():
+        current_time = time.time()
+        elapsed_time = current_time - start_time
+        if completed_tasks == 0:
+            return "Calculating..."
+        
+        avg_time_per_task = elapsed_time / completed_tasks
+        remaining_tasks = total_tasks - completed_tasks
+        remaining_time = avg_time_per_task * remaining_tasks
+        
+        return (f"Progress: {completed_tasks}/{total_tasks} ({(completed_tasks/total_tasks)*100:.1f}%) "
+                f"| Remaining time: {format_time_remaining(remaining_time)} "
+                f"| Elapsed: {format_time_remaining(elapsed_time)}")
 
     # Create a ThreadPoolExecutor
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -270,15 +306,21 @@ def main(num_programs: int = 100, num_apis: int = 1, start_id: int = 0, max_work
             try:
                 results = future.result()
                 all_results.extend(results)
+                completed_tasks += 1
                 thread_safe_print(f"Completed processing program {i+1}")
+                thread_safe_print(update_eta())
             except Exception as e:
                 thread_safe_print(f"Error processing program {i+1}: {str(e)}")
+                completed_tasks += 1
+                thread_safe_print(update_eta())
 
     # Write results to pickle
     with open('results.pkl', 'wb') as pickle_file:
         pickle.dump(all_results, pickle_file)
 
-    print(f"Results have been written to results.pkl")
+    total_time = time.time() - start_time
+    print(f"\nResults have been written to results.pkl")
+    print(f"Total execution time: {format_time_remaining(total_time)}")
 
 if __name__ == "__main__":
     main()
