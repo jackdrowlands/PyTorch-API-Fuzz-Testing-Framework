@@ -1,3 +1,4 @@
+import concurrent
 import torch
 import sys
 from io import StringIO
@@ -11,6 +12,8 @@ import subprocess
 import math
 import pickle
 import random
+from concurrent.futures import ThreadPoolExecutor
+import threading
 
 from RestrictedPython import compile_restricted, safe_builtins
 from parameters import create_fuzz_test_parameters, create_or_load_fuzz_test_parameters
@@ -29,7 +32,7 @@ def run_or_load_pytorch_code_with_params(code: str, params: List[str], id: int) 
         return results
 
     # Run the PyTorch code with the parameters
-    results = run_pytorch_code_with_params(code, params)
+    results = run_pytorch_code_with_params(code, params, id)
 
     # Save the results to a pickle file
     with open(pkl_file, 'wb') as f:
@@ -38,7 +41,7 @@ def run_or_load_pytorch_code_with_params(code: str, params: List[str], id: int) 
     return results
 
 
-def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> List[dict]:
+def run_pytorch_code_with_params(code: str, params_list: List[List[str]], id : int) -> List[dict]:
     results = []
     for params in params_list:
         # Create a dictionary with the parameters
@@ -47,8 +50,8 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
 
         
         # Create a temporary Python file with the code and parameters
-        with open('temp_code.py', 'w') as f:
-            f.write(f"import torch\nimport json\n")
+        with open(f"temp_code/temp_code_{id}.py", 'w') as f:
+            f.write(f"import torch\nimport json\nimport math\ninf = math.inf\n")
             for key, value in param_dict.items():
                 f.write(f"{key} = {value}\n")
             f.write(code)
@@ -56,7 +59,7 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
 
         # Run the code in a separate process with resource limits
         try:
-            result = subprocess.run([sys.executable, 'temp_code.py'], 
+            result = subprocess.run([sys.executable, f"temp_code/temp_code_{id}.py"], 
                                     capture_output=True, text=True, timeout=90)
             
             
@@ -79,7 +82,7 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
                     print(f"Raw output: {result.stdout}")
             else:
                 # Print the last 100 characters of the error message
-                # print(f"Error running PyTorch code: {result.stderr[-100:]}")
+                print(f"Error running PyTorch code: {result.stderr[-100:]}")
                 results.append({
                         'params': param_dict,
                         'result': None,
@@ -89,6 +92,7 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
 
             
         except subprocess.TimeoutExpired:
+            print("CPU time limit exceeded")
             results.append({
                 'params': param_dict,
                 'result': None,
@@ -96,6 +100,7 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> Lis
                 'error': "CPU time limit exceeded"
             })
         except Exception as e:
+            print(f"Error running PyTorch code: {str(e)}")
             results.append({
                 'params': param_dict,
                 'result': None,
@@ -189,49 +194,89 @@ def save_results_to_csv(results: List[dict], filename: str):
         for row in results:
             writer.writerow(row)
 
-def main(num_programs: int = 1583, num_apis: int = 1, start_id: int = 0):
-    """
-    Generate, run, and record results for multiple test programs.
-    """
-    results = []
-    # Read in a list of PyTorch APIs
-    with open('api_def_torch.txt', 'r') as f:
-        apis = f.read().splitlines()
 
-    for i in range(start_id, num_programs):
-        # Choose the next API to test
-        api = apis[i % len(apis)]
-        print(f"Generating and running program {i+1}/{num_programs} with the following API: {api}")
-        
+def process_single_api(i, api, num_apis):
+    """Process a single API test case"""
+    print(f"Generating and running program {i+1} with the following API: {api}")
+    
+    try:
         test_program = generate_or_load_test_program(id=i, api=api, num_apis=num_apis)
         if isinstance(test_program["code"], str) and not test_program["code"].startswith("Error"):
             num_param_sets = math.floor(90 / (test_program["num_of_parameters"] + 1))
             print(f"Running program with {num_param_sets} parameter sets")
-            params = create_or_load_fuzz_test_parameters(id=i, code_to_test=test_program["code"], num_params=test_program["num_of_parameters"], num_sets=num_param_sets)
+            params = create_or_load_fuzz_test_parameters(
+                id=i, 
+                code_to_test=test_program["code"], 
+                num_params=test_program["num_of_parameters"], 
+                num_sets=num_param_sets
+            )
             test_results = run_or_load_pytorch_code_with_params(test_program["code"], params, id=i)
-            for result in test_results:
-                results.append({
-                    'program_id': i+1,
-                    'code': test_program["code"],
-                    'params': result['params'],
-                    'result': result['result'],
-                    'output': result['output'],
-                    'error': result['error']
-                })
+            return [{
+                'program_id': i+1,
+                'code': test_program["code"],
+                'params': result['params'],
+                'result': result['result'],
+                'output': result['output'],
+                'error': result['error']
+            } for result in test_results]
         else:
-            results.append({
+            return [{
                 'program_id': i+1,
                 'code': test_program["code"],
                 'params': None,
                 'result': None,
                 'output': '',
                 'error': 'Failed to generate program'
-            })
+            }]
+    except Exception as e:
+        print(f"Error processing API {api} (id={i}): {str(e)}")
+        return [{
+            'program_id': i+1,
+            'code': None,
+            'params': None,
+            'result': None,
+            'output': '',
+            'error': f'Exception: {str(e)}'
+        }]
 
+def main(num_programs: int = 100, num_apis: int = 1, start_id: int = 0, max_workers: int = 10):
+    """
+    Generate, run, and record results for multiple test programs using multithreading.
+    """
+    # Read in a list of PyTorch APIs
+    with open('api_def_torch.txt', 'r') as f:
+        apis = f.read().splitlines()
+
+    all_results = []
+    
+    # Create a lock for thread-safe printing
+    print_lock = threading.Lock()
+    
+    def thread_safe_print(*args, **kwargs):
+        with print_lock:
+            print(*args, **kwargs)
+
+    # Create a ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # Submit all tasks
+        future_to_api = {
+            executor.submit(process_single_api, i, apis[i % len(apis)], num_apis): i 
+            for i in range(start_id, num_programs)
+        }
+        
+        # Process completed tasks
+        for future in concurrent.futures.as_completed(future_to_api):
+            i = future_to_api[future]
+            try:
+                results = future.result()
+                all_results.extend(results)
+                thread_safe_print(f"Completed processing program {i+1}")
+            except Exception as e:
+                thread_safe_print(f"Error processing program {i+1}: {str(e)}")
 
     # Write results to pickle
     with open('results.pkl', 'wb') as pickle_file:
-        pickle.dump(results, pickle_file)
+        pickle.dump(all_results, pickle_file)
 
     print(f"Results have been written to results.pkl")
 

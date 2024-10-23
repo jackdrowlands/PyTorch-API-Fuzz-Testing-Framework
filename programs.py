@@ -32,7 +32,7 @@ def generate_test_program(
     api: str,
     num_apis: int = 1,
     model: str = "google/gemini-pro-1.5-exp",
-    max_tokens: int = 1000
+    max_tokens: int = 16384
 ) -> Union[str, List[str]]:
     """
     Generate a test program using random PyTorch APIs using an LLM.
@@ -58,27 +58,33 @@ Please create a Python test program based on this API signature. Follow these gu
 2. Write the output to variables named "cpu_output" and "gpu_output".
 3. Include the number of parameters in your code as "num_of_parameters".
 4. Do not define or give values to the parameters. Instead, use "param1", "param2", etc., as placeholders.
-5. Add comments to indicate what the parameters are, their expected types, and bounds at the end of the python code.
+5. Add comments to indicate what the parameters are, their expected types, and bounds at the end of the python code. If there are few values, explicitly write out all the possible values. For dtypes, specify the possible data types.
 6. Provide only the Python code without any explanations.
 7. Place the code in a markdown codeblock.
+
+There must be at least the following variables in your code:
+- cpu_output
+- gpu_output
+- num_of_parameters
 
 Before writing the code, analyze the API signature in <analysis> tags:
 
 1. Identify the function name
-2. For each parameter:
-   - List its name
-   - Note its type
-   - Mention any default values or if it's optional
-3. Identify the return type(s)
-4. Consider the number of parameters and how this affects the test structure
-5. Think about potential edge cases or specific requirements of the API
-6. Plan the structure of the test program:
+2. Identify the return type(s)
+3. Think about potential edge cases or specific requirements of the API
+4. Plan the structure of the test program:
    a. Import necessary libraries (torch)
    b. Create input tensor(s) on CPU
    c. Move tensor(s) to GPU
    d. Perform the API operation on CPU
    e. Perform the same operation on GPU
    f. Include the number of parameters
+5. Write the Python code based on the analysis in the code block.
+    a. Use the provided API signature and placeholder parameters (param1, param2, etc.)
+    b. Write the number of parameters at the end of the code.
+    c. Add comments to explain the purpose of each parameter
+    d. Include the expected type and range of each parameter
+
 
 Please generate the Python test program based on this analysis. Remember to follow the guidelines provided earlier.
 Here is the PyTorch API signature you need to test:
@@ -106,8 +112,6 @@ torch.matrix_exp(input)
    e. Perform matrix_exp operation on GPU
    f. Include number of parameters
 
-5. Number of parameters: 5 (including dtype)
-
 </analysis>
 
 ```python
@@ -123,11 +127,11 @@ gpu_output = torch.matrix_exp(torch.log(y * param4 - param5)) # on GPU
 num_of_parameters=5
 
 # Parameters:
-#   - param1: an integer representing the first dimension of the input tensor
-#   - param2: an integer representing the second dimension of the input tensor
-#   - param3: dtype parameter, optional, specifies the data type of the input tensor
-#   - param4: scalar value used in the calculation
-#   - param5: scalar value used in the calculation
+#   - param1: an integer representing the first dimension of the input tensor : Range = [1, 10000] : Type = int
+#   - param2: an integer representing the second dimension of the input tensor (Must be a square tensor) : Range = [param1, param1] : Type = int
+#   - param3: dtype parameter, optional, specifies the data type of the input tensor : Range = ['torch.float32', 'torch.float64', 'torch.float16', 'torch.bfloat16', 'torch.int8', 'torch.uint8', 'torch.int16', 'torch.int32', 'torch.int64', 'torch.bool', 'torch.complex64', 'torch.complex128'] : Type = torch.dtype
+#   - param4: scalar value used in the calculation : Range = (-math.inf, math.inf) : Type = float
+#   - param5: scalar value used in the calculation : Range = (-math.inf, math.inf)  : Type = float
 ```"""
 
     messages = [
@@ -157,6 +161,7 @@ Here is the PyTorch API signature you need to test:
         "Content-Type": "application/json"
     }
 
+
     try:
         response = requests.post(
             url="https://openrouter.ai/api/v1/chat/completions",
@@ -166,7 +171,6 @@ Here is the PyTorch API signature you need to test:
         
         response.raise_for_status()
         result = response.json()
-        print(result)
 
         # Save full response to json file
         with open(f'program_API_files/program_{id}.json', 'w') as f:
@@ -202,21 +206,25 @@ Here is the PyTorch API signature you need to test:
         }
 
     except requests.exceptions.RequestException as e:
+        print(f"Error: {str(e)}")
         return {
             "code": f"Error: {str(e)}",
             "num_of_parameters": None
         }
     except json.JSONDecodeError:
+        print("Error: Invalid JSON response")
         return {
             "code": "Error: Invalid JSON response",
             "num_of_parameters": None
             }
     except KeyError as e:
+        print(f"Error: Missing key in response: {str(e)}")
         return {
             "code": f"Error: Missing key in response: {str(e)}",
             "num_of_parameters": None
             }
     except Exception as e:
+        print(f"Unexpected error: {str(e)}")
         return {
             "code": f"Unexpected error: {str(e)}",
             "num_of_parameters": None

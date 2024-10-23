@@ -94,7 +94,7 @@ def create_or_load_fuzz_test_parameters(
     num_params: int,
     num_sets: int = 10,
     model: str = "gpt-4o-mini",
-    max_tokens: int = 10000,
+    max_tokens: int = 16384,
     **kwargs: Any
 ) -> Union[List[List[str]], str]:
     csv_file = f'parameter_files/fuzz_test_parameters_{id}_{num_params}_{num_sets}.csv'
@@ -121,7 +121,7 @@ def create_fuzz_test_parameters(
     num_params: int, # Number of parameters to generate
     num_sets: int = 10, # Number of sets of parameters to generate
     model: str = "gpt-4o-mini", # Model to use
-    max_tokens: int = 10000, # Maximum number of tokens to generate
+    max_tokens: int = 16384, # Maximum number of tokens to generate
     id: int = 0, # ID for the generated parameters
     **kwargs: Any # Additional parameters to pass to the model
 ) -> Union[List[List[str]], str]:
@@ -140,15 +140,38 @@ def create_fuzz_test_parameters(
     # Prepare the messages
     messages = [
         {"role": "system", "content": ""},
-        {"role": "user", "content": f"""You are tasked with generating 10 unique and novel sets of 3 parameters for a PyTorch API call. The purpose is to fuzz test the API call.
+        {"role": "user", "content": f"""You are an AI assistant tasked with generating parameter sets for fuzz testing a PyTorch API call. Your goal is to create unique and novel sets of parameters that will test the robustness and error handling of the API.
 
-Your task is to create parameters that will test the robustness and error handling of this API call. Please consider the requirements of the API call and the allowed range of values for each parameter.
+Instructions:
+1. Generate unique and novel parameter sets that will test various edge cases and potential error conditions.
+2. Ensure that each parameter is of the correct data type for the API call.
+3. Explicity define the data type for each parameter. For example: "param1": "str('fro')", "param2": "int(42)", "param3": "float(3.14)", "param4": "bool(True)", "param5": "torch.float32".
+4. Do not use single quotes around numeric, type, or boolean parameters. For example: "param1": "torch.float32".
+5. Ensure that the program will not exceed 4GB of memory usage when using these parameters.
+6. Keep tensor dimensions under 1000.
+7. Make sure all values are within the allowed range for each parameter.
+8. Create exactly the number of parameter sets specified, ensuring each set is unique.
+9. Remember that these parameters will be injected into the code in the order they are generated.
+10. Do not reference any later parameters in the code. For example, do not use "param2" in the definition of "param1".
+
+When generating parameters for torch.randn() or random tensor operations:
+        ONLY use these datatypes:
+        - torch.float32 (default)
+        - torch.float64
+        - torch.float16
+        - torch.bfloat16
+        
+        DO NOT use these datatypes with random operations:
+        - torch.int8, torch.uint8, torch.int16, torch.int32, torch.int64
+        - torch.bool, torch.char, torch.byte, torch.short, torch.long
+
+Review the API code that needs to be tested:
 
 <api_code>
 {code_to_test}
 </api_code>
-num_params = {num_params}
-num_sets = {num_sets}
+
+You need to generate <num_params>{num_params}</num_params> parameters for each set, and create a total of <num_sets>{num_sets}</num_sets> unique sets.
 """}
     ]
     json_format = create_json_schema(num_parameter_sets=num_sets, num_params_per_set=num_params)
@@ -160,8 +183,6 @@ num_sets = {num_sets}
             "json_schema": json_format
         },
         max_tokens=max_tokens,
-        temperature=1,
-        top_p=0.5,
         **kwargs
     )
 

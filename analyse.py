@@ -24,21 +24,37 @@ def analyze_results(results):
     print(f"CPU-GPU mismatches: {cpu_gpu_mismatch}")
     print(f"CPU-GPU mismatch rate: {cpu_gpu_mismatch/total_tests:.2%}")
     
-    # Detailed error analysis
+     # Improved error analysis
+    def extract_error_message(error):
+        if not isinstance(error, str):
+            return str(error)
+        
+        # Split the error message into lines
+        lines = error.split('\n')
+        
+        # Look for the actual error message (usually the last line or the line starting with specific error types)
+        for line in reversed(lines):
+            if any(err in line for err in ['RuntimeError:', 'ValueError:', 'TypeError:', 'IndexError:', 'Exception:']):
+                return line.strip()
+        
+        # If no specific error found, return the last non-empty line
+        for line in reversed(lines):
+            if line.strip():
+                return line.strip()
+        
+        return error
+
+    # Create error DataFrame with specific error messages
     error_df = df[df['error'].notnull()].copy()
-    error_df['error_type'] = error_df['error'].apply(lambda x: x.split('\n')[0] if isinstance(x, str) else str(x))
-    error_df['error_details'] = error_df['error'].apply(lambda x: '\n'.join(x.split('\n')[1:]) if isinstance(x, str) else '')
+    error_df['error_type'] = error_df['error'].apply(extract_error_message)
     error_counts = error_df['error_type'].value_counts()
     
-    print("\nTop 10 most common error types with details:")
-    for error_type, count in error_counts.head(10).items():
-        print(f"\n{error_type}: {count}")
-        error_details = error_df[error_df['error_type'] == error_type]['error_details'].value_counts().head(1)
-        if not error_details.empty:
-            print(f"Most common details:\n{error_details.index[0]}")
+    print("\nTop error types with counts:")
+    for error_type, count in error_counts.head(20).items():
+        print(f"\n{count:4d} occurrences: {error_type}")
     
     # Plot error distribution
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(15, 8))
     error_counts.head(10).plot(kind='bar')
     plt.title('Distribution of Top 10 Error Types')
     plt.xlabel('Error Type')
