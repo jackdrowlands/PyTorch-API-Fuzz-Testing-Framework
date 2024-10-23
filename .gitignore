@@ -175,3 +175,8 @@ program_files/
 program_API_files/
 parameter_files_old/
 parameter_files_405/
+*.pkl
+*.json
+completion_*.txt
+usage_*.txt
+*.csv

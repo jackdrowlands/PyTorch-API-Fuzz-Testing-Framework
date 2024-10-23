@@ -11,6 +11,7 @@ def generate_or_load_test_program(id : int, api: str, num_apis: int = 3, model: 
     pkl_file = f'program_files/program_{id}.pkl'
     
     if os.path.exists(pkl_file):
+        print(f"Loaded program from {pkl_file}")
         with open(pkl_file, 'rb') as f:
             program = pickle.load(f)
         return program
@@ -47,35 +48,98 @@ def generate_test_program(
 
 
 
-    prompt = f"""Generate a Python test program to test this PyTorch API. Here is the API signature:
-    {api}
+    prompt = f"""You are a Python developer specializing in PyTorch API testing. Your task is to generate a Python test program for a given PyTorch API using fuzz testing techniques. The program will compare CPU and GPU responses to identify potential errors.
 
 
-    Provide only the Python code without any explanations in a markdown codeblock.
 
-    The method of testing is fuzz testing using CPU compared to GPU responses to determine if there was an error.
-    Please include both CPU and GPU sections, writing the output to "cpu_output" and "gpu_output".
-    Additionally include the number of parameters in your code as "num_of_parameters".
-    Please do not define or give values to the parameters, only include them as "param`n`".
+Please create a Python test program based on this API signature. Follow these guidelines:
 
-    Here is an example program:
-    ```python
-    import torch
+1. Use fuzz testing to compare CPU and GPU responses.
+2. Write the output to variables named "cpu_output" and "gpu_output".
+3. Include the number of parameters in your code as "num_of_parameters".
+4. Do not define or give values to the parameters. Instead, use "param1", "param2", etc., as placeholders.
+5. Add comments to indicate what the parameters are, their expected types, and bounds at the end of the python code.
+6. Provide only the Python code without any explanations.
+7. Place the code in a markdown codeblock.
 
-    x = torch.randn(param1, param2, dtype=param3)
-    y = x.cuda()
+Before writing the code, analyze the API signature in <analysis> tags:
 
-    cpu_output = torch.matrix_exp(torch.log(x * param4 - param5)) # on CPU
+1. Identify the function name
+2. For each parameter:
+   - List its name
+   - Note its type
+   - Mention any default values or if it's optional
+3. Identify the return type(s)
+4. Consider the number of parameters and how this affects the test structure
+5. Think about potential edge cases or specific requirements of the API
+6. Plan the structure of the test program:
+   a. Import necessary libraries (torch)
+   b. Create input tensor(s) on CPU
+   c. Move tensor(s) to GPU
+   d. Perform the API operation on CPU
+   e. Perform the same operation on GPU
+   f. Include the number of parameters
 
-    gpu_output = torch.matrix_exp(torch.log(y * param4 - param5)) # on GPU
+Please generate the Python test program based on this analysis. Remember to follow the guidelines provided earlier.
+Here is the PyTorch API signature you need to test:
 
-    num_of_parameters=5
-    ```
+<api_signature>
+torch.matrix_exp(input)
+</api_signature>
     """
+
+    assistant_response = f"""<analysis>
+1. Function name: torch.matrix_exp
+
+2. Return type: Tensor
+
+3. Potential edge cases:
+   - Input tensor with very large or very small values
+   - Input tensor with complex numbers
+   - Square vs. non-square matrices
+
+4. Test program structure:
+   a. Import torch
+   b. Create input tensor on CPU
+   c. Move tensor to GPU
+   d. Perform matrix_exp operation on CPU
+   e. Perform matrix_exp operation on GPU
+   f. Include number of parameters
+
+5. Number of parameters: 5 (including dtype)
+
+</analysis>
+
+```python
+import torch
+
+x = torch.randn(param1, param2, dtype=param3)
+y = x.cuda()
+
+cpu_output = torch.matrix_exp(torch.log(x * param4 - param5)) # on CPU
+
+gpu_output = torch.matrix_exp(torch.log(y * param4 - param5)) # on GPU
+
+num_of_parameters=5
+
+# Parameters:
+#   - param1: an integer representing the first dimension of the input tensor
+#   - param2: an integer representing the second dimension of the input tensor
+#   - param3: dtype parameter, optional, specifies the data type of the input tensor
+#   - param4: scalar value used in the calculation
+#   - param5: scalar value used in the calculation
+```"""
 
     messages = [
         {"role": "system", "content": "You are a helpful assistant that generates Python code using PyTorch."},
-        {"role": "user", "content": prompt}
+        {"role": "user", "content": prompt},
+        {"role": "assistant", "content": assistant_response},
+        {"role": "user", "content": f"""Please generate the Python test program based on this analysis. Remember to follow the guidelines provided earlier.
+Here is the PyTorch API signature you need to test:
+
+<api_signature>
+{api}
+</api_signature>"""}
     ]
 
     payload = {

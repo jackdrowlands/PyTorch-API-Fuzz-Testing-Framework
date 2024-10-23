@@ -100,6 +100,7 @@ def create_or_load_fuzz_test_parameters(
     csv_file = f'parameter_files/fuzz_test_parameters_{id}_{num_params}_{num_sets}.csv'
     
     if os.path.exists(csv_file):
+        print(f"Loaded existing parameters from {csv_file}")
         with open(csv_file, 'r') as f:
             reader = csv.reader(f)
             return list(reader)

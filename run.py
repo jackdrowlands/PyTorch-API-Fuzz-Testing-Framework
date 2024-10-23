@@ -16,6 +16,28 @@ from RestrictedPython import compile_restricted, safe_builtins
 from parameters import create_fuzz_test_parameters, create_or_load_fuzz_test_parameters
 from programs import generate_test_program, generate_or_load_test_program
 
+def run_or_load_pytorch_code_with_params(code: str, params: List[str], id: int) -> List[dict]:
+    """
+    Run or load the results of running PyTorch code with parameters.
+    """
+    pkl_file = f'result_parts/results_{id}.pkl'
+
+    if os.path.exists(pkl_file):
+        print(f"Loaded results from {pkl_file}")
+        with open(pkl_file, 'rb') as f:
+            results = pickle.load(f)
+        return results
+
+    # Run the PyTorch code with the parameters
+    results = run_pytorch_code_with_params(code, params)
+
+    # Save the results to a pickle file
+    with open(pkl_file, 'wb') as f:
+        pickle.dump(results, f)
+
+    return results
+
+
 def run_pytorch_code_with_params(code: str, params_list: List[List[str]]) -> List[dict]:
     results = []
     for params in params_list:
@@ -167,7 +189,7 @@ def save_results_to_csv(results: List[dict], filename: str):
         for row in results:
             writer.writerow(row)
 
-def main(num_programs: int = 1583, num_apis: int = 1):
+def main(num_programs: int = 1583, num_apis: int = 1, start_id: int = 0):
     """
     Generate, run, and record results for multiple test programs.
     """
@@ -176,7 +198,7 @@ def main(num_programs: int = 1583, num_apis: int = 1):
     with open('api_def_torch.txt', 'r') as f:
         apis = f.read().splitlines()
 
-    for i in range(num_programs):
+    for i in range(start_id, num_programs):
         # Choose the next API to test
         api = apis[i % len(apis)]
         print(f"Generating and running program {i+1}/{num_programs} with the following API: {api}")
@@ -186,8 +208,7 @@ def main(num_programs: int = 1583, num_apis: int = 1):
             num_param_sets = math.floor(90 / (test_program["num_of_parameters"] + 1))
             print(f"Running program with {num_param_sets} parameter sets")
             params = create_or_load_fuzz_test_parameters(id=i, code_to_test=test_program["code"], num_params=test_program["num_of_parameters"], num_sets=num_param_sets)
-            test_results = run_pytorch_code_with_params(test_program["code"], params)
-    
+            test_results = run_or_load_pytorch_code_with_params(test_program["code"], params, id=i)
             for result in test_results:
                 results.append({
                     'program_id': i+1,
