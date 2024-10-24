@@ -5,13 +5,17 @@ from collections import Counter
 import numpy as np
 
 def load_results(file_path='results.pkl'):
+    print(f"Loading results from {file_path}...")
     with open(file_path, 'rb') as f:
         return pickle.load(f)
 
 def analyze_results(results):
+    # Convert results to a DataFrame
+    print("Converting results to DataFrame...")
     df = pd.DataFrame(results)
     
     # Basic statistics
+    print("Basic statistics:")
     total_programs = df['program_id'].nunique()
     total_tests = len(df)
     failed_tests = df['error'].notnull().sum()
@@ -63,6 +67,11 @@ def analyze_results(results):
     plt.tight_layout()
     plt.savefig('error_distribution.png')
     plt.close()
+
+    # Print every id with the error: "Failed to generate program"
+    print("\nProgram IDs with the error: 'Failed to generate program'")
+    for idx, row in error_df[error_df['error_type'] == 'Failed to generate program'].iterrows():
+        print(row['program_id'])
     
     # Analyze CPU-GPU mismatches
     mismatch_df = df[df['result'].str.contains('not equal', na=False)].copy()
@@ -115,16 +124,16 @@ def analyze_results(results):
     plt.savefig('mismatch_parameter_types.png')
     plt.close()
     
-    # Print mismatched programs and parameters
-    print("\nMismatched programs and parameters (sorted by difference):")
-    for idx, row in mismatch_df.iterrows():
-        print(f"\nProgram ID: {row['program_id']}")
-        print("Code:")
-        print(row['code'])
-        print("Parameters:")
-        for key, value in row['params'].items():
-            print(f"{key}: {value}")
-        print("-" * 50)
+    # # Print mismatched programs and parameters
+    # print("\nMismatched programs and parameters (sorted by difference):")
+    # for idx, row in mismatch_df.iterrows():
+    #     print(f"\nProgram ID: {row['program_id']}")
+    #     print("Code:")
+    #     print(row['code'])
+    #     print("Parameters:")
+    #     for key, value in row['params'].items():
+    #         print(f"{key}: {value}")
+    #     print("-" * 50)
     
     return df
 

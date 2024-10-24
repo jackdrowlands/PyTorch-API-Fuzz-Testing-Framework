@@ -51,11 +51,23 @@ def run_pytorch_code_with_params(code: str, params_list: List[List[str]], id : i
         
         # Create a temporary Python file with the code and parameters
         with open(f"temp_code/temp_code_{id}.py", 'w') as f:
-            f.write(f"import torch\nimport json\nimport math\ninf = math.inf\nimport resource\nresource.setrlimit(resource.RLIMIT_AS, (4 * 1024 * 1024 * 1024, -1))\n")
+            f.write(f"""import torch
+import json
+import math
+inf = math.inf
+import resource
+resource.setrlimit(resource.RLIMIT_AS, (4 * 1024 * 1024 * 1024, -1))
+""")
             for key, value in param_dict.items():
                 f.write(f"{key} = {value}\n")
             f.write(code)
-            f.write("\nprint(json.dumps({'cpu_output': cpu_output.tolist(), 'gpu_output': gpu_output.cpu().tolist()}))")
+            f.write("""
+
+def safe_convert_to_list(tensor: Any) -> Optional[list]:
+    if isinstance(tensor, (bool, str, int, float, None)):
+        return tensor
+    return tensor.cpu().tolist()
+print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': safe_convert_to_list(gpu_output.cpu())}))""")
 
         # Run the code in a separate process with resource limits
         try:
@@ -196,8 +208,12 @@ def save_results_to_csv(results: List[dict], filename: str):
 
 
 def process_single_api(i, api, num_apis):
-    """Process a single API test case"""
-    # print(f"Generating and running program {i+1} with the following API: {api}")
+    """Process a single API test case and save results to a separate file"""
+    result_file = f'result_parts/result_{i}.pkl'
+    
+    # If result already exists, skip processing
+    if os.path.exists(result_file):
+        return i
     
     try:
         test_program = generate_or_load_test_program(id=i, api=api, num_apis=num_apis)
@@ -211,7 +227,7 @@ def process_single_api(i, api, num_apis):
                 num_sets=num_param_sets
             )
             test_results = run_or_load_pytorch_code_with_params(test_program["code"], params, id=i)
-            return [{
+            results = [{
                 'program_id': i+1,
                 'code': test_program["code"],
                 'params': result['params'],
@@ -220,7 +236,7 @@ def process_single_api(i, api, num_apis):
                 'error': result['error']
             } for result in test_results]
         else:
-            return [{
+            results = [{
                 'program_id': i+1,
                 'code': test_program["code"],
                 'params': None,
@@ -229,8 +245,7 @@ def process_single_api(i, api, num_apis):
                 'error': 'Failed to generate program'
             }]
     except Exception as e:
-        print(f"Error processing API {api} (id={i}): {str(e)}")
-        return [{
+        results = [{
             'program_id': i+1,
             'code': None,
             'params': None,
@@ -239,19 +254,28 @@ def process_single_api(i, api, num_apis):
             'error': f'Exception: {str(e)}'
         }]
 
+    # Save results to file
+    os.makedirs('result_parts', exist_ok=True)
+    with open(result_file, 'wb') as f:
+        pickle.dump(results, f)
+    
+    return i
+
 def main(num_programs: int = 1584, num_apis: int = 1, start_id: int = 0, max_workers: int = 12):
     """
     Generate, run, and record results for multiple test programs using multithreading.
+    Results are saved in parts and combined at the end.
     """
     import time
     from datetime import timedelta
+
+    # Create results directory if it doesn't exist
+    os.makedirs('result_parts', exist_ok=True)
 
     # Read in a list of PyTorch APIs
     with open('api_def_torch.txt', 'r') as f:
         apis = f.read().splitlines()
 
-    all_results = []
-    
     # Create a lock for thread-safe printing
     print_lock = threading.Lock()
     
@@ -265,7 +289,6 @@ def main(num_programs: int = 1584, num_apis: int = 1, start_id: int = 0, max_wor
             print(*args, **kwargs)
 
     def format_time_remaining(seconds):
-        """Format remaining time in a human-readable countdown format"""
         if seconds < 60:
             return f"{int(seconds)} seconds"
         elif seconds < 3600:
@@ -304,17 +327,29 @@ def main(num_programs: int = 1584, num_apis: int = 1, start_id: int = 0, max_wor
         for future in concurrent.futures.as_completed(future_to_api):
             i = future_to_api[future]
             try:
-                results = future.result()
-                all_results.extend(results)
+                completed_i = future.result()
                 completed_tasks += 1
-                thread_safe_print(f"Completed processing program {i+1}")
+                thread_safe_print(f"Completed processing program {completed_i+1}")
                 thread_safe_print(update_eta())
             except Exception as e:
                 thread_safe_print(f"Error processing program {i+1}: {str(e)}")
                 completed_tasks += 1
                 thread_safe_print(update_eta())
 
-    # Write results to pickle
+    # Combine all results
+    all_results = []
+    for i in range(start_id, num_programs):
+        print(f"Loading results for program {i+1}")
+        result_file = f'small_result_parts/small_result_{i}.pkl'
+        if os.path.exists(result_file):
+            with open(result_file, 'rb') as f:
+                results = pickle.load(f)
+                all_results.extend(results)
+        else:
+            print(f"Error: Result file not found for program {i+1}")
+
+    # Write combined results to pickle
+    print("Writing results to results.pkl")
     with open('results.pkl', 'wb') as pickle_file:
         pickle.dump(all_results, pickle_file)
 
