@@ -6,8 +6,9 @@ from typing import List, Union
 import re
 import csv
 import pickle
+from openai import OpenAI
 
-def generate_or_load_test_program(id : int, api: str, num_apis: int = 3, model: str = "openai/gpt-4o-mini", max_tokens: int = 1000) -> Union[str, List[str]]:
+def generate_or_load_test_program(id : int, api: str, num_apis: int = 3, model: str = "gpt-4o-mini", max_tokens: int = 1000) -> Union[str, List[str]]:
     pkl_file = f'program_files/program_{id}.pkl'
     
     if os.path.exists(pkl_file):
@@ -31,7 +32,7 @@ def generate_test_program(
     id: int,
     api: str,
     num_apis: int = 1,
-    model: str = "google/gemini-pro-1.5-exp",
+    model: str = "gpt-4o-mini",
     max_tokens: int = 16384
 ) -> Union[str, List[str]]:
     """
@@ -45,12 +46,9 @@ def generate_test_program(
     Returns:
         Union[str, List[str]]: The generated test program as a string, or an error message.
     """
-
-
+    client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
 
     prompt = f"""You are a Python developer specializing in PyTorch API testing. Your task is to generate a Python test program for a given PyTorch API using fuzz testing techniques. The program will compare CPU and GPU responses to identify potential errors.
-
-
 
 Please create a Python test program based on this API signature. Follow these guidelines:
 
@@ -91,8 +89,7 @@ Here is the PyTorch API signature you need to test:
 
 <api_signature>
 torch.matrix_exp(input)
-</api_signature>
-    """
+</api_signature>"""
 
     assistant_response = f"""<analysis>
 1. Function name: torch.matrix_exp
@@ -132,51 +129,89 @@ num_of_parameters=5
 #   - param3: dtype parameter, optional, specifies the data type of the input tensor : Range = ['torch.float32', 'torch.float64', 'torch.float16', 'torch.bfloat16', 'torch.int8', 'torch.uint8', 'torch.int16', 'torch.int32', 'torch.int64', 'torch.bool', 'torch.complex64', 'torch.complex128'] : Type = torch.dtype
 #   - param4: scalar value used in the calculation : Range = (-math.inf, math.inf) : Type = float
 #   - param5: scalar value used in the calculation : Range = (-math.inf, math.inf)  : Type = float
+```
+"""
+    prompt2=""""Please generate the Python test program based on this analysis. Remember to follow the guidelines provided earlier.
+Here is the PyTorch API signature you need to test:
+
+<api_signature>
+torch.nn.functional.relu(input, inplace=False)
+</api_signature>"""
+    
+    assistant_response2 = f"""<analysis>
+1. Function name: torch.nn.functional.relu
+
+2. Return type: Tensor
+
+3. Potential edge cases:
+   - Input tensor with negative values
+   - Input tensor with zero values
+   - Different input shapes and dimensions
+   - Different data types
+   - Inplace operation vs non-inplace
+
+4. Test program structure:
+   a. Import torch and torch.nn.functional
+   b. Create input tensor on CPU
+   c. Move tensor to GPU
+   d. Perform relu operation on CPU
+   e. Perform relu operation on GPU
+   f. Include number of parameters
+</analysis>
+
+```python
+import torch
+import torch.nn.functional as F
+
+x = torch.randn(param1, param2, param3, dtype=param4)
+y = x.cuda()
+
+cpu_output = F.relu(x, inplace=param5)  # on CPU
+gpu_output = F.relu(y, inplace=param5)  # on GPU
+
+num_of_parameters = 5
+
+# Parameters:
+#   - param1: first dimension of the input tensor : Range = [1, 10000] : Type = int
+#   - param2: second dimension of the input tensor : Range = [1, 10000] : Type = int
+#   - param3: third dimension of the input tensor : Range = [1, 10000] : Type = int
+#   - param4: dtype parameter, specifies the data type of the input tensor : Range = ['torch.float32', 'torch.float64', 'torch.float16', 'torch.bfloat16'] : Type = torch.dtype
+#   - param5: boolean flag indicating whether to perform the operation in-place : Range = [True, False] : Type = bool
 ```"""
+    
+    final_prompt = f"""Please generate the Python test program based on this analysis. Remember to follow the guidelines provided earlier.
+Here is the PyTorch API signature you need to test:
+
+<api_signature>
+{api}
+</api_signature>"""
 
     messages = [
         {"role": "system", "content": "You are a helpful assistant that generates Python code using PyTorch."},
         {"role": "user", "content": prompt},
         {"role": "assistant", "content": assistant_response},
-        {"role": "user", "content": f"""Please generate the Python test program based on this analysis. Remember to follow the guidelines provided earlier.
-Here is the PyTorch API signature you need to test:
-
-<api_signature>
-{api}
-</api_signature>"""}
+        {"role": "user", "content": prompt2},
+        {"role": "assistant", "content": assistant_response2},
+        {"role": "user", "content": final_prompt}
     ]
 
-    payload = {
-        "model": model,
-        "messages": messages,
-        "max_tokens": max_tokens,
-        "provider": {
-            "require_parameters": True
-        }
-    }
-
-
-    headers = {
-        "Authorization": f"Bearer {os.environ.get('OPENROUTER_API_KEY')}",
-        "Content-Type": "application/json"
-    }
-
-
     try:
-        response = requests.post(
-            url="https://openrouter.ai/api/v1/chat/completions",
-            headers=headers,
-            json=payload
+        completion = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            max_tokens=max_tokens
         )
+        # print(f"Cached tokens for program: {completion.usage.prompt_tokens_details.cached_tokens}")
         
-        response.raise_for_status()
-        result = response.json()
+        content = completion.choices[0].message.content
 
-        # Save full response to json file
-        with open(f'program_API_files/program_{id}.json', 'w') as f:
-            json.dump(result, f)
+        # # Save full response to json file
+        # with open(f'program_API_files/program_{id}.json', 'w') as f:
+        #     json.dump(result, f)
+        with open(f'program_usage/usage_{id}.txt', 'w') as f:
+            f.write(str(completion.usage))
         
-        content = result['choices'][0]['message']['content']
+        # content = result['choices'][0]['message']['content']
         
         if content is None:
             return {

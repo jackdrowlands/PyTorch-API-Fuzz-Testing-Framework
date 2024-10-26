@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Check if the user is sure about cleaning up
+read -p "Are you sure you want to clean up all files? (yes/n): " confirm
+if [ "$confirm" != "yes" ]; then
+    echo "Exiting..."
+    exit 0
+fi
+
 # List of directories to clean
 directories=(
     "result_parts"

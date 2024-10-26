@@ -184,6 +184,8 @@ You need to generate <num_params>{num_params}</num_params> parameters for each s
         **kwargs
     )
 
+    # print(f"Cached tokens for parameters: {completion.usage.prompt_tokens_details.cached_tokens}")
+
     return extract_responses(completion, id)
     # except Exception as e:
     #     print(str(e))

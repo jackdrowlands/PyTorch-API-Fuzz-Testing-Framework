@@ -23,7 +23,7 @@ def run_or_load_pytorch_code_with_params(code: str, params: List[str], id: int) 
     """
     Run or load the results of running PyTorch code with parameters.
     """
-    pkl_file = f'result_parts/results_{id}.pkl'
+    pkl_file = f'result_parts/result_{id}.pkl'
 
     if os.path.exists(pkl_file):
         print(f"Loaded results from {pkl_file}")
@@ -43,7 +43,9 @@ def run_or_load_pytorch_code_with_params(code: str, params: List[str], id: int) 
 
 def run_pytorch_code_with_params(code: str, params_list: List[List[str]], id : int) -> List[dict]:
     results = []
+    i = 0
     for params in params_list:
+        i += 1
         # Create a dictionary with the parameters
         # if the parameter is em
         param_dict = {f'param{i+1}': param if param != '' else None for i, param in enumerate(params)}
@@ -63,8 +65,8 @@ resource.setrlimit(resource.RLIMIT_AS, (4 * 1024 * 1024 * 1024, -1))
             f.write(code)
             f.write("""
 
-def safe_convert_to_list(tensor: Any) -> Optional[list]:
-    if isinstance(tensor, (bool, str, int, float, None)):
+def safe_convert_to_list(tensor):
+    if isinstance(tensor, (bool, str, int, float, type(None))):
         return tensor
     return tensor.cpu().tolist()
 print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': safe_convert_to_list(gpu_output.cpu())}))""")
@@ -81,14 +83,22 @@ print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': 
                     output = json.loads(result.stdout)
                     comparison = torch.allclose(torch.tensor(output['cpu_output']), 
                                         torch.tensor(output['gpu_output']), 
-                                        rtol=1e-3, atol=1e-6)
+                                        rtol=1e-2, atol=1e-3, equal_nan=True)
                     # print(f"CPU and GPU outputs are {'equal' if comparison else 'not equal'}")
                     results.append({
-                        'params': param_dict,
+                        'params': i,
                         'result': f"CPU and GPU outputs are {'equal' if comparison else 'not equal'}",
                         'output': result.stdout,
                         'error': result.stderr if result.returncode != 0 else None
                     })
+                    if (not comparison):
+                        print(f"CPU and GPU outputs are not equal for program {id} with parameters {i}")
+                        print(f"Parameters: {i}")
+                        # Save the code and parameters to a file
+                        with open(f'mismatch_files/mismatch_{id}_{i}.py', 'w') as f:
+                            f.write(code)
+                            for key, value in param_dict.items():
+                                f.write(f"{key} = {value}\n")
                 except json.JSONDecodeError as e:
                     print(f"Error parsing output JSON: {str(e)}")
                     print(f"Raw output: {result.stdout}")
@@ -96,7 +106,7 @@ print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': 
                 # Print the last 100 characters of the error message
                 # print(f"Error running PyTorch code: {result.stderr[-100:]}")
                 results.append({
-                        'params': param_dict,
+                        'params': i,
                         'result': None,
                         'output': None,
                         'error': result.stderr
@@ -106,7 +116,7 @@ print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': 
         except subprocess.TimeoutExpired:
             print("CPU time limit exceeded")
             results.append({
-                'params': param_dict,
+                'params': i,
                 'result': None,
                 'output': None,
                 'error': "CPU time limit exceeded"
@@ -114,7 +124,7 @@ print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': 
         except Exception as e:
             print(f"Error running PyTorch code: {str(e)}")
             results.append({
-                'params': param_dict,
+                'params': i,
                 'result': None,
                 'output': None,
                 'error': str(e)
@@ -229,7 +239,7 @@ def process_single_api(i, api, num_apis):
             test_results = run_or_load_pytorch_code_with_params(test_program["code"], params, id=i)
             results = [{
                 'program_id': i+1,
-                'code': test_program["code"],
+                # 'code': test_program["code"],
                 'params': result['params'],
                 'result': result['result'],
                 'output': result['output'],
@@ -238,7 +248,7 @@ def process_single_api(i, api, num_apis):
         else:
             results = [{
                 'program_id': i+1,
-                'code': test_program["code"],
+                # 'code': test_program["code"],
                 'params': None,
                 'result': None,
                 'output': '',
@@ -247,7 +257,7 @@ def process_single_api(i, api, num_apis):
     except Exception as e:
         results = [{
             'program_id': i+1,
-            'code': None,
+            # 'code': None,
             'params': None,
             'result': None,
             'output': '',
@@ -340,7 +350,7 @@ def main(num_programs: int = 1584, num_apis: int = 1, start_id: int = 0, max_wor
     all_results = []
     for i in range(start_id, num_programs):
         print(f"Loading results for program {i+1}")
-        result_file = f'small_result_parts/small_result_{i}.pkl'
+        result_file = f'result_parts/result_{i}.pkl'
         if os.path.exists(result_file):
             with open(result_file, 'rb') as f:
                 results = pickle.load(f)
