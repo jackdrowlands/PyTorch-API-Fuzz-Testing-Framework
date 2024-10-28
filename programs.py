@@ -9,6 +9,9 @@ import pickle
 from openai import OpenAI
 
 def generate_or_load_test_program(id : int, api: str, num_apis: int = 3, model: str = "gpt-4o-mini", max_tokens: int = 1000) -> Union[str, List[str]]:
+    """
+    Generate or load a test program for a given PyTorch API using an LLM.
+    """
     pkl_file = f'program_files/program_{id}.pkl'
     
     if os.path.exists(pkl_file):

@@ -42,6 +42,9 @@ def run_or_load_pytorch_code_with_params(code: str, params: List[str], id: int) 
 
 
 def run_pytorch_code_with_params(code: str, params_list: List[List[str]], id : int) -> List[dict]:
+    """
+    Run PyTorch code with a list of parameters and return the results.
+    """
     results = []
     i = 0
     for params in params_list:
@@ -218,7 +221,9 @@ def save_results_to_csv(results: List[dict], filename: str):
 
 
 def process_single_api(i, api, num_apis):
-    """Process a single API test case and save results to a separate file"""
+    """
+    Process a single API test case and save results to a separate file
+    """
     result_file = f'result_parts/result_{i}.pkl'
     
     # If result already exists, skip processing
@@ -345,23 +350,6 @@ def main(num_programs: int = 1584, num_apis: int = 1, start_id: int = 0, max_wor
                 thread_safe_print(f"Error processing program {i+1}: {str(e)}")
                 completed_tasks += 1
                 thread_safe_print(update_eta())
-
-    # Combine all results
-    all_results = []
-    for i in range(start_id, num_programs):
-        print(f"Loading results for program {i+1}")
-        result_file = f'result_parts/result_{i}.pkl'
-        if os.path.exists(result_file):
-            with open(result_file, 'rb') as f:
-                results = pickle.load(f)
-                all_results.extend(results)
-        else:
-            print(f"Error: Result file not found for program {i+1}")
-
-    # Write combined results to pickle
-    print("Writing results to results.pkl")
-    with open('results.pkl', 'wb') as pickle_file:
-        pickle.dump(all_results, pickle_file)
 
     total_time = time.time() - start_time
     print(f"\nResults have been written to results.pkl")

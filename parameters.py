@@ -9,6 +9,9 @@ import re
 import pickle
 
 def create_json_schema(num_parameter_sets, num_params_per_set):
+    """
+    Create a JSON schema for the fuzz test parameters dynamically based on the number of parameter sets and parameters per set.
+    """
     properties = {}
     
     for i in range(1, num_parameter_sets + 1):
@@ -47,6 +50,10 @@ def create_json_schema(num_parameter_sets, num_params_per_set):
     }
 
 def extract_responses(completion_response, id):
+    """
+    Extract the parameter sets from the completion response.
+    """
+
     # Extract the content from the response
     content = completion_response.choices[0].message.content
     
@@ -97,6 +104,9 @@ def create_or_load_fuzz_test_parameters(
     max_tokens: int = 16384,
     **kwargs: Any
 ) -> Union[List[List[str]], str]:
+    """
+    Create or load fuzz test parameters for a given PyTorch API call.
+    """
     csv_file = f'parameter_files/fuzz_test_parameters_{id}_{num_params}_{num_sets}.csv'
     
     if os.path.exists(csv_file):
