@@ -286,6 +286,13 @@ def main(num_programs: int = 1584, num_apis: int = 1, start_id: int = 0, max_wor
 
     # Create results directory if it doesn't exist
     os.makedirs('result_parts', exist_ok=True)
+    os.makedirs('temp_code', exist_ok=True)
+    os.makedirs('mismatch_files', exist_ok=True)
+    os.makedirs('parameter_files', exist_ok=True)
+    os.makedirs('program_files', exist_ok=True)
+    os.makedirs('parameter_API_files', exist_ok=True)
+    os.makedirs('program_API_files', exist_ok=True)
+    os.makedirs('program_usage', exist_ok=True)
 
     # Read in a list of PyTorch APIs
     with open('api_def_torch.txt', 'r') as f:

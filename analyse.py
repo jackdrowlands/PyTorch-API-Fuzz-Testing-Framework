@@ -359,7 +359,7 @@ def generate_summary_visualizations(stats: pd.DataFrame, output_dir: str):
     plt.xlabel('Mismatch Rate (%)')
     plt.ylabel('Number of APIs')
     plt.tight_layout()
-    plt.ylim(0, 1e4)
+    plt.ylim(1e-1, 1e4)
     plt.savefig(os.path.join(output_dir, 'mismatch_rate_distribution.png'))
     plt.close()
     
