@@ -8,9 +8,29 @@ import csv
 import pickle
 from openai import OpenAI
 
+# PyTorch API Fuzz Testing Framework - Test Program Generation Module
+# This module is responsible for generating test programs that compare CPU and GPU 
+# implementations of PyTorch APIs. It leverages LLMs to create structured programs 
+# that exercise APIs with appropriate parameter types and error handling.
+# The generated programs are cached to avoid redundant API calls.
+
 def generate_or_load_test_program(id : int, api: str, num_apis: int = 3, model: str = "gpt-4o-mini", max_tokens: int = 1000) -> Union[str, List[str]]:
     """
     Generate or load a test program for a given PyTorch API using an LLM.
+    
+    This function implements caching to avoid generating programs multiple times
+    for the same API. If a program already exists on disk, it is loaded;
+    otherwise, a new program is generated and saved.
+    
+    Args:
+        id: Unique identifier for this test program
+        api: The PyTorch API signature to test
+        num_apis: Number of APIs to include in the test
+        model: LLM model to use for program generation
+        max_tokens: Maximum number of tokens for generation
+        
+    Returns:
+        Dictionary containing the generated code and number of parameters
     """
     pkl_file = f'program_files/program_{id}.pkl'
     
@@ -39,15 +59,29 @@ def generate_test_program(
     max_tokens: int = 16384
 ) -> Union[str, List[str]]:
     """
-    Generate a test program using random PyTorch APIs using an LLM.
+    Generate a test program for a PyTorch API using an LLM.
+
+    Creates a structured Python program that tests a specific PyTorch API by:
+    1. Setting up appropriate input tensors on both CPU and GPU
+    2. Running the operation on both devices
+    3. Including parameter documentation
+    4. Ensuring the code properly compares outputs between devices
+    
+    Uses few-shot learning by providing examples of well-formed test programs
+    to guide the model's generation process.
 
     Args:
-        num_apis (int): Number of PyTorch APIs to include in the test program.
-        model (str): The LLM model to use.
-        max_tokens (int): Maximum number of tokens to generate.
+        id: Unique identifier for tracking and caching
+        api: The PyTorch API signature to create a test for
+        num_apis: Number of PyTorch APIs to include in the test program
+        model: The LLM model to use
+        max_tokens: Maximum number of tokens to generate
 
     Returns:
-        Union[str, List[str]]: The generated test program as a string, or an error message.
+        Dictionary containing:
+        - code: The generated test program as a string
+        - num_of_parameters: Number of parameters the program expects
+        Or an error message if generation fails
     """
     client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
 

@@ -19,12 +19,30 @@ from RestrictedPython import compile_restricted, safe_builtins
 from parameters import create_fuzz_test_parameters, create_or_load_fuzz_test_parameters
 from programs import generate_test_program, generate_or_load_test_program
 
+# PyTorch API Fuzz Testing Framework
+# Main runner script that generates test programs, executes them with various parameters,
+# and records the results for analysis. Handles concurrent execution, caching, and 
+# resource management for efficient testing.
+
 def run_or_load_pytorch_code_with_params(code: str, params: List[str], id: int) -> List[dict]:
     """
     Run or load the results of running PyTorch code with parameters.
+    
+    Args:
+        code: The PyTorch code to execute
+        params: List of parameter sets for testing
+        id: Unique identifier for this test run
+        
+    Returns:
+        List of dictionaries containing test results
+        
+    Note:
+        This function implements caching - if results for this id already exist,
+        they are loaded from disk instead of re-running tests.
     """
     pkl_file = f'result_parts/result_{id}.pkl'
 
+    # Check if results are already cached on disk
     if os.path.exists(pkl_file):
         print(f"Loaded results from {pkl_file}")
         with open(pkl_file, 'rb') as f:
@@ -34,7 +52,7 @@ def run_or_load_pytorch_code_with_params(code: str, params: List[str], id: int) 
     # Run the PyTorch code with the parameters
     results = run_pytorch_code_with_params(code, params, id)
 
-    # Save the results to a pickle file
+    # Save the results to a pickle file for future runs
     with open(pkl_file, 'wb') as f:
         pickle.dump(results, f)
 
@@ -44,18 +62,31 @@ def run_or_load_pytorch_code_with_params(code: str, params: List[str], id: int) 
 def run_pytorch_code_with_params(code: str, params_list: List[List[str]], id : int) -> List[dict]:
     """
     Run PyTorch code with a list of parameters and return the results.
+    
+    Args:
+        code: The PyTorch code to execute
+        params_list: List of parameter sets for testing
+        id: Unique identifier for this test run
+        
+    Returns:
+        List of dictionaries containing test results with keys:
+        - params: Parameter set index
+        - result: Whether CPU and GPU outputs match
+        - output: Raw program output
+        - error: Error message if execution failed
     """
     results = []
     i = 0
     for params in params_list:
         i += 1
         # Create a dictionary with the parameters
-        # if the parameter is em
+        # Convert empty strings to None values
         param_dict = {f'param{i+1}': param if param != '' else None for i, param in enumerate(params)}
 
         
         # Create a temporary Python file with the code and parameters
         with open(f"temp_code/temp_code_{id}.py", 'w') as f:
+            # Set up imports and memory limit (4GB)
             f.write(f"""import torch
 import json
 import math
@@ -63,9 +94,12 @@ inf = math.inf
 import resource
 resource.setrlimit(resource.RLIMIT_AS, (4 * 1024 * 1024 * 1024, -1))
 """)
+            # Write parameter definitions
             for key, value in param_dict.items():
                 f.write(f"{key} = {value}\n")
+            # Write the test code
             f.write(code)
+            # Add output conversion function
             f.write("""
 
 def safe_convert_to_list(tensor):
@@ -74,30 +108,34 @@ def safe_convert_to_list(tensor):
     return tensor.cpu().tolist()
 print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': safe_convert_to_list(gpu_output.cpu())}))""")
 
-        # Run the code in a separate process with resource limits
+        # Run the code in a separate process with resource limits (90 second timeout)
         try:
             result = subprocess.run([sys.executable, f"temp_code/temp_code_{id}.py"], 
                                     capture_output=True, text=True, timeout=90)
             
             
 
+            # Process successful execution with output
             if result.stdout.strip():
                 try:
+                    # Parse JSON output and compare CPU vs GPU results
                     output = json.loads(result.stdout)
                     comparison = torch.allclose(torch.tensor(output['cpu_output']), 
                                         torch.tensor(output['gpu_output']), 
                                         rtol=1e-2, atol=1e-3, equal_nan=True)
-                    # print(f"CPU and GPU outputs are {'equal' if comparison else 'not equal'}")
+                    
+                    # Record the result
                     results.append({
                         'params': i,
                         'result': f"CPU and GPU outputs are {'equal' if comparison else 'not equal'}",
                         'output': result.stdout,
                         'error': result.stderr if result.returncode != 0 else None
                     })
+                    # Save mismatched results for further analysis
                     if (not comparison):
                         print(f"CPU and GPU outputs are not equal for program {id} with parameters {i}")
                         print(f"Parameters: {i}")
-                        # Save the code and parameters to a file
+                        # Save the code and parameters to a file for debugging
                         with open(f'mismatch_files/mismatch_{id}_{i}.py', 'w') as f:
                             f.write(code)
                             for key, value in param_dict.items():
@@ -106,8 +144,7 @@ print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': 
                     print(f"Error parsing output JSON: {str(e)}")
                     print(f"Raw output: {result.stdout}")
             else:
-                # Print the last 100 characters of the error message
-                # print(f"Error running PyTorch code: {result.stderr[-100:]}")
+                # Handle case with no stdout (likely error)
                 results.append({
                         'params': i,
                         'result': None,
@@ -117,6 +154,7 @@ print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': 
 
             
         except subprocess.TimeoutExpired:
+            # Handle execution timeout (90 seconds)
             print("CPU time limit exceeded")
             results.append({
                 'params': i,
@@ -125,6 +163,7 @@ print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': 
                 'error': "CPU time limit exceeded"
             })
         except Exception as e:
+            # Handle other exceptions
             print(f"Error running PyTorch code: {str(e)}")
             results.append({
                 'params': i,
@@ -138,6 +177,16 @@ print(json.dumps({'cpu_output': safe_convert_to_list(cpu_output), 'gpu_output': 
 def parameter_comparison_test(test_code: str, num_params: int, model: str, param_name: str, param_values: List[float]):
     """
     Run tests with different parameter values and return the results.
+    
+    Args:
+        test_code: PyTorch code to test
+        num_params: Number of parameters in the test code
+        model: LLM model to use for parameter generation
+        param_name: Name of the parameter to vary
+        param_values: Different values to test for the specified parameter
+        
+    Returns:
+        List of dictionaries with test results for each parameter value
     """
     repetitions = 10
     results = []
@@ -211,6 +260,10 @@ gpu_output = 1 / torch.clamp(x, min=param4, max=param5)
 def save_results_to_csv(results: List[dict], filename: str):
     """
     Save the test results to a CSV file.
+    
+    Args:
+        results: List of dictionaries containing test results
+        filename: Path to save the CSV file
     """
     with open(filename, 'w', newline='') as csvfile:
         fieldnames = list(results[0].keys())
@@ -222,7 +275,18 @@ def save_results_to_csv(results: List[dict], filename: str):
 
 def process_single_api(i, api, num_apis):
     """
-    Process a single API test case and save results to a separate file
+    Process a single API test case and save results to a separate file.
+    
+    This function is the core worker for parallel processing. It generates a test program
+    for the given API, creates parameters, runs the test, and saves results.
+    
+    Args:
+        i: Index of the API test case
+        api: The PyTorch API to test
+        num_apis: Total number of APIs being tested
+        
+    Returns:
+        Index of the processed API
     """
     result_file = f'result_parts/result_{i}.pkl'
     
@@ -280,6 +344,18 @@ def main(num_programs: int = 1584, num_apis: int = 1, start_id: int = 0, max_wor
     """
     Generate, run, and record results for multiple test programs using multithreading.
     Results are saved in parts and combined at the end.
+    
+    This is the main entry point for the PyTorch API fuzzing framework. It handles:
+    - Directory setup
+    - API loading 
+    - Parallel test execution with progress tracking
+    - ETA calculation and display
+    
+    Args:
+        num_programs: Number of test programs to run
+        num_apis: Number of APIs to include in each test
+        start_id: Starting index for test programs (for resuming interrupted runs)
+        max_workers: Maximum number of parallel worker threads
     """
     import time
     from datetime import timedelta

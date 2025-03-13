@@ -2,7 +2,24 @@ import re
 import json
 import pandas as pd
 
+# PyTorch API Fuzz Testing Framework - Token Usage Analysis
+# This utility script analyzes and reports on OpenAI API token usage for
+# both parameter and program generation, helping track costs and optimize
+# token efficiency.
+
 def extract_usage_info(file_content):
+    """
+    Extract token usage information from OpenAI API response logs.
+    
+    Uses regular expressions to parse the token counts from the API response
+    including prompt tokens, completion tokens, total tokens, and cached tokens.
+    
+    Args:
+        file_content: String content of the API response log file
+        
+    Returns:
+        Dictionary with token usage statistics
+    """
     # Regular expressions to extract the values
     completion_pattern = r'completion_tokens=(\d+)'
     prompt_pattern = r'prompt_tokens=(\d+)'
@@ -23,6 +40,18 @@ def extract_usage_info(file_content):
     }
 
 def extract_program_info(json_content):
+    """
+    Extract token usage information from JSON response data.
+    
+    Parses program generation API responses that are in JSON format
+    to extract token usage statistics.
+    
+    Args:
+        json_content: JSON string from API response
+        
+    Returns:
+        Dictionary with token usage statistics
+    """
     data = json.loads(json_content)
     usage = data['usage']
     
@@ -33,12 +62,22 @@ def extract_program_info(json_content):
     }
 
 def process_all_files():
+    """
+    Process all token usage files and generate summary statistics.
+    
+    Reads both parameter generation and program generation usage logs,
+    extracts token information, creates summary statistics, and
+    saves the results to CSV files for further analysis.
+    
+    Returns:
+        Tuple of (usage_df, program_df) containing token usage DataFrames
+    """
     # Lists to store results
     usage_results = []
     program_results = []
     
-    # Process usage files
-    print("Processing usage files...")
+    # Process parameter usage files
+    print("Processing parameter usage files...")
     for i in range(0, 99):
         filename = f'parameter_API_files/usage_{i}.txt'
         try:
@@ -52,8 +91,8 @@ def process_all_files():
         except Exception as e:
             print(f"Error processing {filename}: {str(e)}")
     
-    # Process usage files
-    print("Processing usage files...")
+    # Process program usage files
+    print("Processing program usage files...")
     for i in range(0, 99):
         filename = f'program_usage/usage_{i}.txt'
         try:
@@ -71,14 +110,14 @@ def process_all_files():
     usage_df = pd.DataFrame(usage_results)
     program_df = pd.DataFrame(program_results)
     
-    # Save to CSV
+    # Save to CSV for further analysis
     usage_df.to_csv('usage_summary.csv', index=False)
     program_df.to_csv('program_summary.csv', index=False)
     
     # Print summary statistics
-    print("\n=== Usage Files Summary Statistics ===")
+    print("\n=== Parameter Generation Summary Statistics ===")
     print(usage_df.describe())    
-    print("\n=== Program Files Summary Statistics ===")
+    print("\n=== Program Generation Summary Statistics ===")
     print(program_df.describe())
     
     return usage_df, program_df

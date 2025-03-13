@@ -8,9 +8,24 @@ import csv
 import re
 import pickle
 
+# PyTorch API Fuzz Testing Framework - Parameter Generation Module
+# This module handles the generation and management of test parameters using LLMs.
+# It creates diverse parameter sets for testing edge cases in PyTorch APIs and
+# includes caching mechanisms to avoid redundant API calls.
+
 def create_json_schema(num_parameter_sets, num_params_per_set):
     """
     Create a JSON schema for the fuzz test parameters dynamically based on the number of parameter sets and parameters per set.
+    
+    This schema is used to structure the response from the LLM to ensure it generates
+    properly formatted parameter sets that can be easily parsed.
+    
+    Args:
+        num_parameter_sets: Number of parameter sets to generate
+        num_params_per_set: Number of parameters in each set
+        
+    Returns:
+        Dict containing the JSON schema for LLM response validation
     """
     properties = {}
     
@@ -51,7 +66,17 @@ def create_json_schema(num_parameter_sets, num_params_per_set):
 
 def extract_responses(completion_response, id):
     """
-    Extract the parameter sets from the completion response.
+    Extract the parameter sets from the LLM completion response.
+    
+    Parses the JSON response from the model and organizes the parameters
+    into structured lists for testing.
+    
+    Args:
+        completion_response: The response object from the LLM API call
+        id: Unique identifier for this parameter set for caching/tracking
+        
+    Returns:
+        List of parameter sets, each being a list of parameter values
     """
 
     # Extract the content from the response
@@ -106,6 +131,22 @@ def create_or_load_fuzz_test_parameters(
 ) -> Union[List[List[str]], str]:
     """
     Create or load fuzz test parameters for a given PyTorch API call.
+    
+    This function implements caching to avoid generating parameters multiple times
+    for the same test. If parameters already exist on disk, they are loaded;
+    otherwise, new parameters are generated and saved.
+    
+    Args:
+        id: Unique identifier for this parameter set
+        code_to_test: The PyTorch code snippet being tested
+        num_params: Number of parameters needed for the test
+        num_sets: Number of different parameter sets to generate
+        model: LLM model to use for parameter generation
+        max_tokens: Maximum number of tokens for generation
+        **kwargs: Additional parameters for the LLM API call
+        
+    Returns:
+        List of parameter sets, or error message if generation fails
     """
     csv_file = f'parameter_files/fuzz_test_parameters_{id}_{num_params}_{num_sets}.csv'
     
@@ -139,8 +180,24 @@ def create_fuzz_test_parameters(
     Generate fuzz test parameters using an AI model.
     
     This function sends a request to an AI model to generate sets of parameters
-    for fuzz testing a given PyTorch API call.
-
+    for fuzz testing a given PyTorch API call. It instructs the model to create
+    diverse parameter sets that test various edge cases and potential error conditions.
+    
+    The parameters are carefully constrained to ensure:
+    - Memory usage stays under 4GB
+    - Tensor dimensions are reasonable (<1000)
+    - Types are compatible with the operations
+    - Each parameter set is unique
+    
+    Args:
+        code_to_test: The PyTorch code to generate parameters for
+        num_params: Number of parameters to generate for each set
+        num_sets: Number of parameter sets to generate
+        model: The LLM model to use for generation
+        max_tokens: Maximum tokens for the model response
+        id: Unique identifier for tracking and caching
+        **kwargs: Additional parameters for the LLM API
+    
     Returns:
         List[List[str]]: A list of lists of parameters.
         str: An error message if the API call fails.
